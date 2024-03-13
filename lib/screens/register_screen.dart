@@ -63,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   items: ["Male", 'Female'],
                   hintText: "Gender in menu mode",
                   labelText: "Gender",
-                  initialValue: "Male",
+                  initialValue: null,
                   dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
                     print(value);

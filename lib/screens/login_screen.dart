@@ -11,6 +11,16 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Login',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      ),
       backgroundColor: KSurface,
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -18,22 +28,17 @@ class LoginScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: KWhite,
-                      fontSize: 40,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: Text(
+                //     'Login',
+                //     style: TextStyle(
+                //       color: KWhite,
+                //       fontSize: 40,
+                //     ),
+                //   ),
+                // ),
+
                 CustomTextField(
                   hintText: 'Type your email here',
                   label: 'Email',
@@ -70,6 +75,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
