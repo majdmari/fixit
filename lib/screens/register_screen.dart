@@ -1,7 +1,5 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/widgets/custom_button.dart';
-import 'package:fixit/widgets/custom_pop_up.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
