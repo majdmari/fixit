@@ -15,7 +15,7 @@ class CustomDropdown<T> extends StatefulWidget {
     required this.labelText,
     required this.initialValue,
     required this.onChanged,
-    this.dropdownMenuBackgroundColor = Colors.black,
+    this.dropdownMenuBackgroundColor = Colors.white,
   }) : super(key: key);
 
   @override
