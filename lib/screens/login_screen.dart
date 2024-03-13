@@ -11,7 +11,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: KSurface,
       body: Padding(
         padding: const EdgeInsets.all(30),
         child: ListView(
