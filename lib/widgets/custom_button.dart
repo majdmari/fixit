@@ -8,6 +8,7 @@ class CustomButton extends StatelessWidget {
   String text;
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -15,8 +16,10 @@ class CustomButton extends StatelessWidget {
           color: KSecondary,
           borderRadius: BorderRadius.circular(8),
         ),
-        width: double.infinity,
-        height: 60,
+        // width: double.infinity,
+        // height: 60,
+        width: screenSize.width * 0.9,
+        height: screenSize.height * 0.05,
         child: Center(
           child: Text(
             text,
