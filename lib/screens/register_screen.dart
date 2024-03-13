@@ -20,7 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         automaticallyImplyLeading: false,
         title: Text(
           'Register',
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
