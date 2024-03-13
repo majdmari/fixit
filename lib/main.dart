@@ -1,7 +1,6 @@
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register_screen.dart';
 import 'package:fixit/screens/splash.dart';
-import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +14,6 @@ class Fixit extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SplashScreen(),
-      // home: RadioListTileExample(),
 
       routes: {
         SplashScreen.id: (context) => SplashScreen(),
