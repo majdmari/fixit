@@ -24,9 +24,9 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Login----------------------',
+                    'Login',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: KWhite,
                       fontSize: 40,
                     ),
                   ),

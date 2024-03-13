@@ -13,7 +13,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String _selectedValue = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: "Gender in menu mode",
                   labelText: "Gender",
                   initialValue: "Male",
+                  dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
                     print(value);
                   },
