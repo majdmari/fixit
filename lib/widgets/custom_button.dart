@@ -19,7 +19,7 @@ class CustomButton extends StatelessWidget {
         // width: double.infinity,
         // height: 60,
         width: screenSize.width * 0.9,
-        height: screenSize.height * 0.05,
+        height: screenSize.height * 0.06,
         child: Center(
           child: Text(
             text,

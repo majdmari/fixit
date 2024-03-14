@@ -1,3 +1,4 @@
+// import 'package:fixit/constants.dart';
 // import 'package:flutter/material.dart';
 
 // class CustomDropdown<T> extends StatefulWidget {
@@ -39,16 +40,13 @@
 //       children: [
 //         InputDecorator(
 //           decoration: InputDecoration(
-
-//             suffixIcon: GestureDetector(
-//               onTap: () {
-//                 setState(() {
-//                   _isDropdownOpened = !_isDropdownOpened;
-//                 });
-//               },
-//               child: Icon(Icons.arrow_drop_down),
-//             ),
-//             labelText: widget.labelText,
+//             labelText: _isDropdownOpened
+//                 ? widget.labelText
+//                 : _selectedItem == null
+//                     ? null
+//                     : widget.labelText,
+//             // hintText: _isDropdownOpened ? null : widget.hintText,
+//             // labelText: widget.labelText,
 //             hintText: widget.hintText,
 //             labelStyle: TextStyle(
 //               color: Colors.grey,
@@ -57,25 +55,42 @@
 //             enabledBorder: OutlineInputBorder(
 //               borderRadius: BorderRadius.circular(16),
 //               borderSide: BorderSide(
-//                 color: Colors.blue,
+//                 color: KSf2,
 //               ),
 //             ),
 //             border: OutlineInputBorder(
 //               borderRadius: BorderRadius.circular(16),
 //               borderSide: BorderSide(
-//                 color: Colors.blue,
+//                 color: KSecondary,
 //               ),
 //             ),
 //             focusedBorder: OutlineInputBorder(
 //               borderRadius: BorderRadius.circular(16),
 //               borderSide: BorderSide(
-//                 color: Colors.green,
+//                 color: KSecondary,
+//               ),
+//             ),
+//             suffixIcon: GestureDetector(
+//               onTap: () {
+//                 setState(() {
+//                   _isDropdownOpened = !_isDropdownOpened;
+//                 });
+//               },
+//               child: Icon(
+//                 Icons.arrow_drop_down,
+//                 color: Colors.grey,
 //               ),
 //             ),
 //           ),
 //           child: Text(
-//             _selectedItem != null ? _selectedItem.toString() : widget.hintText,
-//             style: TextStyle(color: Colors.black),
+//             _selectedItem != null
+//                 ? _selectedItem.toString()
+//                 : _isDropdownOpened
+//                     ? widget.hintText
+//                     : widget.labelText,
+//             style: _selectedItem != null
+//                 ? TextStyle(color: Colors.white)
+//                 : TextStyle(color: Colors.grey),
 //           ),
 //         ),
 //         if (_isDropdownOpened)
@@ -84,7 +99,7 @@
 //               borderRadius: BorderRadius.circular(16),
 //               color: widget.dropdownMenuBackgroundColor,
 //               border: Border.all(
-//                   color: Colors.blue), // Separate border for the dropdown menu
+//                   color: KSecondary), // Separate border for the dropdown menu
 //             ),
 //             child: Column(
 //               children: widget.items
@@ -108,7 +123,6 @@
 //     );
 //   }
 // }
-
 // import 'package:flutter/material.dart';
 
 // class CustomDropdown<T> extends StatefulWidget {
@@ -150,8 +164,12 @@
 //       children: [
 //         InputDecorator(
 //           decoration: InputDecoration(
-//             labelText: _isDropdownOpened ? widget.labelText : null,
-//             hintText: _isDropdownOpened ? null : widget.hintText,
+//             labelText: _isDropdownOpened
+//                 ? widget.labelText
+//                 : _selectedItem == null
+//                     ? null
+//                     : widget.labelText,
+//             hintText: widget.hintText,
 //             labelStyle: TextStyle(
 //               color: Colors.grey,
 //             ),
@@ -159,19 +177,19 @@
 //             enabledBorder: OutlineInputBorder(
 //               borderRadius: BorderRadius.circular(16),
 //               borderSide: BorderSide(
-//                 color: Colors.blue,
+//                 color: Colors.grey,
 //               ),
 //             ),
 //             border: OutlineInputBorder(
 //               borderRadius: BorderRadius.circular(16),
 //               borderSide: BorderSide(
-//                 color: Colors.blue,
+//                 color: Colors.grey,
 //               ),
 //             ),
 //             focusedBorder: OutlineInputBorder(
 //               borderRadius: BorderRadius.circular(16),
 //               borderSide: BorderSide(
-//                 color: Colors.green,
+//                 color: Colors.grey,
 //               ),
 //             ),
 //             suffixIcon: GestureDetector(
@@ -180,23 +198,21 @@
 //                   _isDropdownOpened = !_isDropdownOpened;
 //                 });
 //               },
-//               child: Icon(Icons.arrow_drop_down, color: Colors.grey),
+//               child: Icon(
+//                 Icons.arrow_drop_down,
+//                 color: Colors.grey,
+//               ),
 //             ),
 //           ),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: [
-//               Text(
-//                 _isDropdownOpened ? '' : widget.labelText,
-//                 style: TextStyle(color: Colors.grey),
-//               ),
-//               Text(
-//                 _selectedItem != null
-//                     ? _selectedItem.toString()
-//                     : widget.hintText,
-//                 style: TextStyle(color: Colors.black),
-//               ),
-//             ],
+//           child: Text(
+//             _selectedItem != null
+//                 ? _selectedItem.toString()
+//                 : _isDropdownOpened
+//                     ? widget.hintText
+//                     : widget.labelText,
+//             style: TextStyle(
+//               color: _selectedItem != null ? Colors.white : Colors.grey,
+//             ),
 //           ),
 //         ),
 //         if (_isDropdownOpened)
@@ -205,23 +221,28 @@
 //               borderRadius: BorderRadius.circular(16),
 //               color: widget.dropdownMenuBackgroundColor,
 //               border: Border.all(
-//                   color: Colors.blue), // Separate border for the dropdown menu
+//                 color: Colors.grey, // Separate border for the dropdown menu
+//               ),
 //             ),
 //             child: Column(
 //               children: widget.items
-//                   .map((value) => ListTile(
-//                         title: Text(
-//                           value.toString(),
-//                           style: TextStyle(color: Colors.white),
-//                         ),
-//                         onTap: () {
-//                           setState(() {
-//                             _selectedItem = value;
-//                             _isDropdownOpened = false;
-//                           });
-//                           widget.onChanged(_selectedItem);
-//                         },
-//                       ))
+//                   .map(
+//                     (value) => RadioListTile<T>(
+//                       title: Text(
+//                         value.toString(),
+//                         style: TextStyle(color: Colors.white),
+//                       ),
+//                       value: value,
+//                       groupValue: _selectedItem,
+//                       onChanged: (newValue) {
+//                         setState(() {
+//                           _selectedItem = newValue;
+//                           _isDropdownOpened = false;
+//                         });
+//                         widget.onChanged(_selectedItem);
+//                       },
+//                     ),
+//                   )
 //                   .toList(),
 //             ),
 //           ),
@@ -229,6 +250,7 @@
 //     );
 //   }
 // }
+import 'package:fixit/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropdown<T> extends StatefulWidget {
@@ -275,8 +297,6 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                 : _selectedItem == null
                     ? null
                     : widget.labelText,
-            // hintText: _isDropdownOpened ? null : widget.hintText,
-            // labelText: widget.labelText,
             hintText: widget.hintText,
             labelStyle: TextStyle(
               color: Colors.grey,
@@ -285,19 +305,23 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: Colors.blue,
+                color: _isDropdownOpened
+                    ? KSecondary
+                    : KSf2, // Dynamic border color
               ),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: Colors.blue,
+                color: _isDropdownOpened
+                    ? KSecondary
+                    : KSf2, // Dynamic border color
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: Colors.green,
+                color: KSecondary, // Border color when focused
               ),
             ),
             suffixIcon: GestureDetector(
@@ -318,7 +342,9 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                 : _isDropdownOpened
                     ? widget.hintText
                     : widget.labelText,
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: _selectedItem != null ? Colors.white : Colors.grey,
+            ),
           ),
         ),
         if (_isDropdownOpened)
@@ -327,23 +353,32 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
               borderRadius: BorderRadius.circular(16),
               color: widget.dropdownMenuBackgroundColor,
               border: Border.all(
-                  color: Colors.blue), // Separate border for the dropdown menu
+                color: KSecondary, // Separate border for the dropdown menu
+              ),
             ),
             child: Column(
               children: widget.items
-                  .map((value) => ListTile(
-                        title: Text(
-                          value.toString(),
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _selectedItem = value;
-                            _isDropdownOpened = false;
-                          });
-                          widget.onChanged(_selectedItem);
-                        },
-                      ))
+                  .map(
+                    (value) => RadioListTile<T>(
+                      fillColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.white),
+                      title: Text(
+                        value.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      value: value,
+                      groupValue: _selectedItem,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedItem = newValue;
+                          _isDropdownOpened = false;
+                        });
+                        widget.onChanged(_selectedItem);
+                      },
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      activeColor: Colors.white, // Move radio to the right
+                    ),
+                  )
                   .toList(),
             ),
           ),
