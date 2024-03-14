@@ -1,6 +1,8 @@
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register_screen.dart';
 import 'package:fixit/screens/splash.dart';
+import 'package:fixit/screens/tradeperson_register_screen.dart';
+import 'package:fixit/screens/user_register_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +21,8 @@ class Fixit extends StatelessWidget {
         SplashScreen.id: (context) => SplashScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),
+        UserRegisterScreen.id: (context) => UserRegisterScreen(),
+        TradepersonRegisterScreen.id: (context) => TradepersonRegisterScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
