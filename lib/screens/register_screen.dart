@@ -1,4 +1,6 @@
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/tradeperson_register_screen.dart';
+import 'package:fixit/screens/user_register_screen.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
@@ -69,31 +71,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     print(value);
                   },
                 ),
-                SizedBox(height: 200),
-                CustomTextField(
-                  hintText: 'User or Tradeperson',
-                  label: 'Who you are ?',
-                  icon: Icons.arrow_drop_down,
+                SizedBox(height: 10),
+                CustomDropdown<String>(
+                  items: ["User", 'Tradeperson'],
+                  hintText: "User Or Tradeperson",
+                  labelText: "Who you are ?",
+                  initialValue: null,
+                  dropdownMenuBackgroundColor: KSf2,
+                  onChanged: (String? value) {
+                    print(value);
+                  },
                 ),
                 SizedBox(
                   height: 35,
                 ),
-                CustomButton(text: 'Login'),
+                CustomButton(
+                  text: 'Continue',
+                  onTap: () {
+                    Navigator.pushNamed(context, TradepersonRegisterScreen.id);
+                  },
+                ),
                 SizedBox(
                   height: 16,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, RegisterScreen.id);
-                      },
-                      child: Text(
-                        'already have an account?',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
+                    Text(
+                      'already have an account?',
+                      style: TextStyle(
+                        color: Colors.grey,
                       ),
                     ),
                     GestureDetector(

@@ -79,15 +79,10 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, RegisterScreen.id);
-                      },
-                      child: Text(
-                        'Do not have an account?',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
+                    Text(
+                      'Do not have an account?',
+                      style: TextStyle(
+                        color: Colors.grey,
                       ),
                     ),
                     GestureDetector(
