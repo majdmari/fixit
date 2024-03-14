@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text(
           'Login',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
