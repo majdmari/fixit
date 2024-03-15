@@ -3,6 +3,7 @@ import 'package:fixit/screens/register_screen.dart';
 import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_register_screen.dart';
 import 'package:fixit/screens/user_register_screen.dart';
+import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,9 +16,11 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SplashScreen(),
+      // home: SplashScreen(),
+      home: WelcomScreen(),
 
       routes: {
+        WelcomScreen.id: (context) => WelcomScreen(),
         SplashScreen.id: (context) => SplashScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),
