@@ -48,6 +48,9 @@ class TradepersonListScreen extends StatelessWidget {
                                   fontSize: 18,
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Row(
                                 children: [
                                   Icon(
