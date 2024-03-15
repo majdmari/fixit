@@ -65,6 +65,7 @@ flutter:
     - assets/images/welcome.png
     - assets/images/purpose.png
     - assets/images/Discover.png
+    - assets/images/tradeperson.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
