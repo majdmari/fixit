@@ -5,6 +5,7 @@ import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({super.key});
@@ -18,6 +19,8 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
   RegisterInfo registerInfo = RegisterInfo();
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel registerViewModel =
+        Provider.of<RegisterViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -115,25 +118,8 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                 SizedBox(
                   height: 35,
                 ),
-                // CustomButton(
-                //   text: 'Done',
-                //   onTap: () async {
-                //     print('hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
-                //     Map<String, dynamic> additionalData = {
-                //       'FullName': registerInfo!.fullName,
-                //       'PhoneNumber': registerInfo.phoneNumber,
-                //       'BirthOfDate': registerInfo.birthOfDate,
-                //       'City': registerInfo.selectedCity,
-                //       'Address': registerInfo.address,
-                //     };
-                //     await FirebaseFirestore.instance
-                //         .collection('User')
-                //         .doc(registerInfo!.email)
-                //         .update(additionalData);
-                //   },
-                // ),
                 CustomButton(
-                  text: 'ok',
+                  text: 'Done',
                   onTap: () async {
                     print('hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
                     Map<String, dynamic> additionalData = {
@@ -145,7 +131,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     };
                     await FirebaseFirestore.instance
                         .collection('Users')
-                        .doc(registerInfo.controller!.text)
+                        .doc(registerViewModel.emailController.text)
                         .update(additionalData);
                   },
                 ),
