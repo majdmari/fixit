@@ -83,10 +83,7 @@ flutter:
        fonts:
          - asset: fonts/Angkor-Regular.ttf
 
-     - family: Kalam
-       fonts:
-         - asset: fixit/fonts/Kalam-Light.ttf
-         
+
        
 
   #
