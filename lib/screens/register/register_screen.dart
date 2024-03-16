@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
-import 'package:fixit/screens/tradeperson_register_screen.dart';
-import 'package:fixit/screens/user_register_screen.dart';
+import 'package:fixit/screens/register/tradeperson_register_screen.dart';
+import 'package:fixit/screens/register/user_model.dart';
+import 'package:fixit/screens/register/user_register_screen.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
   static String id = 'RegisterScreen';
 
   @override
@@ -15,7 +18,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String? selectedOption;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  RegisterInfo registerInfo = RegisterInfo();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +43,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Column(
               children: [
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.userName = value;
+                  },
                   hintText: 'Type your username here',
                   label: 'Username',
                 ),
@@ -44,6 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 10,
                 ),
                 CustomTextField(
+                  controller: registerInfo.controller,
+                  onChanged: (value) {
+                    registerInfo.email = value;
+                  },
                   hintText: 'Type your email here',
                   label: 'Email',
                 ),
@@ -51,6 +64,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 10,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.password = value;
+                  },
                   hintText: 'Type your password here',
                   label: 'Password',
                 ),
@@ -59,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 CustomTextField(
                   hintText: 'confirm your password',
-                  label: 'Email',
+                  label: 'Re-Write Password',
                 ),
                 SizedBox(height: 10),
                 CustomDropdown<String>(
@@ -69,7 +85,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   initialValue: null,
                   dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
-                    print(value);
+                    setState(() {
+                      registerInfo.selectedGender = value;
+                    });
                   },
                 ),
                 SizedBox(height: 10),
@@ -81,9 +99,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
                     setState(() {
-                      selectedOption = value;
+                      registerInfo.selectedOption = value;
                     });
-                    print(value);
                   },
                 ),
                 SizedBox(
@@ -91,10 +108,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 CustomButton(
                   text: 'Continue',
-                  onTap: () {
-                    if (selectedOption == "User") {
+                  onTap: () async {
+                    CollectionReference collectionReference =
+                        FirebaseFirestore.instance.collection('Users');
+                    await collectionReference
+                        .doc(registerInfo.controller!.text)
+                        .set({
+                      'Username': registerInfo.userName,
+                      'Email': registerInfo.email,
+                      'Password': registerInfo.password,
+                      'Gender': registerInfo.selectedGender,
+                      'Type': registerInfo.selectedOption,
+                    });
+
+                    if (registerInfo.selectedOption == "User") {
                       Navigator.pushNamed(context, UserRegisterScreen.id);
-                    } else if (selectedOption == "Tradeperson") {
+                    } else if (registerInfo.selectedOption == "Tradeperson") {
                       Navigator.pushNamed(
                           context, TradepersonRegisterScreen.id);
                     } else {
