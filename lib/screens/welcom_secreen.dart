@@ -2,9 +2,54 @@ import 'package:fixit/constants.dart';
 import 'package:fixit/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
-class WelcomScreen extends StatelessWidget {
-  const WelcomScreen({super.key});
+class WelcomScreen extends StatefulWidget {
   static String id = 'welcomScreen';
+
+  @override
+  _WelcomScreenState createState() => _WelcomScreenState();
+}
+
+class _WelcomScreenState extends State<WelcomScreen> {
+  PageController nextpage = PageController();
+  int pagenumber = 0;
+
+  @override
+  void dispose() {
+    nextpage.dispose();
+    super.dispose();
+  }
+
+  void onPageChanged(int value) {
+    setState(() {
+      pagenumber = value;
+    });
+  }
+
+  Widget dotpageview() {
+    return Builder(
+      builder: ((context) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              for (int i = 0; i < 3; i++)
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  width: i == pagenumber ? 25 : 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: i == pagenumber
+                          ? Color(0XffB73B67)
+                          : Color.fromARGB(255, 107, 46, 67)),
+                ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +57,8 @@ class WelcomScreen extends StatelessWidget {
       home: Scaffold(
         backgroundColor: KSurface,
         body: PageView(
+          onPageChanged: onPageChanged,
+          controller: nextpage,
           children: [
             Column(children: [
               SizedBox(
@@ -30,6 +77,7 @@ class WelcomScreen extends StatelessWidget {
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Colors.grey,
+                              fontSize: 18,
                             ))),
                   ),
                 ],
@@ -48,7 +96,7 @@ class WelcomScreen extends StatelessWidget {
                 height: 30,
               ),
               Text(
-                'Welcom to FixIt',
+                'Welcome to FixIt',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
@@ -58,27 +106,35 @@ class WelcomScreen extends StatelessWidget {
                 'Your trusted solution for all mechanical needs',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontFamily: 'Truculenta'),
+                    color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
               ),
               SizedBox(
-                height: 80,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Align(
                   alignment: Alignment.bottomRight,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Image.asset(
-                      'assets/images/next.png',
-                      width: 70,
-                      height: 70,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      nextpage.animateToPage(1,
+                          duration: Duration(milliseconds: 700),
+                          curve: Curves.easeIn);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(20),
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Color(0XffB73B67),
+                      size: 30,
                     ),
                   ),
                 ),
-              )
+              ),
+              dotpageview()
             ]),
             Column(
               children: [
@@ -98,6 +154,7 @@ class WelcomScreen extends StatelessWidget {
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: Colors.grey,
+                                fontSize: 18,
                               ))),
                     ),
                   ],
@@ -116,7 +173,7 @@ class WelcomScreen extends StatelessWidget {
                   height: 30,
                 ),
                 Text(
-                  'What is FixIt ?',
+                  'What is FixIt?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
@@ -125,31 +182,39 @@ class WelcomScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: const Text(
-                    'Fixit connects you with skilled professionals for all your mechanical needs. our platform makes it easy to find reliable services tailored to you.',
+                    'FixIt connects you with skilled professionals for all your mechanical needs',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontFamily: 'Truculenta'),
+                        color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
                   ),
                 ),
                 SizedBox(
-                  height: 1,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(
-                        'assets/images/next.png',
-                        width: 70,
-                        height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        nextpage.animateToPage(2,
+                            duration: Duration(milliseconds: 700),
+                            curve: Curves.easeIn);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(20),
+                      ),
+                      child: Icon(
+                        Icons.arrow_forward,
+                        color: Color(0XffB73B67),
+                        size: 30,
                       ),
                     ),
                   ),
-                )
+                ),
+                dotpageview()
               ],
             ),
             Column(
@@ -170,6 +235,7 @@ class WelcomScreen extends StatelessWidget {
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: Colors.grey,
+                                fontSize: 18,
                               ))),
                     ),
                   ],
@@ -197,31 +263,32 @@ class WelcomScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: const Text(
-                    'Discover various mechanical services tailored to your needs,Find the perfect solution for you.',
+                    'Discover various mechanical services tailored to your needs',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontFamily: 'Truculenta'),
+                        color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(
-                        'assets/images/next.png',
-                        width: 70,
-                        height: 70,
-                      ),
-                    ),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, LoginScreen.id);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: CircleBorder(),
+                            padding: EdgeInsets.all(20)),
+                        child: Icon(Icons.arrow_forward,
+                            color: Color(0XffB73B67), size: 30)),
                   ),
-                )
+                ),
+                dotpageview(),
               ],
             )
           ],

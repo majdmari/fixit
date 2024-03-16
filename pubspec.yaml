@@ -83,9 +83,9 @@ flutter:
        fonts:
          - asset: fonts/Angkor-Regular.ttf
 
-     - family: Truculenta
+     - family: Kalam
        fonts:
-         - asset: fonts/Truculenta-VariableFont_opsz,wdth,wght.ttf
+         - asset: fixit/fonts/Kalam-Light.ttf
          
        
 
