@@ -83,8 +83,6 @@ flutter:
        fonts:
          - asset: fonts/Angkor-Regular.ttf
 
-         
-       
 
   #
   # For details regarding fonts from package dependencies,
