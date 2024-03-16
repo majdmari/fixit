@@ -1,5 +1,5 @@
 import 'package:fixit/constants.dart';
-import 'package:fixit/screens/register_screen.dart';
+import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';

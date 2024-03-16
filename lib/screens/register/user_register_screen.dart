@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class UserRegisterScreen extends StatefulWidget {
-  const UserRegisterScreen({super.key});
+  UserRegisterScreen({super.key});
   static String id = 'UserRegisterScreen';
 
   @override
@@ -13,6 +15,7 @@ class UserRegisterScreen extends StatefulWidget {
 }
 
 class _UserRegisterScreenState extends State<UserRegisterScreen> {
+  RegisterInfo registerInfo = RegisterInfo();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +50,9 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   height: 20,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.fullName = value;
+                  },
                   hintText: 'Type your Name here',
                   label: 'Full Name',
                 ),
@@ -54,6 +60,9 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   height: 10,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.phoneNumber = value;
+                  },
                   hintText: '0799999999',
                   label: 'Phone number',
                 ),
@@ -61,6 +70,9 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   height: 10,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.birthOfDate = value;
+                  },
                   hintText: 'DD/MM/YYYY',
                   label: 'Birth of Date',
                 ),
@@ -87,20 +99,55 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   initialValue: null,
                   dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
-                    print(value);
+                    setState(() {
+                      registerInfo.selectedCity = value;
+                    });
                   },
                 ),
                 SizedBox(height: 10),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.address = value;
+                  },
                   hintText: 'Type your address here',
                   label: 'Address',
                 ),
                 SizedBox(
                   height: 35,
                 ),
+                // CustomButton(
+                //   text: 'Done',
+                //   onTap: () async {
+                //     print('hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
+                //     Map<String, dynamic> additionalData = {
+                //       'FullName': registerInfo!.fullName,
+                //       'PhoneNumber': registerInfo.phoneNumber,
+                //       'BirthOfDate': registerInfo.birthOfDate,
+                //       'City': registerInfo.selectedCity,
+                //       'Address': registerInfo.address,
+                //     };
+                //     await FirebaseFirestore.instance
+                //         .collection('User')
+                //         .doc(registerInfo!.email)
+                //         .update(additionalData);
+                //   },
+                // ),
                 CustomButton(
-                  text: 'Done',
-                  onTap: () {},
+                  text: 'ok',
+                  onTap: () async {
+                    print('hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
+                    Map<String, dynamic> additionalData = {
+                      'FullName': registerInfo.fullName,
+                      'PhoneNumber': registerInfo.phoneNumber,
+                      'BirthOfDate': registerInfo.birthOfDate,
+                      'City': registerInfo.selectedCity,
+                      'Address': registerInfo.address,
+                    };
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(registerInfo.controller!.text)
+                        .update(additionalData);
+                  },
                 ),
                 SizedBox(
                   height: 16,
