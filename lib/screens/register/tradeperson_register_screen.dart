@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TradepersonRegisterScreen extends StatefulWidget {
   const TradepersonRegisterScreen({super.key});
@@ -14,8 +17,11 @@ class TradepersonRegisterScreen extends StatefulWidget {
 }
 
 class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
+  RegisterInfo registerInfo = RegisterInfo();
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel registerViewModel =
+        Provider.of<RegisterViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -48,6 +54,9 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                   height: 20,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.fullName = value;
+                  },
                   hintText: 'Type your Name here',
                   label: 'Full Name',
                 ),
@@ -55,6 +64,9 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                   height: 10,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.phoneNumber = value;
+                  },
                   hintText: '0799999999',
                   label: 'Phone number',
                 ),
@@ -62,6 +74,9 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                   height: 10,
                 ),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.birthOfDate = value;
+                  },
                   hintText: 'DD/MM/YYYY',
                   label: 'Birth of Date',
                 ),
@@ -88,11 +103,16 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                   initialValue: null,
                   dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
-                    print(value);
+                    setState(() {
+                      registerInfo.selectedCity = value;
+                    });
                   },
                 ),
                 SizedBox(height: 10),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.address = value;
+                  },
                   hintText: 'Type your address here',
                   label: 'Address',
                 ),
@@ -114,11 +134,16 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                   initialValue: null,
                   dropdownMenuBackgroundColor: KSf2,
                   onChanged: (String? value) {
-                    print(value);
+                    setState(() {
+                      registerInfo.category = value;
+                    });
                   },
                 ),
                 SizedBox(height: 10),
                 CustomTextField(
+                  onChanged: (value) {
+                    registerInfo.desc = value;
+                  },
                   hintText: 'Type about you here',
                   label: 'Description',
                 ),
@@ -127,7 +152,22 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                 ),
                 CustomButton(
                   text: 'Done',
-                  onTap: () {},
+                  onTap: () async {
+                    print('hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
+                    Map<String, dynamic> additionalData = {
+                      'FullName': registerInfo.fullName,
+                      'PhoneNumber': registerInfo.phoneNumber,
+                      'BirthOfDate': registerInfo.birthOfDate,
+                      'City': registerInfo.selectedCity,
+                      'Address': registerInfo.address,
+                      'Category': registerInfo.category,
+                      'Description': registerInfo.desc,
+                    };
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(registerViewModel.emailController.text)
+                        .update(additionalData);
+                  },
                 ),
                 SizedBox(
                   height: 16,

@@ -3,18 +3,22 @@ import 'package:fixit/firebase_options.dart';
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/tradeperson_register_screen.dart';
+import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/register/user_register_screen.dart';
 import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const Fixit());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => RegisterViewModel())],
+      child: const Fixit()));
 }
 
 class Fixit extends StatelessWidget {
