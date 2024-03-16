@@ -82,7 +82,9 @@ flutter:
      - family: Angkor
        fonts:
          - asset: fonts/Angkor-Regular.ttf
-
+     - family: Kalam
+       fonts:
+         - asset: fonts/Kalam-Light.ttf
 
   #
   # For details regarding fonts from package dependencies,
