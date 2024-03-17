@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class RegisterInfo {
   String? selectedOption;
   String? selectedGender;
-  String? userName;
   String? email;
   String? password;
   String? fullName;
@@ -17,7 +16,6 @@ class RegisterInfo {
   RegisterInfo({
     this.selectedOption,
     this.selectedGender,
-    this.userName,
     this.email,
     this.password,
     this.fullName,
