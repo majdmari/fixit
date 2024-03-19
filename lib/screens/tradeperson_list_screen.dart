@@ -1,56 +1,50 @@
 import 'package:flutter/material.dart';
 
-class TradepersonListScreen extends StatelessWidget {
-  const TradepersonListScreen({Key? key}) : super(key: key);
-  static String id = 'TradepersonListScreen';
+void main() {
+  runApp(Tradeperson_screen());
+}
 
+class Tradeperson_screen extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        home: Scaffold(
       backgroundColor: Color(0Xff000000),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView.builder(
+      body: ListView.builder(
           itemCount: 10,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+                  Container(
                     decoration: BoxDecoration(
-                      color: Color(0Xff2B2831),
-                    ),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0Xff2B2831)),
                     height: 100,
                     child: Row(
                       children: [
                         Container(
-                          color: const Color(0Xff2B2831),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child:
-                                  Image.asset('assets/images/tradeperson.jpg'),
-                            ),
-                          ),
-                        ),
+                            color: const Color(0Xff2B2831),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.asset(
+                                      'assets/images/tradeperson.jpg')),
+                            )),
                         Padding(
                           padding: const EdgeInsets.only(left: 16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'Jenny Wilson',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              Text('Jenny Wilson',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  )),
                               Row(
                                 children: [
                                   Icon(
@@ -64,13 +58,11 @@ class TradepersonListScreen extends StatelessWidget {
                                     style: TextStyle(color: Color(0XffFFFFFF)),
                                   ),
                                   SizedBox(width: 5),
-                                  Text(
-                                    'irbid',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                                  Text('irbid',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                      )),
                                 ],
                               )
                             ],
@@ -94,17 +86,15 @@ class TradepersonListScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                if (index < 9)
-                  Container(
-                    height: 8,
-                    color: Colors.black,
-                  )
-              ],
+                  if (index < 9)
+                    Container(
+                      height: 8,
+                      color: Colors.black,
+                    )
+                ],
+              ),
             );
-          },
-        ),
-      ),
-    );
+          }),
+    ));
   }
 }
