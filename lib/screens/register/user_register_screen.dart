@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/resources/add_data.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -46,14 +50,22 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
               children: [
                 Column(
                   children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.white,
+                    GestureDetector(
+                      onTap: _pickImage,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage(
-                          'assets/images/profile.png',
-                        ),
-                        radius: 68,
+                        radius: 70,
+                        backgroundColor: Colors.white,
+                        child: registerInfo.selectedImage != null
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    MemoryImage(registerInfo.selectedImage!),
+                                radius: 68,
+                              )
+                            : CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'),
+                                radius: 68,
+                              ),
                       ),
                     ),
                     SizedBox(
@@ -133,12 +145,21 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                           setState(() {});
                           print(
                               'hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
+                          String ImageUrl = '';
+                          if (registerInfo.selectedImage != null) {
+                            ImageUrl = await StoreDate().uploadImageToStorage(
+                                // registerViewModel.emailController.text,
+                                registerInfo.fullName!,
+                                registerInfo.selectedImage!,
+                                context);
+                          }
                           Map<String, dynamic> additionalData = {
                             'FullName': registerInfo.fullName,
                             'PhoneNumber': registerInfo.phoneNumber,
                             'BirthOfDate': registerInfo.birthOfDate,
                             'City': registerInfo.selectedCity,
                             'Address': registerInfo.address,
+                            'ImageLink': ImageUrl
                           };
                           await FirebaseFirestore.instance
                               .collection('Users')
@@ -160,5 +181,16 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _pickImage() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        registerInfo.selectedImage = File(pickedFile.path).readAsBytesSync();
+        registerInfo.imageFileName = pickedFile.path.split('@').last;
+      });
+    }
   }
 }
