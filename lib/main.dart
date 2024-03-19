@@ -38,7 +38,7 @@ class Fixit extends StatelessWidget {
         RegisterScreen.id: (context) => RegisterScreen(),
         UserRegisterScreen.id: (context) => UserRegisterScreen(),
         TradepersonRegisterScreen.id: (context) => TradepersonRegisterScreen(),
-        TradepersonListScreen.id: (context) => TradepersonListScreen(),
+        TradepersonListScreen.id: (context) => TradepersonScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
