@@ -78,6 +78,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 10,
                     ),
                     CustomTextField(
+                      onChanged: (value) {
+                        registerInfo.confirmPassword = value;
+                      },
                       hintText: 'confirm your password',
                       label: 'Re-Write Password',
                     ),
@@ -114,6 +117,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       text: 'Continue',
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
+                          if (registerInfo.password !=
+                              registerInfo.confirmPassword) {
+                            showSnackBar(context, 'Passwords do not match');
+                            return;
+                          }
                           isLoading = true;
                           setState(() {});
                           try {
@@ -129,7 +137,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               'Type': registerInfo.selectedOption,
                             });
                             showSnackBar(context, 'success');
-                            print('doneeeeeeeeeeeeeeeeeeeeeeeeee++++');
                             if (registerInfo.selectedOption == "User") {
                               Navigator.pushNamed(
                                   context, UserRegisterScreen.id);

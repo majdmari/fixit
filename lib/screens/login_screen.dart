@@ -45,17 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Column(
                   children: [
-                    // Align(
-                    //   alignment: Alignment.topLeft,
-                    //   child: Text(
-                    //     'Login',
-                    //     style: TextStyle(
-                    //       color: KWhite,
-                    //       fontSize: 40,
-                    //     ),
-                    //   ),
-                    // ),
-
                     CustomTextField(
                       onChanged: (value) {
                         registerInfo.email = value;
@@ -104,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             await loginUser();
                             // Navigator.pushNamed(context, ChatScreen.id,
                             //     arguments: email);
-                            // Navigator.pushNamed(context, WelcomScreen.id);
+                            Navigator.pushNamed(context, WelcomScreen.id);
                           } catch (ex) {
                             showSnackBar(context,
                                 'there was an error an Email or Password');
@@ -117,7 +106,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 16,
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
