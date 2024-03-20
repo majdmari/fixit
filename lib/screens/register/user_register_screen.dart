@@ -82,6 +82,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                       height: 10,
                     ),
                     CustomTextField(
+                      keyboardType: TextInputType.number,
                       onChanged: (value) {
                         registerInfo.phoneNumber = value;
                       },
@@ -143,8 +144,6 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                         if (formKey.currentState!.validate()) {
                           isLoading = true;
                           setState(() {});
-                          print(
-                              'hellosfdsfkisdkjfiosdkgdsgsdgsdgds78gfds8g4dsdgs');
                           String ImageUrl = '';
                           if (registerInfo.selectedImage != null) {
                             ImageUrl = await StoreDate().uploadImageToStorage(
@@ -189,7 +188,6 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
     if (pickedFile != null) {
       setState(() {
         registerInfo.selectedImage = File(pickedFile.path).readAsBytesSync();
-        registerInfo.imageFileName = pickedFile.path.split('@').last;
       });
     }
   }
