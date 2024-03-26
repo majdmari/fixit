@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixit/firebase_options.dart';
 import 'package:fixit/screens/login_screen.dart';
+import 'package:fixit/screens/profile/tradeperson_profile.dart';
+import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/tradeperson_register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
@@ -39,6 +41,8 @@ class Fixit extends StatelessWidget {
         UserRegisterScreen.id: (context) => UserRegisterScreen(),
         TradepersonRegisterScreen.id: (context) => TradepersonRegisterScreen(),
         // TradepersonListScreen.id: (context) => TradepersonScreen(),
+        UserProfileScreen.id: (context) => UserProfileScreen(),
+        TradepersonProfileScreen.id: (context) => TradepersonProfileScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
