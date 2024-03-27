@@ -16,22 +16,23 @@ class RegisterInfo {
   String? category;
   String? desc;
   Uint8List? selectedImage;
+  String? imagePickerFire;
 
-  RegisterInfo({
-    this.selectedOption,
-    this.selectedGender,
-    this.email,
-    this.password,
-    this.confirmPassword,
-    this.fullName,
-    this.phoneNumber,
-    this.birthOfDate,
-    this.selectedCity,
-    this.address,
-    this.category,
-    this.desc,
-    this.selectedImage,
-  });
+  RegisterInfo(
+      {this.selectedOption,
+      this.selectedGender,
+      this.email,
+      this.password,
+      this.confirmPassword,
+      this.fullName,
+      this.phoneNumber,
+      this.birthOfDate,
+      this.selectedCity,
+      this.address,
+      this.category,
+      this.desc,
+      this.selectedImage,
+      this.imagePickerFire});
 }
 
 class RegisterViewModel extends ChangeNotifier {
