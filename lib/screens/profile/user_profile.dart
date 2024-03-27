@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,14 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   CollectionReference usersInfo =
       FirebaseFirestore.instance.collection('Users');
+  RegisterInfo? userInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,18 +49,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 CircleAvatar(
                   radius: 70,
                   backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'),
-                    radius: 68,
-                  ),
+                  child: userInfo != null && userInfo!.selectedImage != null
+                      ? CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(userInfo!.imagePickerFire!),
+                          radius: 68,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'),
+                          radius: 68,
+                        ),
                 ),
                 SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Majd Mari",
+                      userInfo?.fullName ?? "",
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
                     IconButton(
@@ -75,7 +91,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      "majdmari12@gmail.com",
+                      userInfo?.email ?? '',
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ],
@@ -93,7 +109,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ],
                     ),
                     Text(
-                      "0799304035",
+                      userInfo?.phoneNumber ?? '',
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     IconButton(
@@ -113,7 +129,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      "Irbid",
+                      userInfo?.selectedCity ?? '',
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     IconButton(
@@ -128,7 +144,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      "01/10/2002",
+                      userInfo?.birthOfDate ?? '',
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     IconButton(
@@ -169,5 +185,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> fetchUserData() async {
+    String userEmail = FirebaseAuth.instance.currentUser!.email!;
+    DocumentSnapshot userSnapshot = await usersInfo.doc(userEmail).get();
+    setState(() {
+      userInfo = RegisterInfo(
+        fullName: userSnapshot['FullName'],
+        phoneNumber: userSnapshot['PhoneNumber'],
+        birthOfDate: userSnapshot['BirthOfDate'],
+        selectedCity: userSnapshot['City'],
+        address: userSnapshot['Address'],
+        email: userSnapshot['Email'],
+        imagePickerFire: userSnapshot['ImageLink'],
+        selectedImage: userSnapshot['ImageLink'],
+
+        // Add other fields as needed
+      );
+      print(userInfo!.imagePickerFire);
+    });
   }
 }
