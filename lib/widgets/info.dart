@@ -13,7 +13,7 @@ class Info extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset('assets/images/default.jpg'),
+              child: Image.asset('assets/images/tradeperson.jpg'),
             ),
           ),
         ),
