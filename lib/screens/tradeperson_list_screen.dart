@@ -1,114 +1,16 @@
-// import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(Tradeperson_screen());
-// }
-
-// class Tradeperson_screen extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         home: Scaffold(
-//       backgroundColor: Color(0Xff000000),
-//       body: ListView.builder(
-//           itemCount: 10,
-//           itemBuilder: (context, index) {
-//             return Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 30),
-//               child: Column(
-//                 children: [
-//                   Container(
-//                     decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20),
-//                         color: Color(0Xff2B2831)),
-//                     height: 100,
-//                     child: Row(
-//                       children: [
-//                         Container(
-//                             color: const Color(0Xff2B2831),
-//                             child: Padding(
-//                               padding: const EdgeInsets.all(10),
-//                               child: ClipRRect(
-//                                   borderRadius: BorderRadius.circular(20),
-//                                   child: Image.asset(
-//                                       'assets/images/tradeperson.jpg')),
-//                             )),
-//                         Padding(
-//                           padding: const EdgeInsets.only(left: 16),
-//                           child: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             children: [
-//                               Text('Jenny Wilson',
-//                                   style: const TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: 18,
-//                                   )),
-//                               Row(
-//                                 children: [
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Color(0XffFFFFFF),
-//                                     size: 18,
-//                                   ),
-//                                   SizedBox(width: 5),
-//                                   Text(
-//                                     '4.7',
-//                                     style: TextStyle(color: Color(0XffFFFFFF)),
-//                                   ),
-//                                   SizedBox(width: 5),
-//                                   Text('irbid',
-//                                       style: const TextStyle(
-//                                         color: Colors.white,
-//                                         fontSize: 18,
-//                                       )),
-//                                 ],
-//                               )
-//                             ],
-//                           ),
-//                         ),
-//                         const Spacer(
-//                           flex: 1,
-//                         ),
-//                         RawMaterialButton(
-//                           onPressed: () {},
-//                           elevation: 2.0,
-//                           fillColor: Color(0Xff2B2831),
-//                           child: Icon(
-//                             Icons.phone,
-//                             color: Color(0XffB73B67),
-//                             size: 35.0,
-//                           ),
-//                           padding: EdgeInsets.all(15.0),
-//                           shape: CircleBorder(),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   if (index < 9)
-//                     Container(
-//                       height: 8,
-//                       color: Colors.black,
-//                     )
-//                 ],
-//               ),
-//             );
-//           }),
-//     ));
-//   }
-// }
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/buildlistitem.dart';
 
-void main() {
-  runApp(TradepersonScreen());
+class TradepersonListScreen extends StatefulWidget {
+  static String id = 'TradepersonListScreen';
+
+  @override
+  State<TradepersonListScreen> createState() => _TradepersonListScreenState();
 }
 
-class TradepersonScreen extends StatelessWidget {
-  String selectedFilter = 'All';
+class _TradepersonListScreenState extends State<TradepersonListScreen> {
+  String selectedCity = '0';
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +27,10 @@ class TradepersonScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(42),
               ),
               hintText: 'Search by Name?',
-              hintStyle: TextStyle(color: Colors.white),
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Playfair Display',
+              ),
               filled: true,
               fillColor: Color(0Xff2B2831),
               prefixIcon: Icon(Icons.search, color: Colors.white),
@@ -140,39 +45,53 @@ class TradepersonScreen extends StatelessWidget {
           children: [
             Container(
               color: Color(0Xff2B2831),
-              child: DropdownButton<String>(
-                value: selectedFilter,
-                onChanged: (newValue) {
-                  selectedFilter = newValue!;
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('Users').snapshots(),
+                builder: (context, snapshot) {
+                  List<DropdownMenuItem<String>> usersItems = [];
+                  if (!snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  } else {
+                    final users = snapshot.data!.docs.reversed.toList();
+                    usersItems.add(
+                      DropdownMenuItem(
+                        value: '0',
+                        child: Text('Select city'),
+                      ),
+                    );
+                    for (var user in users) {
+                      usersItems.add(
+                        DropdownMenuItem(
+                          value: user.id,
+                          child: Text(user['City']),
+                        ),
+                      );
+                    }
+                    return DropdownButton<String>(
+                      items: usersItems,
+                      onChanged: (String? usersValue) {
+                        setState(() {
+                          selectedCity = usersValue!;
+                        });
+                        print(usersValue);
+                      },
+                      value: selectedCity,
+                      isExpanded: false,
+                    );
+                  }
                 },
-                items: <String>[
-                  'All',
-                  'Irbid',
-                  'Amman',
-                  'Al-Zarqa',
-                  'Aqaba',
-                  'Jerash',
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
               ),
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 10, // Assuming _allResults is defined somewhere
                 itemBuilder: (context, index) {
-                  // Replace with your actual list item widget
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       children: [
-                        Buildlistitem(),
+                        Buildlistitem(), // Pass _allResults to this widget
                         if (index < 9) SizedBox(height: 8),
                       ],
                     ),
@@ -186,3 +105,124 @@ class TradepersonScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/material.dart';
+// import 'package:path/path.dart';
+// import '../widgets/buildlistitem.dart';
+
+
+// class TradepersonListScreen extends StatefulWidget {
+//   static String id = 'TradepersonListScreen';
+
+//   @override
+//   State<TradepersonListScreen> createState() => _TradepersonListScreenState();
+// }
+
+// class _TradepersonListScreenState extends State<TradepersonListScreen> {
+//   String selectedCity = '0';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         backgroundColor: Color(0Xff000000),
+//         appBar: AppBar(
+//           backgroundColor: Colors.orange,
+//           title: TextField(
+//             cursorColor: Color(0XffB73B67),
+//             cursorHeight: 20,
+//             decoration: InputDecoration(
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(42),
+//               ),
+//               hintText: 'Search by Name?',
+//               hintStyle: TextStyle(
+//                   color: Colors.white, fontFamily: 'Playfair Display'),
+//               filled: true,
+//               fillColor: Color(0Xff2B2831),
+//               prefixIcon: Icon(Icons.search, color: Colors.white),
+//               suffixIcon: IconButton(
+//                 icon: Icon(Icons.close, color: Colors.white),
+//                 onPressed: () {},
+//               ),
+//             ),
+//           ),
+//         ),
+//         body: Column(
+//           children: [
+//             Container(
+//               color: Color(0Xff2B2831),
+//                child:StreamBuilder<QuerySnapshot>(stream: FirebaseFirestore.instance.collection('Users').snapshots(),
+//                 builder: (Context,snapshot){
+//                   List<DropdownMenuItem>UsersItems =[];
+//                   if (!snapshot.hasData){const CircularProgressIndicator();}
+//                   else{
+//                     final User = snapshot.data.docs.reversed.toList();
+//                     UsersItems.add(const DropdownMenuItem(value: '0',
+//                     child: Text('select city'),));
+//                     for  (var Users in User){
+//                       UsersItems.add(DropdownMenuItem(value: Users.id,
+//                         child: Text(Users['City']),),);
+
+//                 }}
+//                 return DropdownButton(items: UsersItems, onChanged: (UsersValue){
+//                   setState(() {
+//                     selectedCity =UsersValue;
+//                   });
+//                   print(UsersValue);
+//                 },
+//                 value: selectedCity,
+//                 isExpanded: false,);
+                
+//                 }),),
+             
+            
+//             Expanded(
+//               child: ListView.builder(
+//                 itemCount: _allResults.length,
+//                 itemBuilder: (context, index) {
+//                   // Replace with your actual list item widget
+//                   return Padding(
+//                     padding: const EdgeInsets.symmetric(horizontal: 30),
+//                     child: Column(
+//                       children: [
+//                         Buildlistitem(),
+//                         if (index < 9) SizedBox(height: 8),
+//                       ],
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+ // DropdownButton<String>(
+              //   value: selectedFilter,
+              //   onChanged: (newValue) {
+              //     selectedFilter = newValue!;
+              //   },
+              //   items: <String>[
+              //     'All',
+              //     'Irbid',
+              //     'Amman',
+              //     'Al-Zarqa',
+              //     'Aqaba',
+              //     'Jerash',
+              //   ].map<DropdownMenuItem<String>>((String value) {
+              //     return DropdownMenuItem<String>(
+              //       value: value,
+              //       child: Text(
+              //         value,
+              //         style: TextStyle(color: Colors.black),
+              //       ),
+              //     );
+              //   }).toList(),
+              // ),

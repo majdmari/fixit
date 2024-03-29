@@ -94,6 +94,9 @@ flutter:
      - family: Kalam
        fonts:
          - asset: fonts/Kalam-Light.ttf
+     - family: Playfair Display
+       fonts:
+       - asset: fonts/PlayfairDisplay-VariableFont_wght.ttf
 
   #
   # For details regarding fonts from package dependencies,

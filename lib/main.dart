@@ -29,7 +29,7 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SplashScreen(),
+      home: TradepersonListScreen(),
       // home: WelcomScreen(),
       // home: WelcomScreen(),
 
@@ -40,9 +40,9 @@ class Fixit extends StatelessWidget {
         RegisterScreen.id: (context) => RegisterScreen(),
         UserRegisterScreen.id: (context) => UserRegisterScreen(),
         TradepersonRegisterScreen.id: (context) => TradepersonRegisterScreen(),
-        // TradepersonListScreen.id: (context) => TradepersonScreen(),
         UserProfileScreen.id: (context) => UserProfileScreen(),
         TradepersonProfileScreen.id: (context) => TradepersonProfileScreen(),
+        TradepersonListScreen.id: (context) => TradepersonListScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
