@@ -1,10 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/buildlistitem.dart';
 
-class TradepersonListScreen extends StatelessWidget {
-  String selectedFilter = 'All';
+class TradepersonListScreen extends StatefulWidget {
   static String id = 'TradepersonListScreen';
+
+  @override
+  State<TradepersonListScreen> createState() => _TradepersonListScreenState();
+}
+
+class _TradepersonListScreenState extends State<TradepersonListScreen> {
+  String selectedCity = '0';
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,10 @@ class TradepersonListScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(42),
               ),
               hintText: 'Search by Name?',
-              hintStyle: TextStyle(color: Colors.white),
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Playfair Display',
+              ),
               filled: true,
               fillColor: Color(0Xff2B2831),
               prefixIcon: Icon(Icons.search, color: Colors.white),
@@ -36,39 +45,53 @@ class TradepersonListScreen extends StatelessWidget {
           children: [
             Container(
               color: Color(0Xff2B2831),
-              child: DropdownButton<String>(
-                value: selectedFilter,
-                onChanged: (newValue) {
-                  selectedFilter = newValue!;
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('Users').snapshots(),
+                builder: (context, snapshot) {
+                  List<DropdownMenuItem<String>> usersItems = [];
+                  if (!snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  } else {
+                    final users = snapshot.data!.docs.reversed.toList();
+                    usersItems.add(
+                      DropdownMenuItem(
+                        value: '0',
+                        child: Text('Select city'),
+                      ),
+                    );
+                    for (var user in users) {
+                      usersItems.add(
+                        DropdownMenuItem(
+                          value: user.id,
+                          child: Text(user['City']),
+                        ),
+                      );
+                    }
+                    return DropdownButton<String>(
+                      items: usersItems,
+                      onChanged: (String? usersValue) {
+                        setState(() {
+                          selectedCity = usersValue!;
+                        });
+                        print(usersValue);
+                      },
+                      value: selectedCity,
+                      isExpanded: false,
+                    );
+                  }
                 },
-                items: <String>[
-                  'All',
-                  'Irbid',
-                  'Amman',
-                  'Al-Zarqa',
-                  'Aqaba',
-                  'Jerash',
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
               ),
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 10, // Assuming _allResults is defined somewhere
                 itemBuilder: (context, index) {
-                  // Replace with your actual list item widget
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       children: [
-                        Buildlistitem(),
+                        Buildlistitem(), // Pass _allResults to this widget
                         if (index < 9) SizedBox(height: 8),
                       ],
                     ),
@@ -82,3 +105,124 @@ class TradepersonListScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/material.dart';
+// import 'package:path/path.dart';
+// import '../widgets/buildlistitem.dart';
+
+
+// class TradepersonListScreen extends StatefulWidget {
+//   static String id = 'TradepersonListScreen';
+
+//   @override
+//   State<TradepersonListScreen> createState() => _TradepersonListScreenState();
+// }
+
+// class _TradepersonListScreenState extends State<TradepersonListScreen> {
+//   String selectedCity = '0';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         backgroundColor: Color(0Xff000000),
+//         appBar: AppBar(
+//           backgroundColor: Colors.orange,
+//           title: TextField(
+//             cursorColor: Color(0XffB73B67),
+//             cursorHeight: 20,
+//             decoration: InputDecoration(
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(42),
+//               ),
+//               hintText: 'Search by Name?',
+//               hintStyle: TextStyle(
+//                   color: Colors.white, fontFamily: 'Playfair Display'),
+//               filled: true,
+//               fillColor: Color(0Xff2B2831),
+//               prefixIcon: Icon(Icons.search, color: Colors.white),
+//               suffixIcon: IconButton(
+//                 icon: Icon(Icons.close, color: Colors.white),
+//                 onPressed: () {},
+//               ),
+//             ),
+//           ),
+//         ),
+//         body: Column(
+//           children: [
+//             Container(
+//               color: Color(0Xff2B2831),
+//                child:StreamBuilder<QuerySnapshot>(stream: FirebaseFirestore.instance.collection('Users').snapshots(),
+//                 builder: (Context,snapshot){
+//                   List<DropdownMenuItem>UsersItems =[];
+//                   if (!snapshot.hasData){const CircularProgressIndicator();}
+//                   else{
+//                     final User = snapshot.data.docs.reversed.toList();
+//                     UsersItems.add(const DropdownMenuItem(value: '0',
+//                     child: Text('select city'),));
+//                     for  (var Users in User){
+//                       UsersItems.add(DropdownMenuItem(value: Users.id,
+//                         child: Text(Users['City']),),);
+
+//                 }}
+//                 return DropdownButton(items: UsersItems, onChanged: (UsersValue){
+//                   setState(() {
+//                     selectedCity =UsersValue;
+//                   });
+//                   print(UsersValue);
+//                 },
+//                 value: selectedCity,
+//                 isExpanded: false,);
+                
+//                 }),),
+             
+            
+//             Expanded(
+//               child: ListView.builder(
+//                 itemCount: _allResults.length,
+//                 itemBuilder: (context, index) {
+//                   // Replace with your actual list item widget
+//                   return Padding(
+//                     padding: const EdgeInsets.symmetric(horizontal: 30),
+//                     child: Column(
+//                       children: [
+//                         Buildlistitem(),
+//                         if (index < 9) SizedBox(height: 8),
+//                       ],
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+ // DropdownButton<String>(
+              //   value: selectedFilter,
+              //   onChanged: (newValue) {
+              //     selectedFilter = newValue!;
+              //   },
+              //   items: <String>[
+              //     'All',
+              //     'Irbid',
+              //     'Amman',
+              //     'Al-Zarqa',
+              //     'Aqaba',
+              //     'Jerash',
+              //   ].map<DropdownMenuItem<String>>((String value) {
+              //     return DropdownMenuItem<String>(
+              //       value: value,
+              //       child: Text(
+              //         value,
+              //         style: TextStyle(color: Colors.black),
+              //       ),
+              //     );
+              //   }).toList(),
+              // ),
