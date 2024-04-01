@@ -215,7 +215,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ChangePasswordDialog(
+                              onChangePassword: (String newPassword) {
+                                changePassword(newPassword);
+                              },
+                            );
+                          },
+                        );
+                      },
                       child: Text(
                         'Change Password?',
                         style: TextStyle(
@@ -284,6 +295,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       setState(() {
         userInfo?.imagePickerFire = downloadUrl;
       });
+    }
+  }
+
+  Future<void> changePassword(String newPassword) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await user!.updatePassword(newPassword);
+      // Show success message or navigate to another screen
+      // You can also update the UI as needed
+    } catch (e) {
+      // Handle password change failure (e.g., show error message)
+      print("Failed to update password: $e");
     }
   }
 }
