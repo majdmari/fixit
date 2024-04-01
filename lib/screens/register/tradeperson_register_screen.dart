@@ -179,7 +179,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                           if (registerInfo.selectedImage != null) {
                             ImageUrl = await StoreDate().uploadImageToStorage(
                                 // registerViewModel.emailController.text,
-                                registerInfo.fullName!,
+
                                 registerInfo.selectedImage!,
                                 context);
                           }
