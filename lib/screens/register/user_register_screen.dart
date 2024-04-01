@@ -147,10 +147,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                           String ImageUrl = '';
                           if (registerInfo.selectedImage != null) {
                             ImageUrl = await StoreDate().uploadImageToStorage(
-                                // registerViewModel.emailController.text,
-                                registerInfo.fullName!,
-                                registerInfo.selectedImage!,
-                                context);
+                                registerInfo.selectedImage!, context);
                           }
                           Map<String, dynamic> additionalData = {
                             'FullName': registerInfo.fullName,
