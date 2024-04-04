@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
+import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -54,6 +55,7 @@ class CustomPopUpDialog extends StatelessWidget {
           },
           text: 'Cancel',
         ),
+        SizedBox(height: 10),
         CustomButton(
           onTap: () {
             final newValue = textFieldController.text.trim();
@@ -92,7 +94,13 @@ class ChangePasswordDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: KSurface,
-      title: Text('Change Password'),
+      title: Text(
+        'Change Password',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+        ),
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -120,6 +128,7 @@ class ChangePasswordDialog extends StatelessWidget {
           },
           text: 'Cancel',
         ),
+        SizedBox(height: 10),
         CustomButton(
           onTap: () async {
             String oldPassword = _oldPasswordController.text.trim();
@@ -177,6 +186,96 @@ class ChangePasswordDialog extends StatelessWidget {
       print("Error checking old password: $e");
       return false;
     }
+  }
+
+  void showCustomDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(message: message);
+      },
+    );
+  }
+}
+
+class CustomDropdownPopup extends StatefulWidget {
+  final String title;
+  final Color dropdownMenuBackgroundColor;
+  final List<String> items;
+  final String hintText;
+  final String labelText;
+  final Function(String) onSave;
+  String message;
+
+  CustomDropdownPopup(
+      {required this.title,
+      this.dropdownMenuBackgroundColor = Colors.white,
+      required this.items,
+      required this.hintText,
+      required this.labelText,
+      required this.onSave,
+      required this.message}); // Constructor
+
+  @override
+  _CustomDropdownPopupState createState() => _CustomDropdownPopupState();
+}
+
+class _CustomDropdownPopupState extends State<CustomDropdownPopup> {
+  String? _selectedItem;
+
+  void _onChanged(String? value) {
+    setState(() {
+      _selectedItem = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: KSurface,
+      title: Text(
+        widget.title,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+        ),
+      ), // Use the title passed from the constructor
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomDropdown(
+              items: widget.items,
+              hintText: widget.hintText,
+              labelText: widget.labelText,
+              initialValue: _selectedItem,
+              onChanged: _onChanged,
+              dropdownMenuBackgroundColor: KSf2,
+            ),
+            SizedBox(height: 20),
+            CustomButton(
+              text: 'Cancel',
+              onTap: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            SizedBox(height: 10),
+            CustomButton(
+              text: "Save",
+              onTap: () {
+                final selectedCity = _selectedItem;
+                if (selectedCity != null) {
+                  widget.onSave(selectedCity);
+                  Navigator.of(context).pop();
+                } else {
+                  showCustomDialog(context, widget.message);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void showCustomDialog(BuildContext context, String message) {

@@ -185,7 +185,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomDropdownPopup(
+                                title: 'select city',
+                                items: ['irbid', 'amman'],
+                                hintText: 'choose city',
+                                labelText: 'City',
+                                message: "Please select a city",
+                                onSave: (selectedCity) {
+                                  // Save the selected city to Firestore
+                                  updateCity(selectedCity);
+                                },
+                              );
+                            },
+                          );
+                        },
                         icon: Icon(
                           Icons.edit,
                           color: Colors.white,
@@ -321,6 +338,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       setState(() {
         userInfo?.imagePickerFire = downloadUrl;
       });
+    }
+  }
+
+  // Function to update the selected city in Firestore
+  Future<void> updateCity(String newCity) async {
+    try {
+      String userEmail = FirebaseAuth.instance.currentUser!.email!;
+      await usersInfo.doc(userEmail).update({'City': newCity});
+
+      // Update local state after updating in Firestore
+      setState(() {
+        userInfo?.selectedCity = newCity;
+      });
+    } catch (e) {
+      // Handle errors
+      print('Failed to update city: $e');
     }
   }
 }
