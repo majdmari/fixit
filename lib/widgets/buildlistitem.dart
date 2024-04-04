@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'info.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Buildlistitem extends StatefulWidget {
-  const Buildlistitem({Key? key}) : super(key: key);
+class Buildlistitem extends StatelessWidget {
+  final QueryDocumentSnapshot userDocument;
 
-  @override
-  State<Buildlistitem> createState() => _BuildlistitemState();
-}
+  const Buildlistitem({Key? key, required this.userDocument}) : super(key: key);
 
-class _BuildlistitemState extends State<Buildlistitem> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -18,7 +16,7 @@ class _BuildlistitemState extends State<Buildlistitem> {
           color: Color(0Xff2B2831),
         ),
         height: 100,
-        child: Info(),
+        child: Info(userDocument: userDocument),
       ),
     );
   }

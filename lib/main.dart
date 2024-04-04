@@ -29,7 +29,7 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginScreen(),
+      home: TradepersonListScreen(),
       // home: WelcomScreen(),
       // home: WelcomScreen(),
 

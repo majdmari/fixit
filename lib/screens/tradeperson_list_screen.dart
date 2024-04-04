@@ -84,17 +84,33 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: 10, // Assuming _allResults is defined somewhere
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Column(
-                      children: [
-                        Buildlistitem(), // Pass _allResults to this widget
-                        if (index < 9) SizedBox(height: 8),
-                      ],
-                    ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('Users').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return Center(
+                      child: Text('No data available'),
+                    );
+                  }
+                  final users = snapshot.data!.docs;
+                  return ListView.builder(
+                    itemCount: users.length,
+                    itemBuilder: (context, index) {
+                      final userDocument = users[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          children: [
+                            Buildlistitem(userDocument: userDocument),
+                            if (index < users.length - 1) SizedBox(height: 8),
+                          ],
+                        ),
+                      );
+                    },
                   );
                 },
               ),
