@@ -14,10 +14,13 @@ class Info extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Row(
           children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset('assets/images/tradeperson.jpg'),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                userDocument['ImageLink'] ?? '', // تحقق من وجود الصورة
+                width: 70, // تحديد عرض الصورة بشكل ثابت
+                height: 70, // تحديد ارتفاع الصورة بشكل ثابت
+                fit: BoxFit.cover, // تحديد كيفية تناسب الصورة داخل الحاوية
               ),
             ),
             Padding(
