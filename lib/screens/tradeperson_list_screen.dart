@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fixit/constants.dart';
+import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 import '../widgets/buildlistitem.dart';
 
@@ -10,7 +12,9 @@ class TradepersonListScreen extends StatefulWidget {
 }
 
 class _TradepersonListScreenState extends State<TradepersonListScreen> {
-  String selectedCity = '0';
+  String? selectedCity; // قيمة افتراضية ممكنة هي null
+  String? searchKeyword; // الكلمة المراد البحث عنها
+  Set<String> cities = {};
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,12 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
           title: TextField(
             cursorColor: Color(0XffB73B67),
             cursorHeight: 20,
+            style: TextStyle(color: Colors.white), // تعيين لون النص إلى الأبيض
+            onChanged: (value) {
+              setState(() {
+                searchKeyword = value;
+              });
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(42),
@@ -32,55 +42,114 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                 fontFamily: 'Playfair Display',
               ),
               filled: true,
-              fillColor: Color(0Xff2B2831),
+              fillColor: KSf2,
               prefixIcon: Icon(Icons.search, color: Colors.white),
               suffixIcon: IconButton(
                 icon: Icon(Icons.close, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    searchKeyword = null;
+                  });
+                },
               ),
             ),
           ),
         ),
         body: Column(
           children: [
-            Container(
-              color: Color(0Xff2B2831),
-              child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('Users').snapshots(),
-                builder: (context, snapshot) {
-                  List<DropdownMenuItem<String>> usersItems = [];
-                  if (!snapshot.hasData) {
-                    return CircularProgressIndicator();
-                  } else {
-                    final users = snapshot.data!.docs.reversed.toList();
-                    usersItems.add(
-                      DropdownMenuItem(
-                        value: '0',
-                        child: Text('Select city'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 170,
+                      margin: EdgeInsets.symmetric(
+                          vertical: 8), // إضافة مسافة بين العناصر
+                      decoration: BoxDecoration(
+                        color: KSf2,
+                        borderRadius:
+                            BorderRadius.circular(20), // جعل الحواف بيضاوية
                       ),
-                    );
-                    for (var user in users) {
-                      usersItems.add(
-                        DropdownMenuItem(
-                          value: user.id,
-                          child: Text(user['City']),
-                        ),
-                      );
-                    }
-                    return DropdownButton<String>(
-                      items: usersItems,
-                      onChanged: (String? usersValue) {
-                        setState(() {
-                          selectedCity = usersValue!;
-                        });
-                        print(usersValue);
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Users')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          } else {
+                            final users = snapshot.data!.docs;
+                            for (var user in users) {
+                              cities.add(user['City']);
+                            }
+
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: CustomDropdown<String>(
+                                items: cities.toList(),
+                                hintText: 'All',
+                                labelText: 'City',
+                                initialValue: selectedCity,
+                                onChanged: (String? city) {
+                                  setState(() {
+                                    selectedCity = city;
+                                  });
+                                  print(city);
+                                },
+                                dropdownMenuBackgroundColor: KSurface,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 170,
+                    margin: EdgeInsets.symmetric(
+                        vertical: 8), // إضافة مسافة بين العناصر
+                    decoration: BoxDecoration(
+                      color: KSf2,
+                      borderRadius:
+                          BorderRadius.circular(20), // جعل الحواف بيضاوية
+                    ),
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('Users')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator();
+                        } else {
+                          final users = snapshot.data!.docs;
+                          for (var user in users) {
+                            cities.add(user['City']);
+                          }
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: CustomDropdown<String>(
+                              items: cities.toList(),
+                              hintText: 'All',
+                              labelText: 'Rating',
+                              initialValue: selectedCity,
+                              onChanged: (String? city) {
+                                setState(() {
+                                  selectedCity = city;
+                                });
+                                print(city);
+                              },
+                              dropdownMenuBackgroundColor: KSurface,
+                            ),
+                          );
+                        }
                       },
-                      value: selectedCity,
-                      isExpanded: false,
-                    );
-                  }
-                },
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -101,15 +170,27 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                     itemCount: users.length,
                     itemBuilder: (context, index) {
                       final userDocument = users[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(
-                          children: [
-                            Buildlistitem(userDocument: userDocument),
-                            if (index < users.length - 1) SizedBox(height: 8),
-                          ],
-                        ),
-                      );
+
+                      // التحقق من تحديد الكل أو المدينة المحددة
+                      if ((selectedCity == null ||
+                              userDocument['City'] == selectedCity) &&
+                          (searchKeyword == null ||
+                              userDocument['FullName']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchKeyword!.toLowerCase()))) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Column(
+                            children: [
+                              Buildlistitem(userDocument: userDocument),
+                              if (index < users.length - 1) SizedBox(height: 8),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
                     },
                   );
                 },
