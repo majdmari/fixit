@@ -126,8 +126,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           setState(() {});
                           try {
                             await registerUser();
-                            CollectionReference collectionReference =
-                                FirebaseFirestore.instance.collection('Users');
+                            late CollectionReference
+                                collectionReference; // Declare as late
+                            if (registerInfo.selectedOption == "User") {
+                              collectionReference = FirebaseFirestore.instance
+                                  .collection('users');
+                            } else if (registerInfo.selectedOption ==
+                                "Tradeperson") {
+                              collectionReference = FirebaseFirestore.instance
+                                  .collection('tradepersons');
+                            }
                             await collectionReference
                                 .doc(registerViewModel.emailController.text)
                                 .set({
@@ -137,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               'Type': registerInfo.selectedOption,
                               'Status': 'Available '
                             });
-                            showSnackBar(context, 'success');
+                            showSnackBar(context, 'Success');
                             if (registerInfo.selectedOption == "User") {
                               Navigator.pushNamed(
                                   context, UserRegisterScreen.id);
@@ -148,19 +156,68 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           } on FirebaseAuthException catch (ex) {
                             if (ex.code == 'weak-password') {
-                              showSnackBar(context, 'weak password');
+                              showSnackBar(context, 'Weak password');
                             } else if (ex.code == 'email-already-in-use') {
                               showSnackBar(context,
                                   'The account already exists for that email.');
                             }
                           } catch (ex) {
-                            showSnackBar(context, 'there was an error');
+                            showSnackBar(context, 'There was an error');
                           }
                           isLoading = false;
                           setState(() {});
                         }
                       },
                     ),
+
+                    // CustomButton(
+                    //   text: 'Continue',
+                    //   onTap: () async {
+                    //     if (formKey.currentState!.validate()) {
+                    //       if (registerInfo.password !=
+                    //           registerInfo.confirmPassword) {
+                    //         showSnackBar(context, 'Passwords do not match');
+                    //         return;
+                    //       }
+                    //       isLoading = true;
+                    //       setState(() {});
+                    //       try {
+                    //         await registerUser();
+                    //         CollectionReference collectionReference =
+                    //             FirebaseFirestore.instance.collection('Users');
+                    //         await collectionReference
+                    //             .doc(registerViewModel.emailController.text)
+                    //             .set({
+                    //           'Email': registerInfo.email,
+                    //           'Password': registerInfo.password,
+                    //           'Gender': registerInfo.selectedGender,
+                    //           'Type': registerInfo.selectedOption,
+                    //           'Status': 'Available '
+                    //         });
+                    //         showSnackBar(context, 'success');
+                    //         if (registerInfo.selectedOption == "User") {
+                    //           Navigator.pushNamed(
+                    //               context, UserRegisterScreen.id);
+                    //         } else if (registerInfo.selectedOption ==
+                    //             "Tradeperson") {
+                    //           Navigator.pushNamed(
+                    //               context, TradepersonRegisterScreen.id);
+                    //         }
+                    //       } on FirebaseAuthException catch (ex) {
+                    //         if (ex.code == 'weak-password') {
+                    //           showSnackBar(context, 'weak password');
+                    //         } else if (ex.code == 'email-already-in-use') {
+                    //           showSnackBar(context,
+                    //               'The account already exists for that email.');
+                    //         }
+                    //       } catch (ex) {
+                    //         showSnackBar(context, 'there was an error');
+                    //       }
+                    //       isLoading = false;
+                    //       setState(() {});
+                    //     }
+                    //   },
+                    // ),
                     SizedBox(
                       height: 16,
                     ),

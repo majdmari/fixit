@@ -210,7 +210,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                             'ImageLink': ImageUrl,
                           };
                           await FirebaseFirestore.instance
-                              .collection('Users')
+                              .collection('tradepersons')
                               .doc(registerViewModel.emailController.text)
                               .update(additionalData);
                           isLoading = false;
