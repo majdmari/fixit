@@ -7,8 +7,10 @@ import 'package:fixit/constants.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/pop_up_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +27,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       FirebaseFirestore.instance.collection('Users');
   RegisterInfo? userInfo;
   bool isLoading = false;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -217,7 +220,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _showDatePicker();
+                        },
                         icon: Icon(
                           Icons.edit,
                           color: Colors.white,
@@ -355,5 +360,55 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       // Handle errors
       print('Failed to update city: $e');
     }
+  }
+
+  void _showDatePicker() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    if (_selectedDate != null) {
+                      _updateBirthDate(_selectedDate!);
+                      Navigator.pop(context); // Close the modal
+                    }
+                  },
+                  child: Text(
+                    'Done',
+                    style: TextStyle(color: KSecondary),
+                  )),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  minimumDate: DateTime(1990),
+                  maximumDate: DateTime.now().add(Duration(days: 1)),
+                  initialDateTime: _selectedDate ?? DateTime.now(),
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    setState(() {
+                      _selectedDate = newDateTime;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _updateBirthDate(DateTime newDate) async {
+    String userEmail = FirebaseAuth.instance.currentUser!.email!;
+    String formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
+    await usersInfo.doc(userEmail).update({'BirthOfDate': formattedDate});
+    setState(() {
+      userInfo?.birthOfDate = formattedDate;
+    });
   }
 }
