@@ -135,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               'Password': registerInfo.password,
                               'Gender': registerInfo.selectedGender,
                               'Type': registerInfo.selectedOption,
+                              'Status': 'Available '
                             });
                             showSnackBar(context, 'success');
                             if (registerInfo.selectedOption == "User") {

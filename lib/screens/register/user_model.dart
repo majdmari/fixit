@@ -17,9 +17,11 @@ class RegisterInfo {
   String? desc;
   Uint8List? selectedImage;
   String? imagePickerFire;
+  String? selectedStatus;
 
   RegisterInfo(
       {this.selectedOption,
+      this.selectedStatus,
       this.selectedGender,
       this.email,
       this.password,

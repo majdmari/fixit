@@ -96,20 +96,11 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    // CustomTextField(
-                    //   onChanged: (value) {
-                    //     registerInfo.birthOfDate = value;
-                    //   },
-                    //   hintText: 'DD/MM/YYYY',
-                    //   label: 'Birth of Date',
-                    // ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     GestureDetector(
                       onTap: _showDatePicker,
                       child: AbsorbPointer(
                         child: CustomTextField(
+                          icon: Icons.date_range,
                           controller: TextEditingController(
                               text: _selectedDate != null
                                   ? DateFormat('dd/MM/yyyy')
@@ -173,7 +164,6 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                           Map<String, dynamic> additionalData = {
                             'FullName': registerInfo.fullName,
                             'PhoneNumber': registerInfo.phoneNumber,
-                            // 'BirthOfDate': registerInfo.birthOfDate,
                             'BirthOfDate': _selectedDate != null
                                 ? DateFormat('dd/MM/yyyy')
                                     .format(_selectedDate!)
