@@ -25,7 +25,7 @@ class TradepersonProfileScreen extends StatefulWidget {
 
 class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
   CollectionReference usersInfo =
-      FirebaseFirestore.instance.collection('Users');
+      FirebaseFirestore.instance.collection('tradepersons');
   RegisterInfo? userInfo;
   bool isLoading = false;
   DateTime? _selectedDate;

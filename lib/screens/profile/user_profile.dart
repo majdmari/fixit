@@ -24,7 +24,7 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   CollectionReference usersInfo =
-      FirebaseFirestore.instance.collection('Users');
+      FirebaseFirestore.instance.collection('users');
   RegisterInfo? userInfo;
   bool isLoading = false;
   DateTime? _selectedDate;

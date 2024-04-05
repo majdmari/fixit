@@ -173,7 +173,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                             'ImageLink': ImageUrl
                           };
                           await FirebaseFirestore.instance
-                              .collection('Users')
+                              .collection('users')
                               .doc(registerViewModel.emailController.text)
                               .update(additionalData);
                           isLoading = false;
