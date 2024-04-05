@@ -194,3 +194,14 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
     );
   }
 }
+
+
+
+ // CustomTextField(
+                    //   onChanged: (value) {
+                    //     registerInfo.birthOfDate = value;
+                    //   },
+                    //   hintText: 'DD/MM/YYYY',
+                    //   label: 'Birth of Date',
+                    // ),
+         

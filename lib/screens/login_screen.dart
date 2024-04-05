@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/helper/show_snack_bar.dart';
+import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
@@ -94,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             await loginUser();
                             // Navigator.pushNamed(context, ChatScreen.id,
                             //     arguments: email);
-                            Navigator.pushNamed(context, UserProfileScreen.id);
+                            Navigator.pushNamed(
+                                context, TradepersonProfileScreen.id);
                           } catch (ex) {
                             showSnackBar(context,
                                 'there was an error an Email or Password');
