@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-
 import 'info.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Buildlistitem extends StatefulWidget {
-  const Buildlistitem({Key? key}) : super(key: key);
+class Buildlistitem extends StatelessWidget {
+  final QueryDocumentSnapshot userDocument;
 
-  @override
-  State<Buildlistitem> createState() => _BuildlistitemState();
-}
+  const Buildlistitem({Key? key, required this.userDocument}) : super(key: key);
 
-class _BuildlistitemState extends State<Buildlistitem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Color(0Xff2B2831),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0Xff2B2831),
+        ),
+        height: 100,
+        child: Info(userDocument: userDocument),
       ),
-      height: 100,
-      child: Info(),
     );
   }
 }

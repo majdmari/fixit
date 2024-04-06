@@ -7,8 +7,10 @@ import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +27,8 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
   RegisterInfo registerInfo = RegisterInfo();
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
+  DateTime? _selectedDate;
+
   @override
   Widget build(BuildContext context) {
     final RegisterViewModel registerViewModel =
@@ -87,17 +91,26 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                         registerInfo.phoneNumber = value;
                       },
                       hintText: '0799999999',
+                      keyboardType: TextInputType.number,
                       label: 'Phone number',
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.birthOfDate = value;
-                      },
-                      hintText: 'DD/MM/YYYY',
-                      label: 'Birth of Date',
+                    GestureDetector(
+                      onTap: _showDatePicker,
+                      child: AbsorbPointer(
+                        child: CustomTextField(
+                          icon: Icons.date_range,
+                          controller: TextEditingController(
+                              text: _selectedDate != null
+                                  ? DateFormat('dd/MM/yyyy')
+                                      .format(_selectedDate!)
+                                  : null),
+                          hintText: 'DD/MM/YYYY',
+                          label: 'Birth of Date',
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -135,6 +148,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                       hintText: 'Type your address here',
                       label: 'Address',
                     ),
+                    SizedBox(height: 10),
                     CustomDropdown<String>(
                       items: [
                         'Electrician',
@@ -179,14 +193,17 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                           if (registerInfo.selectedImage != null) {
                             ImageUrl = await StoreDate().uploadImageToStorage(
                                 // registerViewModel.emailController.text,
-                                registerInfo.fullName!,
+
                                 registerInfo.selectedImage!,
                                 context);
                           }
                           Map<String, dynamic> additionalData = {
                             'FullName': registerInfo.fullName,
                             'PhoneNumber': registerInfo.phoneNumber,
-                            'BirthOfDate': registerInfo.birthOfDate,
+                            'BirthOfDate': _selectedDate != null
+                                ? DateFormat('dd/MM/yyyy')
+                                    .format(_selectedDate!)
+                                : '',
                             'City': registerInfo.selectedCity,
                             'Address': registerInfo.address,
                             'Category': registerInfo.category,
@@ -194,7 +211,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                             'ImageLink': ImageUrl,
                           };
                           await FirebaseFirestore.instance
-                              .collection('Users')
+                              .collection('tradepersons')
                               .doc(registerViewModel.emailController.text)
                               .update(additionalData);
                           isLoading = false;
@@ -223,5 +240,44 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
         registerInfo.selectedImage = File(pickedFile.path).readAsBytesSync();
       });
     }
+  }
+
+  void _showDatePicker() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the modal
+                },
+                child: Text(
+                  'Done',
+                  style: TextStyle(color: KSecondary),
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  minimumDate: DateTime(1990),
+                  maximumDate: DateTime.now().add(Duration(days: 1)),
+                  initialDateTime: _selectedDate ?? DateTime.now(),
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    setState(() {
+                      _selectedDate = newDateTime;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

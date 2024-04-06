@@ -9,6 +9,7 @@ import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/register/user_register_screen.dart';
 import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
+import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,9 +30,9 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SplashScreen(),
+      home: LoginScreen(),
       // home: WelcomScreen(),
-      // home: WelcomScreen(),
+      // home: TradepersonListScreen(),
 
       routes: {
         WelcomScreen.id: (context) => WelcomScreen(),
@@ -40,9 +41,9 @@ class Fixit extends StatelessWidget {
         RegisterScreen.id: (context) => RegisterScreen(),
         UserRegisterScreen.id: (context) => UserRegisterScreen(),
         TradepersonRegisterScreen.id: (context) => TradepersonRegisterScreen(),
-        // TradepersonListScreen.id: (context) => TradepersonScreen(),
         UserProfileScreen.id: (context) => UserProfileScreen(),
         TradepersonProfileScreen.id: (context) => TradepersonProfileScreen(),
+        TradepersonListScreen.id: (context) => TradepersonListScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
