@@ -31,7 +31,7 @@ class Fixit extends StatelessWidget {
     return MaterialApp(
       // home: TradepersonListScreen(),
       // home: WelcomScreen(),
-      home: LoginScreen(),
+      home: TradepersonListScreen(),
 
       routes: {
         WelcomScreen.id: (context) => WelcomScreen(),

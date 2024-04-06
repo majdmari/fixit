@@ -74,7 +74,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                       ),
                       child: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('Users')
+                            .collection('tradepersons')
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
@@ -118,7 +118,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                     ),
                     child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
-                          .collection('Users')
+                          .collection('tradepersons')
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -154,8 +154,9 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('Users').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('tradepersons')
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
