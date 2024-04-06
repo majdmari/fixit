@@ -91,6 +91,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                         registerInfo.phoneNumber = value;
                       },
                       hintText: '0799999999',
+                      keyboardType: TextInputType.number,
                       label: 'Phone number',
                     ),
                     SizedBox(
