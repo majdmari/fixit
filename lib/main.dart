@@ -30,9 +30,9 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: TradepersonListScreen(),
-      // home: WelcomScreen(),
       home: LoginScreen(),
+      // home: WelcomScreen(),
+      // home: TradepersonListScreen(),
 
       routes: {
         WelcomScreen.id: (context) => WelcomScreen(),
