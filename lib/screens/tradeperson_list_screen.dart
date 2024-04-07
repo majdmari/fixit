@@ -20,7 +20,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color(0Xff000000),
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.orange,
           title: TextField(
