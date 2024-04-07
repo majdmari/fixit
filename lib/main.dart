@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixit/firebase_options.dart';
+import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
@@ -30,9 +31,10 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginScreen(),
-      // home: WelcomScreen(),
+      // home: LoginScreen(),
+      //  home: WelcomScreen(),
       // home: TradepersonListScreen(),
+      home: Homepage(),
 
       routes: {
         WelcomScreen.id: (context) => WelcomScreen(),
@@ -44,6 +46,7 @@ class Fixit extends StatelessWidget {
         UserProfileScreen.id: (context) => UserProfileScreen(),
         TradepersonProfileScreen.id: (context) => TradepersonProfileScreen(),
         TradepersonListScreen.id: (context) => TradepersonListScreen(),
+        Homepage.id: (context) => Homepage(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
