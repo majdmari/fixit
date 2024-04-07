@@ -53,15 +53,90 @@ class _WelcomScreenState extends State<WelcomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: KSurface,
-        body: PageView(
-          onPageChanged: onPageChanged,
-          controller: nextpage,
-          children: [
-            Column(children: [
+    return Scaffold(
+      backgroundColor: KSurface,
+      body: PageView(
+        onPageChanged: onPageChanged,
+        controller: nextpage,
+        children: [
+          Column(children: [
+            SizedBox(
+              height: 90,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      },
+                      child: Text('skip',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18,
+                          ))),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 70,
+            ),
+            CircleAvatar(
+                radius: 152,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 150,
+                  backgroundImage: AssetImage('assets/images/welcome.png'),
+                )),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Welcome to FixIt',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Your trusted solution for all mechanical needs',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    nextpage.animateToPage(1,
+                        duration: Duration(milliseconds: 700),
+                        curve: Curves.easeIn);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(20),
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Color(0XffB73B67),
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
+            dotpageview()
+          ]),
+          Column(
+            children: [
               SizedBox(
                 height: 90,
               ),
@@ -91,26 +166,29 @@ class _WelcomScreenState extends State<WelcomScreen> {
                   backgroundColor: Colors.white,
                   child: CircleAvatar(
                     radius: 150,
-                    backgroundImage: AssetImage('assets/images/welcome.png'),
+                    backgroundImage: AssetImage('assets/images/purpose.png'),
                   )),
               SizedBox(
                 height: 30,
               ),
               Text(
-                'Welcome to FixIt',
+                'What is FixIt?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Your trusted solution for all mechanical needs',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text(
+                  'FixIt connects you with skilled professionals for all your mechanical needs',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
+                ),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -118,7 +196,7 @@ class _WelcomScreenState extends State<WelcomScreen> {
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
                     onPressed: () {
-                      nextpage.animateToPage(1,
+                      nextpage.animateToPage(2,
                           duration: Duration(milliseconds: 700),
                           curve: Curves.easeIn);
                     },
@@ -136,164 +214,83 @@ class _WelcomScreenState extends State<WelcomScreen> {
                 ),
               ),
               dotpageview()
-            ]),
-            Column(
-              children: [
-                SizedBox(
-                  height: 90,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, LoginScreen.id);
-                          },
-                          child: Text('skip',
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
-                              ))),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 70,
-                ),
-                CircleAvatar(
-                    radius: 152,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 150,
-                      backgroundImage: AssetImage('assets/images/purpose.png'),
-                    )),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'What is FixIt?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Text(
-                    'FixIt connects you with skilled professionals for all your mechanical needs',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        nextpage.animateToPage(2,
-                            duration: Duration(milliseconds: 700),
-                            curve: Curves.easeIn);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(20),
-                      ),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Color(0XffB73B67),
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
-                dotpageview()
-              ],
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 90,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, LoginScreen.id);
-                          },
-                          child: Text('skip',
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
-                              ))),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 70,
-                ),
-                CircleAvatar(
-                    radius: 152,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 150,
-                      backgroundImage: AssetImage('assets/images/Discover.png'),
-                    )),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'Explore Our Services',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Text(
-                    'Discover various mechanical services tailored to your needs',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                        onPressed: () {
+            ],
+          ),
+          Column(
+            children: [
+              SizedBox(
+                height: 90,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: GestureDetector(
+                        onTap: () {
                           Navigator.pushNamed(context, LoginScreen.id);
                         },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20)),
-                        child: Icon(Icons.arrow_forward,
-                            color: Color(0XffB73B67), size: 30)),
+                        child: Text('skip',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18,
+                            ))),
                   ),
+                ],
+              ),
+              SizedBox(
+                height: 70,
+              ),
+              CircleAvatar(
+                  radius: 152,
+                  backgroundColor: Colors.white,
+                  child: CircleAvatar(
+                    radius: 150,
+                    backgroundImage: AssetImage('assets/images/Discover.png'),
+                  )),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Explore Our Services',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white, fontSize: 32, fontFamily: 'Angkor'),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text(
+                  'Discover various mechanical services tailored to your needs',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontSize: 25, fontFamily: 'Kalam'),
                 ),
-                dotpageview(),
-              ],
-            )
-          ],
-        ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(20)),
+                      child: Icon(Icons.arrow_forward,
+                          color: Color(0XffB73B67), size: 30)),
+                ),
+              ),
+              dotpageview(),
+            ],
+          )
+        ],
       ),
     );
   }
