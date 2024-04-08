@@ -12,7 +12,6 @@ import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
-import 'package:fixit/widgets/s.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +32,7 @@ class Fixit extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: LoginScreen(),
-      // home: MyWidget(),
+      // home: TradepersonShowToUserScreen(),
       // home: TradepersonListScreen(),
       home: WriteReviewScreen(),
 
