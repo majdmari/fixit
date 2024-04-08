@@ -53,6 +53,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WriteReviewScreen extends StatelessWidget {
+  static String id = 'write_review_screen';
   WriteReviewScreen({Key? key}) : super(key: key);
 
   @override
@@ -108,6 +109,7 @@ class WriteReviewScreen extends StatelessWidget {
                   ],
                 ),
                 Text('Tell others what you think',
+                    textAlign: TextAlign.left,
                     style: TextStyle(
                         color: Colors.grey, fontFamily: 'Playfair Display'))
               ],

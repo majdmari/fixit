@@ -1,3 +1,4 @@
+import 'package:fixit/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,7 +10,7 @@ class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0Xff2B2831),
+      color: KSf2,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -33,7 +34,7 @@ class Info extends StatelessWidget {
                     userDocument['FullName'] ?? 'Unknown',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 20,
                       fontFamily: 'Playfair Display',
                     ),
                   ),
@@ -70,10 +71,10 @@ class Info extends StatelessWidget {
             RawMaterialButton(
               onPressed: () {},
               elevation: 2.0,
-              fillColor: Color(0Xff2B2831),
+              fillColor: KSf2,
               child: Icon(
                 Icons.phone,
-                color: Color(0XffB73B67),
+                color: kPrimaryColor,
                 size: 35.0,
               ),
               padding: EdgeInsets.all(15.0),

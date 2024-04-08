@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
-import 'package:fixit/widgets/custom_drop_down.dart';
-import 'package:flutter/material.dart';
 import '../widgets/buildlistitem.dart';
+import '../widgets/custom_drop_down.dart';
 
 class TradepersonListScreen extends StatefulWidget {
   static String id = 'TradepersonListScreen';
@@ -14,7 +14,6 @@ class TradepersonListScreen extends StatefulWidget {
 class _TradepersonListScreenState extends State<TradepersonListScreen> {
   String? selectedCity; // قيمة افتراضية ممكنة هي null
   String? searchKeyword; // الكلمة المراد البحث عنها
-  Set<String> cities = {};
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +21,9 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
       home: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.orange,
+          backgroundColor: kPrimaryColor,
           title: TextField(
-            cursorColor: Color(0XffB73B67),
+            cursorColor: kPrimaryColor,
             cursorHeight: 20,
             style: TextStyle(color: Colors.white), // تعيين لون النص إلى الأبيض
             onChanged: (value) {
@@ -72,38 +71,34 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                         borderRadius:
                             BorderRadius.circular(20), // جعل الحواف بيضاوية
                       ),
-                      child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('tradepersons')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return CircularProgressIndicator();
-                          } else {
-                            final users = snapshot.data!.docs;
-                            for (var user in users) {
-                              cities.add(user['City']);
-                            }
-
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: CustomDropdown<String>(
-                                items: cities.toList(),
-                                hintText: 'All',
-                                labelText: 'City',
-                                initialValue: selectedCity,
-                                onChanged: (String? city) {
-                                  setState(() {
-                                    selectedCity = city;
-                                  });
-                                  print(city);
-                                },
-                                dropdownMenuBackgroundColor: KSurface,
-                              ),
-                            );
-                          }
+                      child: CustomDropdown<String>(
+                        items: [
+                          'All', // إضافة خيار "All"
+                          'Irbid',
+                          'Ajloun',
+                          'Jerash',
+                          'Mafraq',
+                          'Balqa',
+                          'Amman',
+                          'Zarqa',
+                          'Madaba',
+                          'Karak',
+                          'Tafilah',
+                          'Ma\'an',
+                          'Aqaba'
+                        ], // القيم المحددة مسبقًا
+                        hintText: 'All',
+                        labelText: 'City',
+                        initialValue: selectedCity,
+                        onChanged: (String? city) {
+                          setState(() {
+                            selectedCity = city == 'All'
+                                ? null
+                                : city; // تعيين القيمة إلى null إذا تم اختيار "All"
+                          });
+                          print(city);
                         },
+                        dropdownMenuBackgroundColor: KSurface,
                       ),
                     ),
                   ),
@@ -116,37 +111,34 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                       borderRadius:
                           BorderRadius.circular(20), // جعل الحواف بيضاوية
                     ),
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('tradepersons')
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
-                        } else {
-                          final users = snapshot.data!.docs;
-                          for (var user in users) {
-                            cities.add(user['City']);
-                          }
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: CustomDropdown<String>(
-                              items: cities.toList(),
-                              hintText: 'All',
-                              labelText: 'Rating',
-                              initialValue: selectedCity,
-                              onChanged: (String? city) {
-                                setState(() {
-                                  selectedCity = city;
-                                });
-                                print(city);
-                              },
-                              dropdownMenuBackgroundColor: KSurface,
-                            ),
-                          );
-                        }
+                    child: CustomDropdown<String>(
+                      items: [
+                        'All', // إضافة خيار "All"
+                        'Irbid',
+                        'Ajloun',
+                        'Jerash',
+                        'Mafraq',
+                        'Balqa',
+                        'Amman',
+                        'Zarqa',
+                        'Madaba',
+                        'Karak',
+                        'Tafilah',
+                        'Ma\'an',
+                        'Aqaba'
+                      ], // القيم المحددة مسبقًا
+                      hintText: ' All',
+                      labelText: 'Rating',
+                      initialValue: selectedCity,
+                      onChanged: (String? city) {
+                        setState(() {
+                          selectedCity = city == 'All'
+                              ? null
+                              : city; // تعيين القيمة إلى null إذا تم اختيار "All"
+                        });
+                        print(city);
                       },
+                      dropdownMenuBackgroundColor: KSurface,
                     ),
                   ),
                 ],
