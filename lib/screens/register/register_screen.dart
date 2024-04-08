@@ -86,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 10),
                     CustomDropdown<String>(
+                      dropdownMenuHeight: 120,
                       items: ["Male", 'Female'],
                       hintText: "Gender in menu mode",
                       labelText: "Gender",
@@ -99,6 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 10),
                     CustomDropdown<String>(
+                      dropdownMenuHeight: 120,
                       items: ["User", 'Tradeperson'],
                       hintText: "User Or Tradeperson",
                       labelText: "Who you are ?",
