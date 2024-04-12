@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:fixit/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         title: Center(
           child: Text(
             'Write a review',
-            style: TextStyle(fontFamily: 'Playfair Display'),
+            style: TextStyle(fontFamily: Kword),
           ),
         ),
       ),
@@ -77,7 +76,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: KWhite,
-                          fontFamily: 'Playfair Display',
+                          fontFamily: Kword,
                           fontSize: 18,
                         ),
                       ),
@@ -90,7 +89,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                       'Tell others what you think',
                       style: TextStyle(
                         color: Colors.grey,
-                        fontFamily: 'Playfair Display',
+                        fontFamily: Kword,
                       ),
                     ),
                   ),
@@ -121,7 +120,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                       hintText: 'Write something...', // نص التلميح
                       hintStyle: TextStyle(
                         color: Colors.grey,
-                        fontFamily: 'Playfair Display',
+                        fontFamily: Kword,
                       ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -166,9 +165,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     child: Text(
                       'Submit',
                       style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Playfair Display',
-                          fontSize: 15),
+                          color: Colors.white, fontFamily: Kword, fontSize: 15),
                     ),
                     style: ElevatedButton.styleFrom(
                         primary: KSecondary, // لون الزر
@@ -187,9 +184,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     child: Text(
                       'Cancle',
                       style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Playfair Display',
-                          fontSize: 15),
+                          color: Colors.grey, fontFamily: Kword, fontSize: 15),
                     ),
                     style: ElevatedButton.styleFrom(
                         primary: KSurface, // لون الزر

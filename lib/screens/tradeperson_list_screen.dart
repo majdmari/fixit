@@ -444,7 +444,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
             hintText: 'Search by Name?',
             hintStyle: TextStyle(
               color: Colors.white,
-              fontFamily: 'Playfair Display',
+              fontFamily: Kword,
             ),
             filled: true,
             fillColor: KSf2,

@@ -35,7 +35,7 @@ class Info extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontFamily: 'Playfair Display',
+                      fontFamily: Kword,
                     ),
                   ),
                   SizedBox(height: 10),
@@ -59,7 +59,7 @@ class Info extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
-                          fontFamily: 'Playfair Display',
+                          fontFamily: Kword,
                         ),
                       ),
                     ],
