@@ -9,3 +9,4 @@ const KSurface = Color(0Xff1C1B1F);
 const KSf2 = Color(0Xff2B2831);
 
 const kLogo = 'assets/images/logo.jpg';
+const Kword = 'Playfair Display';
