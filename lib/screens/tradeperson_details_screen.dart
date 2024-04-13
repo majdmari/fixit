@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:flutter/material.dart';
 
-class TradepersonDetailsScreen extends StatelessWidget {
+class TradepersonDetailsScreen extends StatefulWidget {
   static String id = 'TradepersonShowToUserScreen';
 
   final String fullName;
@@ -24,6 +26,40 @@ class TradepersonDetailsScreen extends StatelessWidget {
     required this.imageUrl,
     required this.category,
   });
+
+  @override
+  State<TradepersonDetailsScreen> createState() =>
+      _TradepersonDetailsScreenState();
+}
+
+class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
+  bool isFavorite = false; // Track favorite status
+
+  @override
+  void initState() {
+    super.initState();
+    checkFavorite();
+  }
+
+  void checkFavorite() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String userEmail = user.email ?? "";
+      DocumentSnapshot<
+          Map<String,
+              dynamic>> favoriteSnapshot = await FirebaseFirestore.instance
+          .collection('favorites')
+          .doc(userEmail)
+          .collection('favoriteList')
+          .doc(widget
+              .email) // Assuming the tradeperson's email is used as the document ID
+          .get();
+      setState(() {
+        isFavorite = favoriteSnapshot.exists;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +88,7 @@ class TradepersonDetailsScreen extends StatelessWidget {
                       radius: 70,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(imageUrl),
+                        backgroundImage: NetworkImage(widget.imageUrl),
                         radius: 68,
                       ),
                     ),
@@ -63,13 +99,13 @@ class TradepersonDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      fullName,
+                      widget.fullName,
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
                   ],
                 ),
                 Text(
-                  category,
+                  widget.category,
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
                 SizedBox(height: 20),
@@ -81,7 +117,7 @@ class TradepersonDetailsScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      email,
+                      widget.email,
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ],
@@ -95,7 +131,7 @@ class TradepersonDetailsScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      city,
+                      widget.city,
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
@@ -103,7 +139,7 @@ class TradepersonDetailsScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      birthDate,
+                      widget.birthDate,
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ],
@@ -141,7 +177,7 @@ class TradepersonDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        description,
+                        widget.description,
                         style: TextStyle(fontSize: 13, color: Colors.white),
                       ),
                     ),
@@ -156,10 +192,19 @@ class TradepersonDetailsScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                     Text(
-                      status,
+                      widget.status,
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ],
+                ),
+                SizedBox(height: 20),
+                // Add favorite button
+                IconButton(
+                  onPressed: toggleFavorite,
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite ? Colors.red : Colors.white,
+                  ),
                 ),
               ],
             )
@@ -167,5 +212,47 @@ class TradepersonDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Function to toggle favorite status
+  void toggleFavorite() async {
+    User? user = FirebaseAuth.instance.currentUser; // Get current user
+    if (user != null) {
+      String userEmail = user.email ?? ""; // Get current user's email
+
+      setState(() {
+        isFavorite = !isFavorite;
+      });
+
+      if (isFavorite) {
+        // Add to favorites in Firebase
+        await FirebaseFirestore.instance
+            .collection('favorites')
+            .doc(userEmail)
+            .collection('favoriteList')
+            .doc(widget
+                .email) // Assuming the tradeperson's email is used as the document ID
+            .set({
+          'FullName': widget.fullName,
+          'ImageLink': widget.imageUrl,
+          'City': widget.city,
+          'Email': widget.email,
+          'Desc': widget.description,
+          'Category': widget.category,
+          'Status': widget.status,
+          'BirthOfDate': widget.birthDate,
+          // Add other tradeperson details as needed
+        });
+      } else {
+        // Remove from favorites in Firebase
+        await FirebaseFirestore.instance
+            .collection('favorites')
+            .doc(userEmail)
+            .collection('favoriteList')
+            .doc(widget
+                .email) // Assuming the tradeperson's email is used as the document ID
+            .delete();
+      }
+    }
   }
 }

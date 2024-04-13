@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixit/firebase_options.dart';
+import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/profile/tradeperson_profile.dart';
@@ -48,6 +49,7 @@ class Fixit extends StatelessWidget {
         TradepersonListScreen.id: (context) => TradepersonListScreen(),
         Homepage.id: (context) => Homepage(),
         WriteReviewScreen.id: (context) => WriteReviewScreen(),
+        FavoriteListScreen.id: (context) => FavoriteListScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
