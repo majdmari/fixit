@@ -221,41 +221,49 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: TextField(
-          cursorColor: kPrimaryColor,
-          cursorHeight: 20,
-          style: TextStyle(color: Colors.white),
-          onChanged: (value) {
-            setState(() {
-              searchKeyword = value;
-            });
-          },
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(42),
-            ),
-            hintText: 'Search by Name?',
-            hintStyle: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Playfair Display',
-            ),
-            filled: true,
-            fillColor: KSf2,
-            prefixIcon: Icon(Icons.search, color: Colors.white),
-            suffixIcon: IconButton(
-              icon: Icon(Icons.close, color: Colors.white),
-              onPressed: () {
-                setState(() {
-                  searchKeyword = null;
-                });
-              },
-            ),
-          ),
+        backgroundColor: KSecondary,
+        title: Text(
+          'Tradepersons List',
+          style: TextStyle(fontFamily: Kword),
         ),
       ),
       body: Column(
         children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 25, right: 25, bottom: 6, top: 12),
+            child: TextField(
+              cursorColor: kPrimaryColor,
+              cursorHeight: 20,
+              style: TextStyle(color: Colors.white),
+              onChanged: (value) {
+                setState(() {
+                  searchKeyword = value;
+                });
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                hintText: 'Search by Name?',
+                hintStyle: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Playfair Display',
+                ),
+                filled: true,
+                fillColor: KSf2,
+                prefixIcon: Icon(Icons.search, color: Colors.white),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.close, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      searchKeyword = null;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Row(
