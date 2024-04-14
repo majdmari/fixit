@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             await loginUser();
                             // Navigator.pushNamed(context, ChatScreen.id,
                             //     arguments: email);
-                            Navigator.pushNamed(context, FavoriteListScreen.id);
+                            Navigator.pushNamed(context, Homepage.id);
                           } catch (ex) {
                             showSnackBar(context,
                                 'there was an error an Email or Password');
