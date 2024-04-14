@@ -211,6 +211,19 @@ class TradepersonListScreen extends StatefulWidget {
 class _TradepersonListScreenState extends State<TradepersonListScreen> {
   String? selectedCity;
   String? searchKeyword;
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(); // Initialize the controller
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose(); // Dispose the controller to avoid memory leaks
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +236,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: TextField(
+          controller: _searchController,
           cursorColor: kPrimaryColor,
           cursorHeight: 20,
           style: TextStyle(color: Colors.white),
@@ -248,6 +262,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
               onPressed: () {
                 setState(() {
                   searchKeyword = null;
+                  _searchController.clear();
                 });
               },
             ),
@@ -259,6 +274,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 170,
