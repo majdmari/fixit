@@ -295,15 +295,13 @@ class _HomepageState extends State<Homepage> {
                   });
                   if (index == 0) {
                     // Navigate to Home page
-                    Navigator.pushReplacementNamed(context, Homepage.id);
+                    Navigator.pushNamed(context, Homepage.id);
                   } else if (index == 1) {
                     // Navigate to Favorites page
-                    Navigator.pushReplacementNamed(
-                        context, FavoriteListScreen.id);
+                    Navigator.pushNamed(context, FavoriteListScreen.id);
                   } else if (index == 2) {
                     // Navigate to Profile page
-                    Navigator.pushReplacementNamed(
-                        context, UserProfileScreen.id);
+                    Navigator.pushNamed(context, UserProfileScreen.id);
                   }
                   // Handle tab change
                 },
