@@ -132,12 +132,15 @@
 //   }
 // }
 
+import 'package:fixit/screens/favorite_list_screen.dart';
+import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/widgets/custom_card.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:path/path.dart';
 
 class Homepage extends StatefulWidget {
   static String id = 'Homepage';
@@ -147,6 +150,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  int _selectedIndex = 0;
   String? searchKeyword; // The keyword to search for
   late List<String> categories =
       []; // List to store categories, initialized as empty
@@ -283,8 +287,24 @@ class _HomepageState extends State<Homepage> {
                     text: 'Profile',
                   ),
                 ],
+
                 selectedIndex: 0, // Index of the initially selected tab
                 onTabChange: (index) {
+                  setState(() {
+                    _selectedIndex = index; // Update the selected index
+                  });
+                  if (index == 0) {
+                    // Navigate to Home page
+                    Navigator.pushReplacementNamed(context, Homepage.id);
+                  } else if (index == 1) {
+                    // Navigate to Favorites page
+                    Navigator.pushReplacementNamed(
+                        context, FavoriteListScreen.id);
+                  } else if (index == 2) {
+                    // Navigate to Profile page
+                    Navigator.pushReplacementNamed(
+                        context, UserProfileScreen.id);
+                  }
                   // Handle tab change
                 },
               ),
