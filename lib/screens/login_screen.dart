@@ -10,6 +10,7 @@ import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
+import 'package:fixit/widgets/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             await loginUser();
                             // Navigator.pushNamed(context, ChatScreen.id,
                             //     arguments: email);
-                            Navigator.pushNamed(context, Homepage.id);
+                            Navigator.pushNamed(context, NavigationScreen.id);
                           } catch (ex) {
                             showSnackBar(context,
                                 'there was an error an Email or Password');

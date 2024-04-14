@@ -252,64 +252,6 @@ class _HomepageState extends State<Homepage> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: KSurface,
-          boxShadow: [
-            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-          child: Container(
-            color: KSurface,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: GNav(
-                backgroundColor: KSurface,
-                color: Colors.white,
-                activeColor: Colors.white,
-                tabBackgroundColor: const Color(0XffB73B67),
-                gap: 8,
-                padding: EdgeInsets.all(16),
-                tabs: [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: Icons.favorite_border,
-                    text: 'Favorites',
-                  ),
-                  GButton(
-                    icon: Icons.person,
-                    text: 'Profile',
-                  ),
-                ],
-
-                selectedIndex: 0, // Index of the initially selected tab
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index; // Update the selected index
-                  });
-                  if (index == 0) {
-                    // Navigate to Home page
-                    Navigator.pushNamed(context, Homepage.id);
-                  } else if (index == 1) {
-                    // Navigate to Favorites page
-                    Navigator.pushNamed(context, FavoriteListScreen.id);
-                  } else if (index == 2) {
-                    // Navigate to Profile page
-                    Navigator.pushNamed(context, UserProfileScreen.id);
-                  }
-                  // Handle tab change
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
