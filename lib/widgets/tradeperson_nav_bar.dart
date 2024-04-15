@@ -1,28 +1,31 @@
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
+import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 
-class NavigationScreen extends StatefulWidget {
-  static String id = 'NavigationScreen';
+class TradepersonNavigationScreen extends StatefulWidget {
+  static String id = 'TradepersonNavigationScreen';
 
   @override
-  _NavigationScreenState createState() => _NavigationScreenState();
+  _TradepersonNavigationScreenState createState() =>
+      _TradepersonNavigationScreenState();
 }
 
-class _NavigationScreenState extends State<NavigationScreen> {
+class _TradepersonNavigationScreenState
+    extends State<TradepersonNavigationScreen> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
     Homepage(),
     FavoriteListScreen(),
-    UserProfileScreen(),
+    TradepersonProfileScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Navigation Bar Example'),
+        title: Text('trade Navigation Bar Example'),
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

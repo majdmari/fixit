@@ -75,6 +75,7 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
                             email: tradePersonData['Email'],
                             description: tradePersonData['Desc'],
                             category: tradePersonData['Category'],
+                            adress: tradePersonData['Address'],
                             imageUrl: tradePersonData['ImageLink'],
                           ),
                         ),

@@ -211,6 +211,45 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           color: Colors.white,
                         ),
                       ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Address : ",
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                      Text(
+                        userInfo?.address ?? '',
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomPopUpDialog(
+                                  message: 'The Adress cannot be empty.',
+                                  text: "Edit Adress",
+                                  label: 'Adress',
+                                  hintText: 'Enter your Adress here',
+                                  onSave: updateAddress,
+                                );
+                              });
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
                       Text(
                         "BirthDay : ",
                         style: TextStyle(color: Colors.white, fontSize: 17),
@@ -409,6 +448,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     await usersInfo.doc(userEmail).update({'BirthOfDate': formattedDate});
     setState(() {
       userInfo?.birthOfDate = formattedDate;
+    });
+  }
+
+  Future<void> updateAddress(String newAdress) async {
+    String userEmail = FirebaseAuth.instance.currentUser!.email!;
+    await usersInfo.doc(userEmail).update({
+      'Address': newAdress
+    }); // Update local state after updating in Firestore
+    setState(() {
+      userInfo?.address = newAdress;
     });
   }
 }
