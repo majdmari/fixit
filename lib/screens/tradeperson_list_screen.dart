@@ -383,6 +383,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                                   email: userDocument['Email'],
                                   description: userDocument['Description'],
                                   category: userDocument['Category'],
+                                  adress: userDocument['Address'],
                                   imageUrl: userDocument[
                                       'ImageLink'], // Pass imageUrl
                                 ),

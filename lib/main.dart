@@ -13,7 +13,8 @@ import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
-import 'package:fixit/widgets/nav_bar.dart';
+import 'package:fixit/widgets/tradeperson_nav_bar.dart';
+import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,9 @@ class Fixit extends StatelessWidget {
         Homepage.id: (context) => Homepage(),
         // WriteReviewScreen.id: (context) => WriteReviewScreen(),
         FavoriteListScreen.id: (context) => FavoriteListScreen(),
-        NavigationScreen.id: (context) => NavigationScreen(),
+        UserNavigationScreen.id: (context) => UserNavigationScreen(),
+        TradepersonNavigationScreen.id: (context) =>
+            TradepersonNavigationScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
