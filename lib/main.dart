@@ -9,6 +9,7 @@ import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/tradeperson_register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/register/user_register_screen.dart';
+import 'package:fixit/screens/review_list_screen.dart';
 import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/user_writeReview_screen.dart';
