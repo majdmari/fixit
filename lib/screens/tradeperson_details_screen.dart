@@ -285,6 +285,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/review_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class TradepersonDetailsScreen extends StatefulWidget {
@@ -487,6 +488,16 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                                 fontSize: 18,
                                 decoration: TextDecoration.underline),
                           ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReviewListScreen(
+                                  email: widget.email,
+                                ),
+                              ),
+                            );
+                          },
                         )
                       ],
                     ),
