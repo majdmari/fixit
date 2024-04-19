@@ -5,6 +5,7 @@ import 'package:fixit/helper/show_snack_bar.dart';
 import 'package:fixit/screens/register/tradeperson_register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/register/user_register_screen.dart';
+import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
@@ -121,7 +122,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if (formKey.currentState!.validate()) {
                           if (registerInfo.password !=
                               registerInfo.confirmPassword) {
-                            showSnackBar(context, 'Passwords do not match');
+                            showCustomDialog(context, 'Passwords do not match');
+                            return;
+                          }
+                          if (registerInfo.selectedGender == null) {
+                            showCustomDialog(
+                                context, "You can't leave gender empty.");
+                            return;
+                          }
+                          if (registerInfo.selectedOption == null) {
+                            showCustomDialog(
+                                context, "You can't leave who you are empty.");
                             return;
                           }
                           isLoading = true;
@@ -166,13 +177,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           } on FirebaseAuthException catch (ex) {
                             if (ex.code == 'weak-password') {
-                              showSnackBar(context, 'Weak password');
+                              showCustomDialog(context, 'Weak password');
                             } else if (ex.code == 'email-already-in-use') {
-                              showSnackBar(context,
+                              showCustomDialog(context,
                                   'The account already exists for that email.');
                             }
                           } catch (ex) {
-                            showSnackBar(context, 'There was an error');
+                            showCustomDialog(context, 'There was an error');
                           }
                           isLoading = false;
                           setState(() {});
@@ -218,5 +229,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     UserCredential user = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: registerInfo.email!, password: registerInfo.password!);
+  }
+
+  void showCustomDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(message: message);
+      },
+    );
   }
 }

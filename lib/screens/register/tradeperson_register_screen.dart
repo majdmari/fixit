@@ -1,14 +1,17 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/resources/add_data.dart';
 import 'package:fixit/screens/register/user_model.dart';
+import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -187,6 +190,16 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                       text: 'Done',
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
+                          if (registerInfo.selectedCity == null) {
+                            showCustomDialog(
+                                context, "You can't leave City empty.");
+                            return;
+                          }
+                          if (registerInfo.category == null) {
+                            showCustomDialog(
+                                context, "You can't leave Category empty.");
+                            return;
+                          }
                           isLoading = true;
                           setState(() {});
                           String ImageUrl = '';
@@ -196,6 +209,21 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
 
                                 registerInfo.selectedImage!,
                                 context);
+                          } else {
+                            DocumentSnapshot userSnapshot =
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(registerViewModel.emailController.text)
+                                    .get();
+                            String gender = userSnapshot.get('Gender');
+                            // Upload default image based on gender
+                            if (gender == 'Male') {
+                              ImageUrl = await _uploadDefaultImage(
+                                  'assets/images/male.png', context);
+                            } else if (gender == 'Female') {
+                              ImageUrl = await _uploadDefaultImage(
+                                  'assets/images/female.png', context);
+                            }
                           }
                           Map<String, dynamic> additionalData = {
                             'FullName': registerInfo.fullName,
@@ -279,5 +307,21 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
         );
       },
     );
+  }
+
+  void showCustomDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(message: message);
+      },
+    );
+  }
+
+  Future<String> _uploadDefaultImage(
+      String defaultImagePath, BuildContext context) async {
+    ByteData byteData = await rootBundle.load(defaultImagePath);
+    Uint8List defaultImageBytes = byteData.buffer.asUint8List();
+    return await StoreDate().uploadImageToStorage(defaultImageBytes, context);
   }
 }

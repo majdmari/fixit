@@ -286,6 +286,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/review_list_screen.dart';
+import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:flutter/material.dart';
 
 class TradepersonDetailsScreen extends StatefulWidget {
@@ -465,6 +466,24 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                         style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     ),
+                    SizedBox(height: 10),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WriteReviewScreen(
+                                category: widget.category,
+                                email: widget.email,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.star_rate,
+                          color: Colors.white,
+                          size: 50,
+                        )),
                     SizedBox(height: 20),
                     Row(
                       children: [
