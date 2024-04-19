@@ -143,25 +143,9 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                   onSubmitted: (_) => _textFieldFocusNode.unfocus(),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton.icon(
-                  onPressed: _getImageFromGallery,
-                  icon: Icon(
-                    Icons.upload,
-                    color: Colors.grey,
-                  ),
-                  label: Text(
-                    'Upload Your Image',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: KSurface,
-                    onPrimary: KSf2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7),
-                        side: BorderSide(
-                          color: Colors.grey,
-                        )),
-                  ),
+                CustomButton(
+                  text: 'Upload Your Image',
+                  onTap: _getImageFromGallery,
                 ),
                 SizedBox(height: 190),
                 CustomButton(
