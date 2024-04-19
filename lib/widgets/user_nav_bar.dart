@@ -1,3 +1,4 @@
+import 'package:fixit/constants.dart';
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
@@ -21,9 +22,6 @@ class _UserNavigationScreenState extends State<UserNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Navigation Bar Example'),
-      ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -35,17 +33,20 @@ class _UserNavigationScreenState extends State<UserNavigationScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Screen 1',
+            label: 'home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Screen 2',
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Screen 3',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
+        backgroundColor: KSurface,
+        selectedItemColor: Color(0XffB73B67),
+        unselectedItemColor: Colors.white,
       ),
     );
   }
