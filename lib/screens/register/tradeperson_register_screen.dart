@@ -212,7 +212,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                           } else {
                             DocumentSnapshot userSnapshot =
                                 await FirebaseFirestore.instance
-                                    .collection('users')
+                                    .collection('tradepersons')
                                     .doc(registerViewModel.emailController.text)
                                     .get();
                             String gender = userSnapshot.get('Gender');
@@ -237,6 +237,8 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                             'Category': registerInfo.category,
                             'Description': registerInfo.desc,
                             'ImageLink': ImageUrl,
+                            'TotalRating': '0',
+                            'ReviewsNumber': '0',
                           };
                           await FirebaseFirestore.instance
                               .collection('tradepersons')

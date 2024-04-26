@@ -1,6 +1,7 @@
 import 'package:fixit/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class Info extends StatelessWidget {
   final QueryDocumentSnapshot userDocument;
@@ -48,7 +49,8 @@ class Info extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        '4.7',
+                        userDocument['AverageRating'].toStringAsFixed(2) ??
+                            'Unknown',
                         style: TextStyle(
                           color: Color(0XffFFFFFF),
                         ),
@@ -69,7 +71,10 @@ class Info extends StatelessWidget {
             ),
             Spacer(),
             RawMaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                FlutterPhoneDirectCaller.callNumber(
+                    userDocument['PhoneNumber']);
+              },
               elevation: 2.0,
               fillColor: KSf2,
               child: Icon(
