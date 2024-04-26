@@ -239,6 +239,7 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                             'ImageLink': ImageUrl,
                             'TotalRating': '0',
                             'ReviewsNumber': '0',
+                            'AverageRating': '0'
                           };
                           await FirebaseFirestore.instance
                               .collection('tradepersons')
