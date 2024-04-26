@@ -158,14 +158,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               'Type': registerInfo.selectedOption,
                               'Status': 'Available '
                             });
-                            if (registerInfo.selectedOption == "Tradeperson") {
-                              await FirebaseFirestore.instance
-                                  .collection('Comment')
-                                  .doc(registerViewModel.emailController.text)
-                                  .collection('comment')
-                                  .doc()
-                                  .set({});
-                            }
+                            // if (registerInfo.selectedOption == "Tradeperson") {
+                            //   await FirebaseFirestore.instance
+                            //       .collection('Comment')
+                            //       .doc(registerViewModel.emailController.text)
+                            //       .collection('comment')
+                            //       .doc()
+                            //       .set({});
+                            // }
                             showSnackBar(context, 'Success');
                             if (registerInfo.selectedOption == "User") {
                               Navigator.pushNamed(

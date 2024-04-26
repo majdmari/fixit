@@ -22,6 +22,7 @@ class WriteReviewScreen extends StatefulWidget {
 class _WriteReviewScreenState extends State<WriteReviewScreen> {
   late File _image;
   late FocusNode _textFieldFocusNode;
+  late double _rating = 0;
 
   @override
   void initState() {
@@ -90,7 +91,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: RatingBar.builder(
-                    initialRating: 0,
+                    initialRating: _rating,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: false,
@@ -103,7 +104,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     ),
                     onRatingUpdate: (rating) {
                       // Update the rating
-                      print(rating);
+                      _rating = rating;
                     },
                   ),
                 ),
@@ -188,7 +189,17 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
           .collection('Comment')
           .add({
         'content': comment,
+        'rating': _rating,
         // Add any other fields you want to include in the comment
+      });
+      // Update trade person's document with the rating and increment ReviewsNumber
+      await FirebaseFirestore.instance
+          .collection('tradepersons')
+          .doc(email)
+          .update({
+        'ReviewsNumber': FieldValue.increment(1), // Increment review count
+        'TotalRating':
+            FieldValue.increment(_rating), // Add rating to total rating
       });
       print('Comment added successfully');
     } catch (error) {
