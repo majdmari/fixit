@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixit/firebase_options.dart';
+import 'package:fixit/screens/admins/add_admin_screen.dart';
+import 'package:fixit/screens/admins/add_traderperson.dart';
+import 'package:fixit/screens/admins/admin_control_screen.dart';
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';
@@ -14,6 +17,7 @@ import 'package:fixit/screens/splash.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
+import 'package:fixit/widgets/admin_nav_bar.dart';
 import 'package:fixit/widgets/tradeperson_nav_bar.dart';
 import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +57,10 @@ class Fixit extends StatelessWidget {
         UserNavigationScreen.id: (context) => UserNavigationScreen(),
         TradepersonNavigationScreen.id: (context) =>
             TradepersonNavigationScreen(),
+        AdminNavigationScreen.id: (context) => AdminNavigationScreen(),
+        AddAdmin.id: (context) => AddAdmin(),
+        AddTradeperson.id: (context) => AddTradeperson(),
+        AdminControlScreen.id: (context) => AdminControlScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,

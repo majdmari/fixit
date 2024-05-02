@@ -1,6 +1,5 @@
 import 'package:fixit/widgets/review_info.dart';
 import 'package:flutter/material.dart';
-import 'info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BuildlistReview extends StatelessWidget {

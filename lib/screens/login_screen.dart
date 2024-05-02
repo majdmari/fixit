@@ -160,6 +160,7 @@ import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
+import 'package:fixit/widgets/admin_nav_bar.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/tradeperson_nav_bar.dart';
@@ -311,12 +312,22 @@ class _LoginScreenState extends State<LoginScreen> {
               .doc(user.email)
               .get();
 
+      // Check if the user exists in the users collection
+      DocumentSnapshot<Map<String, dynamic>> adminSnapshot =
+          await FirebaseFirestore.instance
+              .collection('admins')
+              .doc(user.email)
+              .get();
+
       if (userSnapshot.exists) {
         // User exists in the users collection
         Navigator.pushNamed(context, UserNavigationScreen.id);
       } else if (tradepersonSnapshot.exists) {
         // User exists in the tradepersons collection
         Navigator.pushNamed(context, TradepersonNavigationScreen.id);
+      } else if (adminSnapshot.exists) {
+        // admin exists in the admins collection
+        Navigator.pushNamed(context, AdminNavigationScreen.id);
       } else {
         // User not found in either collection, handle accordingly
         // For example, show an error message
