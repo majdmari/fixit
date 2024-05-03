@@ -167,6 +167,7 @@ import 'package:fixit/widgets/tradeperson_nav_bar.dart';
 import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -322,12 +323,21 @@ class _LoginScreenState extends State<LoginScreen> {
       if (userSnapshot.exists) {
         // User exists in the users collection
         Navigator.pushNamed(context, UserNavigationScreen.id);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('email', registerInfo.email!);
       } else if (tradepersonSnapshot.exists) {
         // User exists in the tradepersons collection
         Navigator.pushNamed(context, TradepersonNavigationScreen.id);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('email', registerInfo.email!);
       } else if (adminSnapshot.exists) {
         // admin exists in the admins collection
         Navigator.pushNamed(context, AdminNavigationScreen.id);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('email', registerInfo.email!);
       } else {
         // User not found in either collection, handle accordingly
         // For example, show an error message

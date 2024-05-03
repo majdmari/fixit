@@ -34,6 +34,7 @@ class _AddTradepersonState extends State<AddTradeperson> {
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
   DateTime? _selectedDate;
+  String? TradeEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +66,8 @@ class _AddTradepersonState extends State<AddTradeperson> {
                       height: 10,
                     ),
                     CustomTextField(
-                      controller: registerViewModel.emailController,
                       onChanged: (value) {
-                        registerInfo.email = value;
+                        TradeEmail = value;
                       },
                       hintText: 'Type your email here',
                       label: 'Email',
@@ -250,13 +250,13 @@ class _AddTradepersonState extends State<AddTradeperson> {
                                 'assets/images/female.png', context);
                           }
                           try {
-                            await addAdmin();
+                            // await addTradeperson();
 
                             await FirebaseFirestore.instance
                                 .collection('tradepersons')
-                                .doc(registerViewModel.emailController.text)
+                                .doc(TradeEmail)
                                 .set({
-                              'Email': registerInfo.email,
+                              'Email': TradeEmail,
                               'Password': registerInfo.password,
                               'FullName': registerInfo.fullName,
                               'Gender': registerInfo.selectedGender,
@@ -306,11 +306,11 @@ class _AddTradepersonState extends State<AddTradeperson> {
     );
   }
 
-  Future<void> addAdmin() async {
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: registerInfo.email!, password: registerInfo.password!);
-  }
+  // Future<void> addTradeperson() async {
+  //   UserCredential user = await FirebaseAuth.instance
+  //       .createUserWithEmailAndPassword(
+  //           email: TradeEmail!, password: registerInfo.password!);
+  // }
 
   void showCustomDialog(BuildContext context, String message) {
     showDialog(

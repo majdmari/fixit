@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/pop_up_dialog.dart';
@@ -13,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -270,7 +272,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  CustomButton(text: 'Log out'),
+                  CustomButton(
+                    text: 'Log out',
+                    onTap: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs.setBool('isLoggedIn', false);
+                      Navigator.pushNamed(context, LoginScreen.id);
+                    },
+                  ),
                   SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,

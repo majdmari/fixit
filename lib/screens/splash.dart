@@ -1,7 +1,15 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/login_screen.dart';
+import 'package:fixit/screens/register/user_model.dart';
+import 'package:fixit/widgets/admin_nav_bar.dart';
+import 'package:fixit/widgets/tradeperson_nav_bar.dart';
+import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,12 +21,61 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashState extends State<SplashScreen> {
   @override
+  bool isTrue = false;
+  String email = '';
+
+  @override
   void initState() {
     super.initState();
+    initializeScreen();
+  }
 
-    Timer(const Duration(seconds: 1), () {
+  Future<void> initializeScreen() async {
+    await sharedPrefData();
+
+    Timer(const Duration(seconds: 5), () async {
       Navigator.pushNamed(context, LoginScreen.id);
-      ;
+      if (isTrue && email.isNotEmpty) {
+        final registerViewModel =
+            Provider.of<RegisterViewModel>(context, listen: false);
+        registerViewModel.emailController.text = email;
+        DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(email)
+                .get();
+
+        // Check if the user exists in the tradepersons collection
+        DocumentSnapshot<Map<String, dynamic>> tradepersonSnapshot =
+            await FirebaseFirestore.instance
+                .collection('tradepersons')
+                .doc(email)
+                .get();
+
+        // Check if the user exists in the users collection
+        DocumentSnapshot<Map<String, dynamic>> adminSnapshot =
+            await FirebaseFirestore.instance
+                .collection('admins')
+                .doc(email)
+                .get();
+        if (userSnapshot.exists) {
+          Navigator.pushNamed(context, UserNavigationScreen.id);
+        } else if (tradepersonSnapshot.exists) {
+          Navigator.pushNamed(context, TradepersonNavigationScreen.id);
+        } else if (adminSnapshot.exists) {
+          Navigator.pushNamed(context, AdminNavigationScreen.id);
+        }
+      } else {
+        Navigator.pushNamed(context, LoginScreen.id);
+      }
+    });
+  }
+
+  Future<void> sharedPrefData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isTrue = prefs.getBool('isLoggedIn') ?? false;
+      email = prefs.getString('email') ?? '';
     });
   }
 

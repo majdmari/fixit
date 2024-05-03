@@ -61,7 +61,6 @@ class _AddAdminState extends State<AddAdmin> {
                       height: 10,
                     ),
                     CustomTextField(
-                      controller: registerViewModel.emailController,
                       onChanged: (value) {
                         registerInfo.email = value;
                       },
@@ -196,7 +195,7 @@ class _AddAdminState extends State<AddAdmin> {
 
                             await FirebaseFirestore.instance
                                 .collection('admins')
-                                .doc(registerViewModel.emailController.text)
+                                .doc(registerInfo.email)
                                 .set({
                               'Email': registerInfo.email,
                               'Password': registerInfo.password,
