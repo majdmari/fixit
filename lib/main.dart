@@ -3,6 +3,7 @@ import 'package:fixit/firebase_options.dart';
 import 'package:fixit/screens/admins/add_admin_screen.dart';
 import 'package:fixit/screens/admins/add_traderperson.dart';
 import 'package:fixit/screens/admins/admin_control_screen.dart';
+import 'package:fixit/screens/admins/generate_report_screen.dart';
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';
@@ -39,7 +40,7 @@ class Fixit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginScreen(),
+      home: SplashScreen(),
 
       routes: {
         WelcomScreen.id: (context) => WelcomScreen(),
@@ -61,6 +62,7 @@ class Fixit extends StatelessWidget {
         AddAdmin.id: (context) => AddAdmin(),
         AddTradeperson.id: (context) => AddTradeperson(),
         AdminControlScreen.id: (context) => AdminControlScreen(),
+        GenerateReportScreen.id: (context) => GenerateReportScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,

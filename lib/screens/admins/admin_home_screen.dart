@@ -2,6 +2,7 @@ import 'package:fixit/constants.dart';
 import 'package:fixit/screens/admins/add_admin_screen.dart';
 import 'package:fixit/screens/admins/add_traderperson.dart';
 import 'package:fixit/screens/admins/admin_control_screen.dart';
+import 'package:fixit/screens/admins/generate_report_screen.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -49,6 +50,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               text: 'Show All TradePersons',
               onTap: () {
                 Navigator.pushNamed(context, AdminControlScreen.id);
+              },
+            ),
+            SizedBox(height: 25),
+            CustomButton(
+              text: 'Generate Report',
+              onTap: () {
+                Navigator.pushNamed(context, GenerateReportScreen.id);
               },
             )
           ],

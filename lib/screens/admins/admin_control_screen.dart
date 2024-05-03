@@ -206,9 +206,5 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
         .collection('tradepersons')
         .doc(userId)
         .delete();
-
-    // Delete from Firebase Authentication
-    // Note: Implement your own logic to delete the user from Firebase Authentication
-    // It typically involves calling the appropriate method provided by your authentication library.
   }
 }
