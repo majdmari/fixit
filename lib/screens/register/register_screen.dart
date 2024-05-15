@@ -39,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Register',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -198,9 +198,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Text(
                           'already have an account?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          style:
+                              TextStyle(color: Colors.grey, fontFamily: Kword),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -208,9 +207,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                           child: Text(
                             ' Login',
-                            style: TextStyle(
-                              color: KSecondary,
-                            ),
+                            style:
+                                TextStyle(color: KSecondary, fontFamily: Kword),
                           ),
                         ),
                       ],

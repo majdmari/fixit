@@ -47,7 +47,7 @@ class _AddTradepersonState extends State<AddTradeperson> {
           automaticallyImplyLeading: false,
           title: Text(
             'Add Tradeperson',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -337,7 +337,7 @@ class _AddTradepersonState extends State<AddTradeperson> {
                 },
                 child: Text(
                   'Done',
-                  style: TextStyle(color: KSecondary),
+                  style: TextStyle(color: KSecondary, fontFamily: Kword),
                 ),
               ),
               Expanded(

@@ -1015,7 +1015,7 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
         automaticallyImplyLeading: false,
         title: Text(
           'Profile',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontFamily: Kword),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -1065,36 +1065,43 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                     SizedBox(height: 10),
                     Text(
                       tradePersonData['FullName'],
-                      style: TextStyle(color: Colors.white, fontSize: 25),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 25, fontFamily: Kword),
                     ),
                     Text(
                       tradePersonData['Category'],
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
+                      style: TextStyle(
+                          color: Colors.grey, fontSize: 20, fontFamily: Kword),
                     ),
                     SizedBox(height: 20),
                     Text(
                       "Email:  ${widget.email} ",
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 17, fontFamily: Kword),
                     ),
                     SizedBox(height: 15),
                     Text(
                       "City : ${tradePersonData['City']}",
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 17, fontFamily: Kword),
                     ),
                     SizedBox(height: 15),
                     Text(
                       "Address : ${tradePersonData['Address']}",
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 17, fontFamily: Kword),
                     ),
                     SizedBox(height: 15),
                     Text(
                       "BirthDay : ${tradePersonData['BirthOfDate']}",
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 17, fontFamily: Kword),
                     ),
                     SizedBox(height: 15),
                     Text(
                       'Status : ${tradePersonData['Status']}',
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 17, fontFamily: Kword),
                     ),
                     SizedBox(height: 15),
                     Divider(
@@ -1108,7 +1115,10 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                         Expanded(
                           child: Text(
                             tradePersonData['Description'],
-                            style: TextStyle(fontSize: 13, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.white,
+                                fontFamily: Kword),
                           ),
                         ),
                       ],
@@ -1127,14 +1137,20 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Rate this ${tradePersonData['Category']} :',
-                            style: TextStyle(color: Colors.white, fontSize: 17),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontFamily: Kword),
                           ),
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Tell others what you think',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: Kword),
                           ),
                         ),
                         SizedBox(height: 10),
