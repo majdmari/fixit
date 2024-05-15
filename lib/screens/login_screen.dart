@@ -190,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Login',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -234,9 +234,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Forget your Password?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          style:
+                              TextStyle(color: Colors.grey, fontFamily: Kword),
                         ),
                       ),
                     ),
@@ -265,9 +264,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text(
                           'Do not have an account?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          style:
+                              TextStyle(color: Colors.grey, fontFamily: Kword),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -275,9 +273,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(
                             ' Register',
-                            style: TextStyle(
-                              color: KSecondary,
-                            ),
+                            style:
+                                TextStyle(color: KSecondary, fontFamily: Kword),
                           ),
                         ),
                       ],

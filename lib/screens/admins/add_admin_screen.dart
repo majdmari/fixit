@@ -42,7 +42,7 @@ class _AddAdminState extends State<AddAdmin> {
           automaticallyImplyLeading: false,
           title: Text(
             'Add Admin',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -270,7 +270,7 @@ class _AddAdminState extends State<AddAdmin> {
                 },
                 child: Text(
                   'Done',
-                  style: TextStyle(color: KSecondary),
+                  style: TextStyle(color: KSecondary, fontFamily: Kword),
                 ),
               ),
               Expanded(

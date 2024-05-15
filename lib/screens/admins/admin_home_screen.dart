@@ -21,7 +21,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         automaticallyImplyLeading: false,
         title: Text(
           'Admin Home Page',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontFamily: Kword),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,

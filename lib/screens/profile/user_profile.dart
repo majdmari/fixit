@@ -48,7 +48,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Profile',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -124,7 +124,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                   Text(
                     'User',
-                    style: TextStyle(color: Colors.grey, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.grey, fontSize: 20, fontFamily: Kword),
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -132,7 +133,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     children: [
                       Text(
                         "Email: ",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.email ?? '',
@@ -148,7 +152,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         children: [
                           Text(
                             "Phone Number:",
-                            style: TextStyle(color: Colors.white, fontSize: 17),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontFamily: Kword),
                           ),
                         ],
                       ),
@@ -183,7 +190,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     children: [
                       Text(
                         "City : ",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.selectedCity ?? '',
@@ -221,7 +231,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     children: [
                       Text(
                         "Address : ",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.address ?? '',
@@ -254,7 +267,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     children: [
                       Text(
                         "BirthDay : ",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.birthOfDate ?? '',
@@ -286,9 +302,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     children: [
                       Text(
                         'Do You Want To ',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        style: TextStyle(color: Colors.grey, fontFamily: Kword),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -305,9 +319,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         },
                         child: Text(
                           'Change Password?',
-                          style: TextStyle(
-                            color: KSecondary,
-                          ),
+                          style:
+                              TextStyle(color: KSecondary, fontFamily: Kword),
                         ),
                       ),
                     ],
@@ -429,7 +442,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   },
                   child: Text(
                     'Done',
-                    style: TextStyle(color: KSecondary),
+                    style: TextStyle(color: KSecondary, fontFamily: Kword),
                   )),
               Expanded(
                 child: CupertinoDatePicker(

@@ -737,14 +737,14 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                     color: KSf2,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: CustomDropdown<int>(
-                    items: [1, 2, 3, 4, 5],
+                  child: CustomDropdown<dynamic>(
+                    items: ['All', 1, 2, 3, 4, 5],
                     hintText: 'All',
                     labelText: 'Rating',
                     initialValue: selectedRating,
-                    onChanged: (int? rating) {
+                    onChanged: (dynamic? rating) {
                       setState(() {
-                        selectedRating = rating;
+                        selectedRating = rating == 'All' ? null : rating;
                       });
                     },
                     dropdownMenuBackgroundColor: KSurface,
