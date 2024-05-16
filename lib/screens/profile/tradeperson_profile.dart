@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/pop_up_dialog.dart';
@@ -13,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TradepersonProfileScreen extends StatefulWidget {
   const TradepersonProfileScreen({super.key});
@@ -47,7 +49,7 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Profile',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -131,7 +133,10 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     children: [
                       Text(
                         "Email: ",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.email ?? '',
@@ -147,7 +152,10 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                         children: [
                           Text(
                             "Phone Number: ",
-                            style: TextStyle(color: Colors.white, fontSize: 17),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontFamily: Kword),
                           ),
                         ],
                       ),
@@ -182,7 +190,10 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     children: [
                       Text(
                         "City : ",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.selectedCity ?? '',
@@ -218,10 +229,11 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          "Adress : ",
-                          style: TextStyle(color: Colors.white, fontSize: 17),
-                        ),
+                        Text("Adress : ",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontFamily: Kword)),
                         Text(
                           userInfo?.address ?? '',
                           style: TextStyle(color: Colors.white, fontSize: 17),
@@ -252,7 +264,10 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                       children: [
                         Text(
                           "BirthDay : ",
-                          style: TextStyle(color: Colors.white, fontSize: 17),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontFamily: Kword),
                         ),
                         Text(
                           userInfo?.birthOfDate ?? '',
@@ -274,7 +289,10 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     children: [
                       Text(
                         'Status',
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontFamily: Kword),
                       ),
                       Text(
                         userInfo?.selectedStatus ?? '',
@@ -320,7 +338,8 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                            fontSize: 18,
+                            fontFamily: Kword),
                       ),
                       GestureDetector(
                         child: Text(
@@ -329,6 +348,7 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
+                              fontFamily: Kword,
                               decoration: TextDecoration.underline),
                         ),
                       )
@@ -364,16 +384,21 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  CustomButton(text: 'Log out'),
+                  CustomButton(
+                    text: 'Log out',
+                    onTap: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs.setBool('isLoggedIn', false);
+                      Navigator.pushReplacementNamed(context, LoginScreen.id);
+                    },
+                  ),
                   SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         'Do You Want To ',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        style: TextStyle(color: Colors.grey, fontFamily: Kword),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -390,9 +415,8 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                         },
                         child: Text(
                           'Change Password?',
-                          style: TextStyle(
-                            color: KSecondary,
-                          ),
+                          style:
+                              TextStyle(color: KSecondary, fontFamily: Kword),
                         ),
                       ),
                     ],
@@ -541,7 +565,7 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                   },
                   child: Text(
                     'Done',
-                    style: TextStyle(color: KSecondary),
+                    style: TextStyle(color: KSecondary, fontFamily: Kword),
                   )),
               Expanded(
                 child: CupertinoDatePicker(

@@ -348,7 +348,7 @@ class _HomepageState extends State<Homepage> {
                 hintText: 'Search by Category?',
                 hintStyle: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'Playfair Display',
+                  fontFamily: Kword,
                 ),
                 filled: true,
                 fillColor: KSf2,

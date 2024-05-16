@@ -96,10 +96,7 @@ class ChangePasswordDialog extends StatelessWidget {
       backgroundColor: KSurface,
       title: Text(
         'Change Password',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-        ),
+        style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: Kword),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,

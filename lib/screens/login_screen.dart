@@ -160,12 +160,14 @@ import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
+import 'package:fixit/widgets/admin_nav_bar.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/tradeperson_nav_bar.dart';
 import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -188,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Login',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -232,9 +234,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Forget your Password?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          style:
+                              TextStyle(color: Colors.grey, fontFamily: Kword),
                         ),
                       ),
                     ),
@@ -263,9 +264,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text(
                           'Do not have an account?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          style:
+                              TextStyle(color: Colors.grey, fontFamily: Kword),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -273,9 +273,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(
                             ' Register',
-                            style: TextStyle(
-                              color: KSecondary,
-                            ),
+                            style:
+                                TextStyle(color: KSecondary, fontFamily: Kword),
                           ),
                         ),
                       ],
@@ -311,12 +310,31 @@ class _LoginScreenState extends State<LoginScreen> {
               .doc(user.email)
               .get();
 
+      // Check if the user exists in the users collection
+      DocumentSnapshot<Map<String, dynamic>> adminSnapshot =
+          await FirebaseFirestore.instance
+              .collection('admins')
+              .doc(user.email)
+              .get();
+
       if (userSnapshot.exists) {
         // User exists in the users collection
         Navigator.pushNamed(context, UserNavigationScreen.id);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('email', registerInfo.email!);
       } else if (tradepersonSnapshot.exists) {
         // User exists in the tradepersons collection
         Navigator.pushNamed(context, TradepersonNavigationScreen.id);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('email', registerInfo.email!);
+      } else if (adminSnapshot.exists) {
+        // admin exists in the admins collection
+        Navigator.pushNamed(context, AdminNavigationScreen.id);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setString('email', registerInfo.email!);
       } else {
         // User not found in either collection, handle accordingly
         // For example, show an error message

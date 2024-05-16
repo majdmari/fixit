@@ -42,7 +42,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Register',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -243,7 +243,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                 },
                 child: Text(
                   'Done',
-                  style: TextStyle(color: KSecondary),
+                  style: TextStyle(color: KSecondary, fontFamily: Kword),
                 ),
               ),
               Expanded(

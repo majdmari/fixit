@@ -75,9 +75,9 @@ class _WelcomScreenState extends State<WelcomScreen> {
                       child: Text('skip',
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 18,
-                          ))),
+                              color: Colors.grey,
+                              fontSize: 18,
+                              fontFamily: Kword))),
                 ),
               ],
             ),

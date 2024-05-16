@@ -2,31 +2,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/helper/show_snack_bar.dart';
-import 'package:fixit/screens/register/tradeperson_register_screen.dart';
+
 import 'package:fixit/screens/register/user_model.dart';
-import 'package:fixit/screens/register/user_register_screen.dart';
+
 import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/custom_drop_down.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
-  static String id = 'RegisterScreen';
+class AddAdmin extends StatefulWidget {
+  AddAdmin({super.key});
+  static String id = 'AddAdmin';
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<AddAdmin> createState() => _AddAdminState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _AddAdminState extends State<AddAdmin> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   RegisterInfo registerInfo = RegisterInfo();
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
+  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-            'Register',
+            'Add Admin',
             style: TextStyle(color: Colors.white, fontFamily: Kword),
           ),
           backgroundColor: Colors.transparent,
@@ -58,7 +61,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 10,
                     ),
                     CustomTextField(
-                      controller: registerViewModel.emailController,
                       onChanged: (value) {
                         registerInfo.email = value;
                       },
@@ -86,6 +88,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       label: 'Re-Write Password',
                     ),
                     SizedBox(height: 10),
+                    CustomTextField(
+                      onChanged: (value) {
+                        registerInfo.fullName = value;
+                      },
+                      hintText: 'Type your Name here',
+                      label: 'Full Name',
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        registerInfo.phoneNumber = value;
+                      },
+                      hintText: '0799999999',
+                      label: 'Phone number',
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: _showDatePicker,
+                      child: AbsorbPointer(
+                        child: CustomTextField(
+                          icon: Icons.date_range,
+                          controller: TextEditingController(
+                              text: _selectedDate != null
+                                  ? DateFormat('dd/MM/yyyy')
+                                      .format(_selectedDate!)
+                                  : null),
+                          hintText: 'DD/MM/YYYY',
+                          label: 'Birth of Date',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CustomDropdown<String>(
+                      items: [
+                        'Irbid',
+                        'Ajloun',
+                        'Jerash',
+                        'Mafraq',
+                        'Balqa',
+                        'Amman',
+                        'Zarqa',
+                        'Madaba',
+                        'Karak',
+                        'Tafilah',
+                        'Ma\'an',
+                        'Aqaba'
+                      ],
+                      hintText: "City in menu mode",
+                      labelText: "City",
+                      initialValue: null,
+                      dropdownMenuBackgroundColor: KSf2,
+                      onChanged: (String? value) {
+                        setState(() {
+                          registerInfo.selectedCity = value;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 10),
                     CustomDropdown<String>(
                       dropdownMenuHeight: 120,
                       items: ["Male", 'Female'],
@@ -99,25 +166,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         });
                       },
                     ),
-                    SizedBox(height: 10),
-                    CustomDropdown<String>(
-                      dropdownMenuHeight: 120,
-                      items: ["User", 'Tradeperson'],
-                      hintText: "User Or Tradeperson",
-                      labelText: "Who you are ?",
-                      initialValue: null,
-                      dropdownMenuBackgroundColor: KSf2,
-                      onChanged: (String? value) {
-                        setState(() {
-                          registerInfo.selectedOption = value;
-                        });
-                      },
-                    ),
                     SizedBox(
                       height: 35,
                     ),
                     CustomButton(
-                      text: 'Continue',
+                      text: 'Done',
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
                           if (registerInfo.password !=
@@ -130,51 +183,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 context, "You can't leave gender empty.");
                             return;
                           }
-                          if (registerInfo.selectedOption == null) {
+                          if (registerInfo.selectedCity == null) {
                             showCustomDialog(
-                                context, "You can't leave who you are empty.");
+                                context, "You can't leave City empty.");
                             return;
                           }
                           isLoading = true;
                           setState(() {});
                           try {
-                            await registerUser();
-                            late CollectionReference
-                                collectionReference; // Declare as late
-                            if (registerInfo.selectedOption == "User") {
-                              collectionReference = FirebaseFirestore.instance
-                                  .collection('users');
-                            } else if (registerInfo.selectedOption ==
-                                "Tradeperson") {
-                              collectionReference = FirebaseFirestore.instance
-                                  .collection('tradepersons');
-                            }
-                            await collectionReference
-                                .doc(registerViewModel.emailController.text)
+                            await addSubAdmin();
+
+                            await FirebaseFirestore.instance
+                                .collection('admins')
+                                .doc(registerInfo.email)
                                 .set({
                               'Email': registerInfo.email,
                               'Password': registerInfo.password,
+                              'FullName': registerInfo.fullName,
                               'Gender': registerInfo.selectedGender,
-                              'Type': registerInfo.selectedOption,
-                              'Status': 'Available '
+                              'City': registerInfo.selectedCity,
+                              'PhoneNumber': registerInfo.phoneNumber,
+                              'Type': 'Admin',
+                              'BirthOfDate': _selectedDate != null
+                                  ? DateFormat('dd/MM/yyyy')
+                                      .format(_selectedDate!)
+                                  : '',
                             });
-                            // if (registerInfo.selectedOption == "Tradeperson") {
-                            //   await FirebaseFirestore.instance
-                            //       .collection('Comment')
-                            //       .doc(registerViewModel.emailController.text)
-                            //       .collection('comment')
-                            //       .doc()
-                            //       .set({});
-                            // }
+
                             showSnackBar(context, 'Success');
-                            if (registerInfo.selectedOption == "User") {
-                              Navigator.pushNamed(
-                                  context, UserRegisterScreen.id);
-                            } else if (registerInfo.selectedOption ==
-                                "Tradeperson") {
-                              Navigator.pushNamed(
-                                  context, TradepersonRegisterScreen.id);
-                            }
                           } on FirebaseAuthException catch (ex) {
                             if (ex.code == 'weak-password') {
                               showCustomDialog(context, 'Weak password');
@@ -193,26 +229,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'already have an account?',
-                          style:
-                              TextStyle(color: Colors.grey, fontFamily: Kword),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            ' Login',
-                            style:
-                                TextStyle(color: KSecondary, fontFamily: Kword),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ],
@@ -223,7 +239,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future<void> registerUser() async {
+  Future<void> addSubAdmin() async {
     UserCredential user = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: registerInfo.email!, password: registerInfo.password!);
@@ -234,6 +250,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context: context,
       builder: (BuildContext context) {
         return CustomAlertDialog(message: message);
+      },
+    );
+  }
+
+  void _showDatePicker() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the modal
+                },
+                child: Text(
+                  'Done',
+                  style: TextStyle(color: KSecondary, fontFamily: Kword),
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  minimumDate: DateTime(1990),
+                  maximumDate: DateTime.now().add(Duration(days: 1)),
+                  initialDateTime: _selectedDate ?? DateTime.now(),
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    setState(() {
+                      _selectedDate = newDateTime;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
