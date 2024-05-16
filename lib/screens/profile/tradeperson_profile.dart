@@ -390,6 +390,7 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                       final prefs = await SharedPreferences.getInstance();
                       prefs.setBool('isLoggedIn', false);
                       Navigator.pushReplacementNamed(context, LoginScreen.id);
+                      registerViewModel.emailController.text = '';
                     },
                   ),
                   SizedBox(height: 15),

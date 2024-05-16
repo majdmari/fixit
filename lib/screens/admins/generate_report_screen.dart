@@ -374,12 +374,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/admins/pdf_screen.dart';
+import 'package:fixit/screens/register/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:pdf/widgets.dart' as pdf;
+import 'package:provider/provider.dart';
 
 class GenerateReportScreen extends StatefulWidget {
   static String id = 'GenerateReportScreen';
@@ -425,7 +427,7 @@ class _GenerateReportScreenState extends State<GenerateReportScreen> {
     });
   }
 
-  Future<void> _saveAsPdf() async {
+  Future<void>? _saveAsPdf(String? email) async {
     // Fetch the email of the admin from Firestore
     final String adminEmail = await _fetchAdminEmail();
 
@@ -459,7 +461,7 @@ class _GenerateReportScreenState extends State<GenerateReportScreen> {
               ),
               pdf.RichText(
                 text: pdf.TextSpan(
-                  text: 'Admin Email: $adminEmail\n\n',
+                  text: 'Admin Email: $email\n\n',
                   style: largeTextStyle,
                 ),
               ),
@@ -550,6 +552,8 @@ class _GenerateReportScreenState extends State<GenerateReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel registerViewModel =
+        Provider.of<RegisterViewModel>(context);
     return Scaffold(
       backgroundColor: KSurface,
       appBar: AppBar(
@@ -583,7 +587,9 @@ class _GenerateReportScreenState extends State<GenerateReportScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: _saveAsPdf,
+            onPressed: () async {
+              await _saveAsPdf(registerViewModel.emailController.text);
+            },
             child: Icon(Icons.save),
             backgroundColor: Colors.blue,
             heroTag:

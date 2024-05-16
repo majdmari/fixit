@@ -294,6 +294,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       final prefs = await SharedPreferences.getInstance();
                       prefs.setBool('isLoggedIn', false);
                       Navigator.pushNamed(context, LoginScreen.id);
+                      registerViewModel.emailController.text = '';
                     },
                   ),
                   SizedBox(height: 15),
