@@ -392,7 +392,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                             (states) => Colors.white),
                         title: Text(
                           value.toString(),
-                          style: TextStyle(color: Colors.white),
+                          style:
+                              TextStyle(color: Colors.white, fontFamily: Kword),
                         ),
                         value: value,
                         groupValue: _selectedItem,
@@ -430,8 +431,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                     ? null
                     : widget.labelText,
             hintText: widget.hintText,
-            labelStyle: TextStyle(color: Colors.grey),
-            hintStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: Colors.grey, fontFamily: Kword),
+            hintStyle: TextStyle(color: Colors.grey, fontFamily: Kword),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
@@ -465,8 +466,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                     ? widget.hintText
                     : widget.labelText,
             style: TextStyle(
-              color: _selectedItem != null ? Colors.white : Colors.grey,
-            ),
+                color: _selectedItem != null ? Colors.white : Colors.grey,
+                fontFamily: Kword),
           ),
         ),
       ],
