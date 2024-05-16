@@ -33,8 +33,6 @@ class _AddAdminState extends State<AddAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    final RegisterViewModel registerViewModel =
-        Provider.of<RegisterViewModel>(context);
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Scaffold(

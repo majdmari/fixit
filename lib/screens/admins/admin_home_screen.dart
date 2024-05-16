@@ -1,5 +1,6 @@
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/admins/add_admin_screen.dart';
+import 'package:fixit/screens/admins/add_category_screen.dart';
 import 'package:fixit/screens/admins/add_traderperson.dart';
 import 'package:fixit/screens/admins/admin_control_screen.dart';
 import 'package:fixit/screens/admins/generate_report_screen.dart';
@@ -57,6 +58,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               text: 'Generate Report',
               onTap: () {
                 Navigator.pushNamed(context, GenerateReportScreen.id);
+              },
+            ),
+            SizedBox(height: 25),
+            CustomButton(
+              text: 'Add Category',
+              onTap: () {
+                Navigator.pushNamed(context, AddCategory.id);
               },
             )
           ],

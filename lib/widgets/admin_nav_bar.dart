@@ -1,5 +1,6 @@
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/admins/admin_home_screen.dart';
+import 'package:fixit/screens/profile/admin_profile.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,7 @@ class AdminNavigationScreen extends StatefulWidget {
 
 class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
   int _currentIndex = 0;
-  final List<Widget> _screens = [
-    AdminHomeScreen(),
-  ];
+  final List<Widget> _screens = [AdminHomeScreen(), AdminProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,6 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

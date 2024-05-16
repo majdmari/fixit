@@ -167,6 +167,7 @@ import 'package:fixit/widgets/tradeperson_nav_bar.dart';
 import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -183,6 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel registerViewModel =
+        Provider.of<RegisterViewModel>(context);
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Scaffold(
@@ -206,6 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     CustomTextField(
+                      controller: registerViewModel.emailController,
                       onChanged: (value) {
                         registerInfo.email = value;
                       },
