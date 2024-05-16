@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixit/firebase_options.dart';
 import 'package:fixit/screens/admins/add_admin_screen.dart';
+import 'package:fixit/screens/admins/add_category_screen.dart';
 import 'package:fixit/screens/admins/add_traderperson.dart';
 import 'package:fixit/screens/admins/admin_control_screen.dart';
 import 'package:fixit/screens/admins/generate_report_screen.dart';
@@ -63,6 +64,7 @@ class Fixit extends StatelessWidget {
         AddTradeperson.id: (context) => AddTradeperson(),
         AdminControlScreen.id: (context) => AdminControlScreen(),
         GenerateReportScreen.id: (context) => GenerateReportScreen(),
+        AddCategory.id: (context) => AddCategory(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,

@@ -72,13 +72,64 @@
 //   }
 // }
 
+// import 'package:flutter/material.dart';
+// import 'package:fixit/constants.dart';
+
+// class CustomCard extends StatelessWidget {
+//   final String title; // Title for the card
+//     final String imageLink; // Image link for the card
+
+//   const CustomCard({Key? key, required this.title,required this.imageLink}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: KSf2,
+//         borderRadius: BorderRadius.circular(15.0),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.5),
+//             spreadRadius: 3,
+//             blurRadius: 7,
+//             offset: Offset(0, 3),
+//           ),
+//         ],
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           Expanded(
+//             child: ClipRRect(
+//               borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+//               child: Image.network(
+//                 imageLink,
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+//             child: Text(
+//               title,
+//               style: TextStyle(color: Colors.white, fontSize: 18),
+//               textAlign: TextAlign.center,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 import 'package:fixit/constants.dart';
 
 class CustomCard extends StatelessWidget {
-  final String title; // Title for the card
+  final String title;
+  final String imageLink;
 
-  const CustomCard({Key? key, required this.title}) : super(key: key);
+  const CustomCard({Key? key, required this.title, required this.imageLink})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +152,8 @@ class CustomCard extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
-              child: Image.asset(
-                'assets/images/home.png',
+              child: Image.network(
+                imageLink,
                 fit: BoxFit.cover,
               ),
             ),

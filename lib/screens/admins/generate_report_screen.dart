@@ -376,6 +376,7 @@ import 'package:fixit/constants.dart';
 import 'package:fixit/screens/admins/pdf_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:pdf/widgets.dart' as pdf;
@@ -424,51 +425,6 @@ class _GenerateReportScreenState extends State<GenerateReportScreen> {
     });
   }
 
-  // Future<void> _saveAsPdf() async {
-  //   final pdf.Document pdfDocument = pdf.Document();
-
-  //   // Define a TextStyle with larger font size
-  //   final pdf.TextStyle largeTextStyle = pdf.TextStyle(fontSize: 20);
-
-  //   // Add content to the PDF
-  //   pdfDocument.addPage(
-  //     pdf.Page(
-  //       build: (context) => pdf.Center(
-  //         // Use Column to display all content in the same page
-  //         child: pdf.Column(
-  //           mainAxisAlignment: pdf.MainAxisAlignment.center,
-  //           children: tradePersonCount.entries.map((entry) {
-  //             String category = entry.key;
-  //             int count = entry.value;
-  //             // Use RichText to apply TextStyle
-  //             return pdf.RichText(
-  //               text: pdf.TextSpan(
-  //                 text: '$category - TradePersons: $count\n',
-  //                 style: largeTextStyle,
-  //               ),
-  //             );
-  //           }).toList(),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-
-  //   // Save the PDF to a file
-  //   final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-  //   final Directory directory = await getApplicationDocumentsDirectory();
-  //   // final String path = '${directory.path}/report/.pdf';
-  //   final String path = '${directory.path}/report_$timestamp.pdf';
-
-  //   final File file = File(path);
-  //   await file.writeAsBytes(await pdfDocument.save());
-
-  //   // Show a message to the user that the PDF is saved
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       content: Text('PDF saved successfully at $path'),
-  //     ),
-  //   );
-  // }
   Future<void> _saveAsPdf() async {
     // Fetch the email of the admin from Firestore
     final String adminEmail = await _fetchAdminEmail();
@@ -525,9 +481,11 @@ class _GenerateReportScreenState extends State<GenerateReportScreen> {
     );
 
     // Generate a unique filename based on the current timestamp
-    final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd_HH-mm-ss');
+    final String timestamp = formatter.format(now);
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String path = '${directory.path}/report_$timestamp.pdf';
+    final String path = '${directory.path}/Tradepersons Report _$timestamp.pdf';
 
     final File file = File(path);
     await file.writeAsBytes(await pdfDocument.save());
