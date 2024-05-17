@@ -176,6 +176,7 @@
 //     );
 //   }
 // }
+import 'package:fixit/constants.dart';
 import 'package:fixit/widgets/build_list_review.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -189,10 +190,13 @@ class ReviewListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0Xff000000),
+      backgroundColor: KSurface,
       appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text('Comments'),
+        backgroundColor: KSecondary,
+        title: Text(
+          'Comments',
+          style: TextStyle(fontFamily: Kword),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
