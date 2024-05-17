@@ -1,3 +1,4 @@
+import 'package:fixit/constants.dart';
 import 'package:fixit/widgets/review_info.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,12 +17,12 @@ class BuildlistReview extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0Xff2B2831),
+              color: KSurface,
             ),
             child: ReviewInfo(userDocument: userDocument),
           ),
         ),
-        SizedBox(height: 10), // Add space between comments
+        // Add space between comments
       ],
     );
   }

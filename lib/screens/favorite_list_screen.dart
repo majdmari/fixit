@@ -242,6 +242,8 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Favorite List'),
+        backgroundColor: KSecondary,
+        elevation: 0,
       ),
       backgroundColor: KSurface,
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
