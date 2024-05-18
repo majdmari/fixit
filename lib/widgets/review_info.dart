@@ -74,8 +74,8 @@ class _ReviewInfoState extends State<ReviewInfo> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(40),
-                child: Image.asset(
-                  'assets/images/female.png',
+                child: Image.network(
+                  widget.userDocument['userImage'],
                   width: 45,
                   height: 45,
                   fit: BoxFit.cover,

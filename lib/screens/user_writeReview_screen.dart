@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,11 +13,9 @@ class WriteReviewScreen extends StatefulWidget {
   static String id = 'write_review_screen';
   final String? category;
   final String? email;
-  final String? userName;
   String? comment;
 
-  WriteReviewScreen({Key? key, this.category, this.email, this.userName})
-      : super(key: key);
+  WriteReviewScreen({Key? key, this.category, this.email}) : super(key: key);
 
   @override
   State<WriteReviewScreen> createState() => _WriteReviewScreenState();
@@ -27,17 +26,44 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   late FocusNode _textFieldFocusNode;
   late double _rating = 0;
   bool _isSubmitting = false;
+  String? _userImage;
+  String? _userName;
+  String? _userEmail;
 
   @override
   void initState() {
     super.initState();
     _textFieldFocusNode = FocusNode();
+    _fetchUserData();
   }
 
   @override
   void dispose() {
     _textFieldFocusNode.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        setState(() {
+          _userEmail = user.email;
+        });
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_userEmail)
+            .get();
+        if (userDoc.exists) {
+          setState(() {
+            _userImage = userDoc.data()?['ImageLink'];
+            _userName = userDoc.data()?['FullName'];
+          });
+        }
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
   }
 
   @override
@@ -200,7 +226,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       }
 
       String email = widget.email ?? '';
-      String userName = widget.userName ?? 'Unknown User';
+      String userName = _userName ?? 'Unknown User';
+      String userImage = _userImage ?? '';
 
       await FirebaseFirestore.instance
           .collection('Comments')
@@ -211,6 +238,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         'rating': _rating,
         'imageUrl': imageUrl,
         'userName': userName,
+        'userName': userName,
+        'userImage': userImage,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
