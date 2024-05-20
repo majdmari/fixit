@@ -8,6 +8,7 @@ import 'package:fixit/screens/admins/generate_report_screen.dart';
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';
+import 'package:fixit/screens/payment_screen.dart';
 import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:fixit/screens/register/register_screen.dart';
@@ -20,6 +21,7 @@ import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:fixit/widgets/admin_nav_bar.dart';
+import 'package:fixit/screens/subscription_screen.dart';
 import 'package:fixit/widgets/tradeperson_nav_bar.dart';
 import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +67,8 @@ class Fixit extends StatelessWidget {
         AdminControlScreen.id: (context) => AdminControlScreen(),
         GenerateReportScreen.id: (context) => GenerateReportScreen(),
         AddCategory.id: (context) => AddCategory(),
+        SubscriptionScreen.id: (context) => SubscriptionScreen(),
+        PaymentScreen.id: (context) => PaymentScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,
