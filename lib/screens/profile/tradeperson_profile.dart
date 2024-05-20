@@ -8,6 +8,7 @@ import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/pop_up_dialog.dart';
+import 'package:fixit/screens/subscription_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -422,6 +423,14 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 15),
+                  CustomButton(
+                    text: 'Subcribe',
+                    onTap: () {
+                      Navigator.pushNamed(context, SubscriptionScreen.id);
+                    },
+                  ),
+                  SizedBox(height: 15),
                 ],
               ),
             ],
