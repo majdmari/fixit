@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
+import 'package:fixit/screens/review_list_screen.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/pop_up_dialog.dart';
 import 'package:fixit/screens/subscription_screen.dart';
@@ -335,23 +336,35 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                         color: Colors.white,
                       ),
                       Text(
-                        "4.7●",
+                        '${userInfo?.averageRating!.toStringAsFixed(2)} ● ' ??
+                            '0 ● ', // Display the average rating
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            fontFamily: Kword),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
                       GestureDetector(
                         child: Text(
-                          "1,399 review",
+                          '${userInfo?.reviewsNumber.toString()} review' ??
+                              '0 review', // Display the number of reviews
+
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              fontFamily: Kword,
                               decoration: TextDecoration.underline),
                         ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReviewListScreen(
+                                email: userInfo!.email!,
+                              ),
+                            ),
+                          );
+                        },
                       )
                     ],
                   ),
@@ -360,7 +373,7 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          userInfo?.desc ?? '',
+                          userInfo?.desc ?? '●',
                           style: TextStyle(fontSize: 13, color: Colors.white),
                         ),
                       ),
@@ -458,6 +471,8 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
         desc: userSnapshot['Description'],
         category: userSnapshot['Category'],
         selectedStatus: userSnapshot['Status'],
+        reviewsNumber: userSnapshot['ReviewsNumber'], // Add this line
+        averageRating: userSnapshot['AverageRating'], // Add this line
 
         // Add other fields as needed
       );

@@ -18,6 +18,8 @@ class RegisterInfo {
   Uint8List? selectedImage;
   String? imagePickerFire;
   String? selectedStatus;
+  num? reviewsNumber;
+  num? averageRating;
 
   RegisterInfo(
       {this.selectedOption,
@@ -34,7 +36,9 @@ class RegisterInfo {
       this.category,
       this.desc,
       this.selectedImage,
-      this.imagePickerFire});
+      this.imagePickerFire,
+      this.averageRating,
+      this.reviewsNumber});
 }
 
 class RegisterViewModel extends ChangeNotifier {
