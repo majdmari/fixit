@@ -157,6 +157,7 @@ import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
+import 'package:fixit/screens/register/forger_pw_page.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
@@ -234,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.topLeft,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, RegisterScreen.id);
+                          Navigator.pushNamed(context, Forgetpaswordpage.id);
                         },
                         child: Text(
                           'Forget your Password?',

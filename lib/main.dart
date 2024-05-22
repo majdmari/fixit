@@ -11,17 +11,16 @@ import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/payment_screen.dart';
 import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
+import 'package:fixit/screens/register/forger_pw_page.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/tradeperson_register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/register/user_register_screen.dart';
-import 'package:fixit/screens/review_list_screen.dart';
 import 'package:fixit/screens/splash.dart';
+import 'package:fixit/screens/subscription_screen.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
-import 'package:fixit/screens/user_writeReview_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:fixit/widgets/admin_nav_bar.dart';
-import 'package:fixit/screens/subscription_screen.dart';
 import 'package:fixit/widgets/tradeperson_nav_bar.dart';
 import 'package:fixit/widgets/user_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +65,7 @@ class Fixit extends StatelessWidget {
         AddTradeperson.id: (context) => AddTradeperson(),
         AdminControlScreen.id: (context) => AdminControlScreen(),
         GenerateReportScreen.id: (context) => GenerateReportScreen(),
+        Forgetpaswordpage.id: (context) => Forgetpaswordpage(),
         AddCategory.id: (context) => AddCategory(),
         SubscriptionScreen.id: (context) => SubscriptionScreen(),
         PaymentScreen.id: (context) => PaymentScreen(),
