@@ -349,10 +349,17 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                   );
                 }
                 final users = snapshot.data!.docs;
+                // Sort users by isSubscribed status
+                final sortedUsers = users
+                    .where((user) => user['isSubscribed'] == 'yes')
+                    .toList()
+                  ..addAll(users
+                      .where((user) => user['isSubscribed'] == 'no')
+                      .toList());
                 return ListView.builder(
-                  itemCount: users.length,
+                  itemCount: sortedUsers.length,
                   itemBuilder: (context, index) {
-                    final userDocument = users[index];
+                    final userDocument = sortedUsers[index];
                     if ((selectedCity == null ||
                             userDocument['City'] == selectedCity) &&
                         (selectedCategory == null ||
@@ -385,7 +392,8 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                       'Email']); // Assuming the document ID is used as the user ID
                                 },
                               ),
-                              if (index < users.length - 1) SizedBox(height: 8),
+                              if (index < sortedUsers.length - 1)
+                                SizedBox(height: 8),
                             ],
                           ),
                         ),
