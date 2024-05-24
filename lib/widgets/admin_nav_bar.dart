@@ -1,8 +1,10 @@
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/admins/admin_home_screen.dart';
 import 'package:fixit/screens/profile/admin_profile.dart';
+import 'package:fixit/screens/register/user_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AdminNavigationScreen extends StatefulWidget {
   static String id = 'AdminNavigationScreen';
@@ -13,10 +15,18 @@ class AdminNavigationScreen extends StatefulWidget {
 
 class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
   int _currentIndex = 0;
-  final List<Widget> _screens = [AdminHomeScreen(), AdminProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel registerViewModel =
+        Provider.of<RegisterViewModel>(context);
+    final List<Widget> _screens = [
+      AdminHomeScreen(),
+      AdminProfileScreen(
+        adminEmail: registerViewModel.emailController.text,
+      )
+    ];
+
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -10,15 +10,15 @@ import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/pop_up_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminProfileScreen extends StatefulWidget {
-  const AdminProfileScreen({super.key});
+  AdminProfileScreen({super.key, this.adminEmail});
   static String id = 'AdminProfileScreen';
+  String? adminEmail;
 
   @override
   State<AdminProfileScreen> createState() => _AdminProfileScreenState();
@@ -279,8 +279,8 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
     setState(() {
       isLoading = true; // Show loading indicator
     });
-    String userEmail = FirebaseAuth.instance.currentUser!.email!;
-    DocumentSnapshot userSnapshot = await usersInfo.doc(userEmail).get();
+    DocumentSnapshot userSnapshot =
+        await usersInfo.doc(widget.adminEmail).get();
     setState(() {
       userInfo = RegisterInfo(
         fullName: userSnapshot['FullName'],
@@ -296,8 +296,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   }
 
   Future<void> updateFullName(String newName) async {
-    String userEmail = FirebaseAuth.instance.currentUser!.email!;
-    await usersInfo.doc(userEmail).update({'FullName': newName});
+    await usersInfo.doc(widget.adminEmail).update({'FullName': newName});
     // Update local state after updating in Firestore
     setState(() {
       userInfo?.fullName = newName;
@@ -305,8 +304,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   }
 
   Future<void> updatePhoneNumber(String newPhoneNumber) async {
-    String userEmail = FirebaseAuth.instance.currentUser!.email!;
-    await usersInfo.doc(userEmail).update({'PhoneNumber': newPhoneNumber});
+    await usersInfo
+        .doc(widget.adminEmail)
+        .update({'PhoneNumber': newPhoneNumber});
     // Update local state after updating in Firestore
     setState(() {
       userInfo?.phoneNumber = newPhoneNumber;
@@ -318,8 +318,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
       User? user = FirebaseAuth.instance.currentUser;
       await user!.updatePassword(newPassword);
 
-      String userEmail = user.email!;
-      await usersInfo.doc(userEmail).update({'Password': newPassword});
+      await usersInfo.doc(widget.adminEmail).update({'Password': newPassword});
       // Show success message or navigate to another screen
       // You can also update the UI as needed
     } catch (e) {
@@ -331,8 +330,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   // Function to update the selected city in Firestore
   Future<void> updateCity(String newCity) async {
     try {
-      String userEmail = FirebaseAuth.instance.currentUser!.email!;
-      await usersInfo.doc(userEmail).update({'City': newCity});
+      await usersInfo.doc(widget.adminEmail).update({'City': newCity});
 
       // Update local state after updating in Firestore
       setState(() {
@@ -386,9 +384,10 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   }
 
   Future<void> _updateBirthDate(DateTime newDate) async {
-    String userEmail = FirebaseAuth.instance.currentUser!.email!;
     String formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
-    await usersInfo.doc(userEmail).update({'BirthOfDate': formattedDate});
+    await usersInfo
+        .doc(widget.adminEmail)
+        .update({'BirthOfDate': formattedDate});
     setState(() {
       userInfo?.birthOfDate = formattedDate;
     });

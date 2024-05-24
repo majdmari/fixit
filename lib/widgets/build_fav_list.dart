@@ -18,7 +18,7 @@ class BuildlistFav extends StatelessWidget {
         decoration: BoxDecoration(
           color: Color(0Xff2B2831),
         ),
-        height: 100,
+        height: 120,
         child: FavInfo(userDocument: userDocument, onRemove: onRemove),
       ),
     );

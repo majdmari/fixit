@@ -132,84 +132,96 @@ class FavInfo extends StatelessWidget {
       color: KSf2, // Set the background color to KSf2
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Row(
+        child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                imageUrl ?? '',
-                width: 70,
-                height: 70,
-                fit: BoxFit.cover,
-              ),
-            ),
             Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+              padding: const EdgeInsets.only(left: 80),
+              child: Row(
                 children: [
                   Text(
                     fullName ?? 'Unknown',
                     style: TextStyle(
-                      color: Colors.white, // Set text color to white
+                      color: Colors.white,
                       fontSize: 20,
+                      fontFamily: Kword,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Colors.white, // Set icon color to white
-                        size: 18,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        averageRating!.toStringAsFixed(2),
-                        style: TextStyle(
-                          color: Colors.white, // Set text color to white
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        city ?? 'Unknown',
-                        style: TextStyle(
-                          color: Colors.white, // Set text color to white
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),
-            Spacer(),
-            RawMaterialButton(
-              onPressed: onRemove,
-              elevation: 2.0,
-              fillColor: KSf2,
-              child: Icon(
-                Icons.favorite,
-                color: Colors.red,
-                size: 35.0,
-              ),
-              padding: EdgeInsets.all(15.0),
-              shape: CircleBorder(),
-            ),
-            RawMaterialButton(
-              onPressed: () {
-                FlutterPhoneDirectCaller.callNumber(phoneNumber.toString());
-              },
-              elevation: 2.0,
-              fillColor: KSf2,
-              child: Icon(
-                Icons.phone,
-                color: kPrimaryColor,
-                size: 35.0,
-              ),
-              padding: EdgeInsets.all(15.0),
-              shape: CircleBorder(),
+            Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    imageUrl ?? '',
+                    width: 70,
+                    height: 70,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.white, // Set icon color to white
+                            size: 18,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            averageRating!.toStringAsFixed(2),
+                            style: TextStyle(
+                              color: Colors.white, // Set text color to white
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            city ?? 'Unknown',
+                            style: TextStyle(
+                              color: Colors.white, // Set text color to white
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Spacer(),
+                RawMaterialButton(
+                  onPressed: onRemove,
+                  elevation: 2.0,
+                  fillColor: KSf2,
+                  child: Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                    size: 35.0,
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+                RawMaterialButton(
+                  onPressed: () {
+                    FlutterPhoneDirectCaller.callNumber(phoneNumber.toString());
+                  },
+                  elevation: 2.0,
+                  fillColor: KSf2,
+                  child: Icon(
+                    Icons.phone,
+                    color: kPrimaryColor,
+                    size: 35.0,
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+              ],
             ),
           ],
         ),
