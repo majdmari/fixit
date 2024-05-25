@@ -74,6 +74,8 @@
 //     );
 //   }
 // }
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
@@ -148,11 +150,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               text: _selectedSubscription == 'paid_subscription'
                   ? 'Next'
                   : 'Confirm',
-              onTap: () {
+              onTap: () async {
                 if (_selectedSubscription == 'free_trial') {
+                  await updateSubscriptionStatus('no');
                   Navigator.pop(context);
                   // Handle free trial subscription logic here
-                  print('Free Trial selected');
                 } else if (_selectedSubscription == 'paid_subscription') {
                   Navigator.pushNamed(context, PaymentScreen.id);
 
@@ -168,5 +170,16 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> updateSubscriptionStatus(String status) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final email = user?.email;
+    if (email != null) {
+      await FirebaseFirestore.instance
+          .collection('tradepersons')
+          .doc(email)
+          .update({'isSubscribed': status});
+    }
   }
 }

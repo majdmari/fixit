@@ -20,6 +20,7 @@ class RegisterInfo {
   String? selectedStatus;
   num? reviewsNumber;
   num? averageRating;
+  String? isSubscribed;
 
   RegisterInfo(
       {this.selectedOption,
@@ -38,7 +39,8 @@ class RegisterInfo {
       this.selectedImage,
       this.imagePickerFire,
       this.averageRating,
-      this.reviewsNumber});
+      this.reviewsNumber,
+      this.isSubscribed});
 }
 
 class RegisterViewModel extends ChangeNotifier {
