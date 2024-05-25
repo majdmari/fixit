@@ -9,7 +9,8 @@ class CustomTextField extends StatelessWidget {
       this.icon,
       required this.label,
       this.keyboardType,
-      this.controller});
+      this.controller,
+      this.validator});
   IconData? icon;
   String? hintText;
   String label;
@@ -17,6 +18,8 @@ class CustomTextField extends StatelessWidget {
   Function(String)? onChanged;
   TextEditingController? controller;
   TextInputType? keyboardType;
+  final FormFieldValidator<String>? validator;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -24,11 +27,12 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       style: TextStyle(color: Colors.white),
       obscureText: obscureText!,
-      validator: (data) {
-        if (data!.isEmpty) {
-          return 'Field is required';
-        }
-      },
+      validator: validator ??
+          (data) {
+            if (data!.isEmpty) {
+              return 'Field is required';
+            }
+          },
       onChanged: onChanged,
       decoration: InputDecoration(
         label: Text(label),

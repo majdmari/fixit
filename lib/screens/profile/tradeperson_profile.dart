@@ -125,9 +125,21 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                       )
                     ],
                   ),
-                  Text(
-                    userInfo?.category ?? '',
-                    style: TextStyle(color: Colors.grey, fontSize: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 105),
+                    child: Row(
+                      children: [
+                        Text(
+                          userInfo?.category ?? '',
+                          style: TextStyle(color: Colors.grey, fontSize: 20),
+                        ),
+                        if (userInfo?.isSubscribed == 'yes')
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                          ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -437,12 +449,63 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     ],
                   ),
                   SizedBox(height: 15),
-                  CustomButton(
-                    text: 'Subcribe',
-                    onTap: () {
-                      Navigator.pushNamed(context, SubscriptionScreen.id);
-                    },
-                  ),
+                  if (userInfo?.isSubscribed == 'yes')
+                    CustomButton(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: KSurface,
+                              title: Text(
+                                'Cancel Subscribe',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              content: Text(
+                                'Are you sure to Cancel Subscribe?',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () async {
+                                    await updateSubscriptionStatus('no');
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    'NO',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      text: 'Cancel Subscribe',
+                    )
+                  else
+                    CustomButton(
+                      onTap: () {
+                        // Navigator.pushNamed(context, SubscriptionScreen.id);
+                        Navigator.pushNamed(context, SubscriptionScreen.id)
+                            .then((result) {
+                          if (result != null && result == true) {
+                            // If payment information was saved successfully, fetch user data again
+                            fetchUserData();
+                          }
+                        });
+                      },
+                      text: 'Subscribe',
+                    ),
                   SizedBox(height: 15),
                 ],
               ),
@@ -451,6 +514,22 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> updateSubscriptionStatus(String status) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final email = user?.email;
+    if (email != null) {
+      await FirebaseFirestore.instance
+          .collection('tradepersons')
+          .doc(email)
+          .update({'isSubscribed': status});
+
+      // Update local state after updating in Firestore
+      setState(() {
+        userInfo?.isSubscribed = status;
+      });
+    }
   }
 
   Future<void> fetchUserData() async {
@@ -472,7 +551,9 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
         category: userSnapshot['Category'],
         selectedStatus: userSnapshot['Status'],
         reviewsNumber: userSnapshot['ReviewsNumber'], // Add this line
-        averageRating: userSnapshot['AverageRating'], // Add this line
+        averageRating: userSnapshot['AverageRating'],
+        isSubscribed: userSnapshot['isSubscribed'],
+        // Add this line
 
         // Add other fields as needed
       );
