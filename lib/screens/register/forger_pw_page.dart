@@ -1,3 +1,4 @@
+import 'package:fixit/constants.dart';
 import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
@@ -25,14 +26,16 @@ class _ForgetpaswordpageState extends State<Forgetpaswordpage> {
           title: Text('Forget Password'),
           backgroundColor: Color(0XffB73B67),
         ),
+        backgroundColor: KSurface,
         body: Padding(
             padding: const EdgeInsets.all(30),
             child: Form(
                 child: ListView(children: [
               Text(
                 'Enter your email and we will send you a password reset link',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
+              SizedBox(height: 16),
               CustomTextField(
                 onChanged: (value) {
                   registerInfo.email = value;
