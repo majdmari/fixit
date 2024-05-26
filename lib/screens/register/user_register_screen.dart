@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/resources/add_data.dart';
+import 'package:fixit/screens/login_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
@@ -158,8 +159,8 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
                           if (registerInfo.selectedCity == null) {
-                            showCustomDialog(
-                                context, "You can't leave City empty.");
+                            showCustomDialog(context,
+                                "You can't leave City empty.", 'Error');
                             return;
                           }
                           isLoading = true;
@@ -201,6 +202,12 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                               .update(additionalData);
                           isLoading = false;
                           setState(() {});
+                          registerViewModel.emailController.text = '';
+                          await showCustomDialogg(
+                              context,
+                              'your account created successfully',
+                              'Create account');
+                          Navigator.pushNamed(context, LoginScreen.id);
                         }
                       },
                     ),
@@ -249,7 +256,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
               Expanded(
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
-                  minimumDate: DateTime(1990),
+                  minimumDate: DateTime(1900),
                   maximumDate: DateTime.now().add(Duration(days: 1)),
                   initialDateTime: _selectedDate ?? DateTime.now(),
                   onDateTimeChanged: (DateTime newDateTime) {
@@ -266,11 +273,24 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
     );
   }
 
-  void showCustomDialog(BuildContext context, String message) {
+  void showCustomDialog(BuildContext context, String message, String? title) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return CustomAlertDialog(message: message);
+      },
+    );
+  }
+
+  Future<void> showCustomDialogg(
+      BuildContext context, String message, String? title) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          message: message,
+          title: title,
+        );
       },
     );
   }

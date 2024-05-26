@@ -978,22 +978,26 @@
 //   }
 // }
 import 'package:fixit/constants.dart';
+import 'package:fixit/screens/login_screen.dart';
+import 'package:fixit/screens/register/user_model.dart';
+import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
-class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({Key? key}) : super(key: key);
-  static String id = 'PaymentScreen';
+class PaymentRegScreen extends StatefulWidget {
+  const PaymentRegScreen({Key? key}) : super(key: key);
+  static String id = 'PaymentRegScreen';
 
   @override
-  State<PaymentScreen> createState() => _PaymentScreenState();
+  State<PaymentRegScreen> createState() => _PaymentRegScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
+class _PaymentRegScreenState extends State<PaymentRegScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   final TextEditingController visaController = TextEditingController();
   final TextEditingController expDateController = TextEditingController();
@@ -1012,10 +1016,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     super.dispose();
   }
 
-  Future<void> savePaymentInformation() async {
-    final user = _auth.currentUser;
-    if (user != null) {
-      final email = user.email;
+  Future<void> savePaymentInformation(String email) async {
+    if (email != null) {
       final paymentInfoRef =
           _firestore.collection('paymentInformation').doc(email);
       final tradepersonsRef = _firestore.collection('tradepersons').doc(email);
@@ -1121,6 +1123,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final RegisterViewModel registerViewModel =
+        Provider.of<RegisterViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -1213,9 +1217,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
               CustomButton(
                 onTap: () async {
                   if (formKey.currentState!.validate()) {
-                    await savePaymentInformation();
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
+                    await savePaymentInformation(
+                        registerViewModel.emailController.text);
+                    await showCustomDialogg(context,
+                        'your Subscription was successfully', 'Subscription');
+                    registerViewModel.emailController.text = '';
+                    Navigator.pushNamed(context, LoginScreen.id);
                   }
                 },
                 text: 'Done',
@@ -1224,6 +1231,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> showCustomDialogg(
+      BuildContext context, String message, String? title) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          message: message,
+          title: title,
+        );
+      },
     );
   }
 }
