@@ -8,15 +8,18 @@ import 'package:fixit/screens/admins/generate_report_screen.dart';
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';
+import 'package:fixit/screens/payment_reg_screen.dart';
 import 'package:fixit/screens/payment_screen.dart';
 import 'package:fixit/screens/profile/tradeperson_profile.dart';
 import 'package:fixit/screens/profile/user_profile.dart';
 import 'package:fixit/screens/register/forger_pw_page.dart';
+import 'package:fixit/screens/register/forget_pw_change_firestore_screen.dart';
 import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/tradeperson_register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/register/user_register_screen.dart';
 import 'package:fixit/screens/splash.dart';
+import 'package:fixit/screens/subscription_reg_screen.dart';
 import 'package:fixit/screens/subscription_screen.dart';
 import 'package:fixit/screens/tradeperson_list_screen.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
@@ -69,6 +72,10 @@ class Fixit extends StatelessWidget {
         AddCategory.id: (context) => AddCategory(),
         SubscriptionScreen.id: (context) => SubscriptionScreen(),
         PaymentScreen.id: (context) => PaymentScreen(),
+        ForgetPaswordChangeFirePage.id: (context) =>
+            ForgetPaswordChangeFirePage(),
+        PaymentRegScreen.id: (context) => PaymentRegScreen(),
+        SubscriptionRegScreen.id: (context) => SubscriptionRegScreen(),
       },
       // initialRoute: SplashScreen.id,
       debugShowCheckedModeBanner: false,

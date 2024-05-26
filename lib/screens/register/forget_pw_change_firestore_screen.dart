@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit/constants.dart';
 import 'package:fixit/screens/login_screen.dart';
-import 'package:fixit/screens/register/forget_pw_change_firestore_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
@@ -13,15 +13,17 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class Forgetpaswordpage extends StatefulWidget {
-  const Forgetpaswordpage({super.key});
-  static String id = 'Forgetpaswordpage';
+class ForgetPaswordChangeFirePage extends StatefulWidget {
+  const ForgetPaswordChangeFirePage({super.key});
+  static String id = 'ForgetPaswordChangeFirePage';
 
   @override
-  State<Forgetpaswordpage> createState() => _ForgetpaswordpageState();
+  State<ForgetPaswordChangeFirePage> createState() =>
+      _ForgetPaswordChangeFirePageState();
 }
 
-class _ForgetpaswordpageState extends State<Forgetpaswordpage> {
+class _ForgetPaswordChangeFirePageState
+    extends State<ForgetPaswordChangeFirePage> {
   RegisterInfo registerInfo = RegisterInfo();
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
@@ -33,7 +35,7 @@ class _ForgetpaswordpageState extends State<Forgetpaswordpage> {
       inAsyncCall: isLoading,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Forget Password'),
+          title: Text('Change Password'),
           backgroundColor: Color(0XffB73B67),
         ),
         backgroundColor: KSurface,
@@ -44,51 +46,48 @@ class _ForgetpaswordpageState extends State<Forgetpaswordpage> {
             child: ListView(
               children: [
                 Text(
-                  'Enter your email and we will send you a password reset link',
+                  'Type the password you just changed from your browser.',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 SizedBox(height: 16),
                 CustomTextField(
-                  controller: registerViewModel.emailController,
                   onChanged: (value) {
-                    registerInfo.email = value;
+                    registerInfo.password = value;
                   },
-                  hintText: 'Type your email here',
-                  label: 'Email',
+                  hintText: 'Type your new password here',
+                  label: 'Password',
                 ),
                 SizedBox(
                   height: 16,
                 ),
-                // CustomButton(
-                //   text: 'reset password',
-                //   onTap: () async {
-                //     await FirebaseAuth.instance
-                //         .sendPasswordResetEmail(email: registerInfo.email!);
-                //     showCustomDialog(
-                //         context, 'Check your email inbox .', 'Rest Password');
-                //     Navigator.pushNamed(context, LoginScreen.id);
-                //   },
-                // ),
                 CustomButton(
-                  text: 'Reset Password',
+                  text: 'Change Password',
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      if (registerInfo.email == null) {
+                      if (registerInfo.password == null) {
                         showCustomDialog(context,
-                            "You can't Email Password empty.", 'error');
+                            "You can't leave Password empty.", 'error');
                         return;
                       }
                       isLoading = true;
                       setState(() {});
 
-                      await FirebaseAuth.instance
-                          .sendPasswordResetEmail(email: registerInfo.email!);
+                      Map<String, dynamic> password = {
+                        'Password': registerInfo.password,
+                      };
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(registerViewModel.emailController.text)
+                          .update(password);
                       isLoading = false;
                       setState(() {});
                       await showCustomDialog(
-                          context, 'Check your email inbox.', 'Rest Password');
-                      Navigator.pushNamed(
-                          context, ForgetPaswordChangeFirePage.id);
+                          context,
+                          'your password change successfully .',
+                          'Change Password');
+                      registerViewModel.emailController.text = '';
+
+                      Navigator.pushNamed(context, LoginScreen.id);
                     }
                   },
                 ),

@@ -166,7 +166,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //       .doc()
                             //       .set({});
                             // }
-                            showSnackBar(context, 'Success');
+
                             if (registerInfo.selectedOption == "User") {
                               Navigator.pushNamed(
                                   context, UserRegisterScreen.id);

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String message;
+  final String? title;
 
   const CustomAlertDialog({
     required this.message,
+    this.title,
   });
 
   @override
@@ -13,7 +15,7 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: KSurface,
       title: Text(
-        'Error',
+        title ?? "Error",
         style: TextStyle(color: Colors.red),
       ),
       content: Text(

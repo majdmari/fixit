@@ -162,6 +162,7 @@ import 'package:fixit/screens/register/register_screen.dart';
 import 'package:fixit/screens/register/user_model.dart';
 import 'package:fixit/screens/welcom_secreen.dart';
 import 'package:fixit/widgets/admin_nav_bar.dart';
+import 'package:fixit/widgets/custom_alert_message.dart';
 import 'package:fixit/widgets/custom_button.dart';
 import 'package:fixit/widgets/custom_text_field.dart';
 import 'package:fixit/widgets/tradeperson_nav_bar.dart';
@@ -294,6 +295,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void showCustomDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(message: message);
+      },
+    );
+  }
+
   Future<void> loginUser() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -343,10 +353,11 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         // User not found in either collection, handle accordingly
         // For example, show an error message
-        showSnackBar(context, 'User not found.');
+        showCustomDialog(context, 'User not found.');
       }
     } catch (ex) {
-      showSnackBar(context, 'There was an error with the email or password.');
+      showCustomDialog(
+          context, 'There was an error with the email or password.');
     }
   }
 }
