@@ -1012,7 +1012,7 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: Text(
           'Profile',
           style: TextStyle(color: Colors.white, fontFamily: Kword),

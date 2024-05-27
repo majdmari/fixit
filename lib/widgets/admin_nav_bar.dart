@@ -27,29 +27,37 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
       )
     ];
 
-    return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        backgroundColor: KSurface,
-        selectedItemColor: Color(0XffB73B67),
-        unselectedItemColor: Colors.white,
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          backgroundColor: KSurface,
+          selectedItemColor: Color(0XffB73B67),
+          unselectedItemColor: Colors.white,
+        ),
       ),
     );
+  }
+
+  // Function to handle back button press
+  Future<bool> _onBackPressed() async {
+    return false;
   }
 }

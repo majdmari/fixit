@@ -407,191 +407,195 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
   Widget build(BuildContext context) {
     final RegisterViewModel registerViewModel =
         Provider.of<RegisterViewModel>(context);
-    return ModalProgressHUD(
-      inAsyncCall: isLoading,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Register',
-            style: TextStyle(color: Colors.white, fontFamily: Kword),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: ModalProgressHUD(
+        inAsyncCall: isLoading,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Register',
+              style: TextStyle(color: Colors.white, fontFamily: Kword),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
           ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-        ),
-        backgroundColor: KSurface,
-        body: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: _pickImage,
-                      child: CircleAvatar(
-                        radius: 70,
-                        backgroundColor: Colors.white,
-                        child: registerInfo.selectedImage != null
-                            ? CircleAvatar(
-                                backgroundImage:
-                                    MemoryImage(registerInfo.selectedImage!),
-                                radius: 68,
-                              )
-                            : CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'),
-                                radius: 68,
-                              ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.fullName = value;
-                      },
-                      hintText: 'Type your Name here',
-                      label: 'Full Name',
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.phoneNumber = value;
-                      },
-                      hintText: '0799999999',
-                      keyboardType: TextInputType.number,
-                      label: 'Phone number',
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      onTap: _showDatePicker,
-                      child: AbsorbPointer(
-                        child: CustomTextField(
-                          icon: Icons.date_range,
-                          controller: TextEditingController(
-                              text: _selectedDate != null
-                                  ? DateFormat('dd/MM/yyyy')
-                                      .format(_selectedDate!)
-                                  : null),
-                          hintText: 'DD/MM/YYYY',
-                          label: 'Birth of Date',
+          backgroundColor: KSurface,
+          body: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Form(
+              key: formKey,
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: _pickImage,
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundColor: Colors.white,
+                          child: registerInfo.selectedImage != null
+                              ? CircleAvatar(
+                                  backgroundImage:
+                                      MemoryImage(registerInfo.selectedImage!),
+                                  radius: 68,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'),
+                                  radius: 68,
+                                ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomDropdown<String>(
-                      items: categories,
-                      hintText: "Category in menu mode",
-                      labelText: "Category",
-                      initialValue: null,
-                      dropdownMenuBackgroundColor: KSf2,
-                      onChanged: (String? value) {
-                        setState(() {
-                          registerInfo.category = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.address = value;
-                      },
-                      hintText: 'Type your address here',
-                      label: 'Address',
-                    ),
-                    SizedBox(height: 10),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.desc = value;
-                      },
-                      hintText: 'Type about you here',
-                      label: 'Description',
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    CustomButton(
-                      text: 'Done',
-                      onTap: () async {
-                        if (formKey.currentState!.validate()) {
-                          if (registerInfo.category == null) {
-                            showCustomDialog(
-                                context, "You can't leave Category empty.");
-                            return;
-                          }
-                          isLoading = true;
-                          setState(() {});
-                          String ImageUrl = '';
-                          if (registerInfo.selectedImage != null) {
-                            ImageUrl = await StoreDate().uploadImageToStorage(
-                                // registerViewModel.emailController.text,
-
-                                registerInfo.selectedImage!,
-                                context);
-                          } else {
-                            DocumentSnapshot userSnapshot =
-                                await FirebaseFirestore.instance
-                                    .collection('tradepersons')
-                                    .doc(registerViewModel.emailController.text)
-                                    .get();
-                            String gender = userSnapshot.get('Gender');
-                            // Upload default image based on gender
-                            if (gender == 'Male') {
-                              ImageUrl = await _uploadDefaultImage(
-                                  'assets/images/male.png', context);
-                            } else if (gender == 'Female') {
-                              ImageUrl = await _uploadDefaultImage(
-                                  'assets/images/female.png', context);
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.fullName = value;
+                        },
+                        hintText: 'Type your Name here',
+                        label: 'Full Name',
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.phoneNumber = value;
+                        },
+                        hintText: '0799999999',
+                        keyboardType: TextInputType.number,
+                        label: 'Phone number',
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: _showDatePicker,
+                        child: AbsorbPointer(
+                          child: CustomTextField(
+                            icon: Icons.date_range,
+                            controller: TextEditingController(
+                                text: _selectedDate != null
+                                    ? DateFormat('dd/MM/yyyy')
+                                        .format(_selectedDate!)
+                                    : null),
+                            hintText: 'DD/MM/YYYY',
+                            label: 'Birth of Date',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomDropdown<String>(
+                        items: categories,
+                        hintText: "Category in menu mode",
+                        labelText: "Category",
+                        initialValue: null,
+                        dropdownMenuBackgroundColor: KSf2,
+                        onChanged: (String? value) {
+                          setState(() {
+                            registerInfo.category = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.address = value;
+                        },
+                        hintText: 'Type your address here',
+                        label: 'Address',
+                      ),
+                      SizedBox(height: 10),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.desc = value;
+                        },
+                        hintText: 'Type about you here',
+                        label: 'Description',
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                      CustomButton(
+                        text: 'Done',
+                        onTap: () async {
+                          if (formKey.currentState!.validate()) {
+                            if (registerInfo.category == null) {
+                              showCustomDialog(
+                                  context, "You can't leave Category empty.");
+                              return;
                             }
-                          }
-                          Map<String, dynamic> additionalData = {
-                            'FullName': registerInfo.fullName,
-                            'PhoneNumber': registerInfo.phoneNumber,
-                            'BirthOfDate': _selectedDate != null
-                                ? DateFormat('dd/MM/yyyy')
-                                    .format(_selectedDate!)
-                                : '',
-                            'City': registerInfo.selectedCity,
-                            'Address': registerInfo.address,
-                            'Category': registerInfo.category,
-                            'Description': registerInfo.desc,
-                            'ImageLink': ImageUrl,
-                            'TotalRating': 0,
-                            'ReviewsNumber': 0,
-                            'AverageRating': 0
-                          };
-                          await FirebaseFirestore.instance
-                              .collection('tradepersons')
-                              .doc(registerViewModel.emailController.text)
-                              .update(additionalData);
-                          isLoading = false;
-                          setState(() {});
+                            isLoading = true;
+                            setState(() {});
+                            String ImageUrl = '';
+                            if (registerInfo.selectedImage != null) {
+                              ImageUrl = await StoreDate().uploadImageToStorage(
+                                  // registerViewModel.emailController.text,
 
-                          await showCustomDialogg(
-                              context,
-                              'your account created successfully',
-                              'Create account');
-                          Navigator.pushNamed(
-                              context, SubscriptionRegScreen.id);
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                  ],
-                ),
-              ],
+                                  registerInfo.selectedImage!,
+                                  context);
+                            } else {
+                              DocumentSnapshot userSnapshot =
+                                  await FirebaseFirestore.instance
+                                      .collection('tradepersons')
+                                      .doc(registerViewModel
+                                          .emailController.text)
+                                      .get();
+                              String gender = userSnapshot.get('Gender');
+                              // Upload default image based on gender
+                              if (gender == 'Male') {
+                                ImageUrl = await _uploadDefaultImage(
+                                    'assets/images/male.png', context);
+                              } else if (gender == 'Female') {
+                                ImageUrl = await _uploadDefaultImage(
+                                    'assets/images/female.png', context);
+                              }
+                            }
+                            Map<String, dynamic> additionalData = {
+                              'FullName': registerInfo.fullName,
+                              'PhoneNumber': registerInfo.phoneNumber,
+                              'BirthOfDate': _selectedDate != null
+                                  ? DateFormat('dd/MM/yyyy')
+                                      .format(_selectedDate!)
+                                  : '',
+                              'City': registerInfo.selectedCity,
+                              'Address': registerInfo.address,
+                              'Category': registerInfo.category,
+                              'Description': registerInfo.desc,
+                              'ImageLink': ImageUrl,
+                              'TotalRating': 0,
+                              'ReviewsNumber': 0,
+                              'AverageRating': 0
+                            };
+                            await FirebaseFirestore.instance
+                                .collection('tradepersons')
+                                .doc(registerViewModel.emailController.text)
+                                .update(additionalData);
+                            isLoading = false;
+                            setState(() {});
+
+                            await showCustomDialogg(
+                                context,
+                                'your account created successfully',
+                                'Create account');
+                            Navigator.pushNamed(
+                                context, SubscriptionRegScreen.id);
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -659,6 +663,11 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
         );
       },
     );
+  }
+
+  // Function to handle back button press
+  Future<bool> _onBackPressed() async {
+    return false;
   }
 
   void showCustomDialog(BuildContext context, String message) {
