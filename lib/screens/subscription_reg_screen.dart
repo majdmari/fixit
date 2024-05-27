@@ -160,6 +160,8 @@ class _SubscriptionRegScreenState extends State<SubscriptionRegScreen> {
                 if (_selectedSubscription == 'free_trial') {
                   await updateSubscriptionStatus(
                       'no', registerViewModel.emailController.text);
+                  registerViewModel.emailController.text = '';
+
                   Navigator.pushNamed(context, LoginScreen.id);
                   // Handle free trial subscription logic here
                 } else if (_selectedSubscription == 'paid_subscription') {
