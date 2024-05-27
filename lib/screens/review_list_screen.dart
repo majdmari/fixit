@@ -209,7 +209,11 @@ class ReviewListScreen extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('No comments available'));
+            return Center(
+                child: Text(
+              'No comments available',
+              style: TextStyle(color: Colors.white),
+            ));
           }
           final comments = snapshot.data!.docs;
           return ListView.builder(
