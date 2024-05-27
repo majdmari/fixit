@@ -1045,6 +1045,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
   String? selectedCity;
   int? selectedRating;
   String? searchKeyword;
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -1067,6 +1068,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
             padding:
                 const EdgeInsets.only(left: 25, right: 25, bottom: 6, top: 12),
             child: TextField(
+              controller: searchController,
               cursorColor: kPrimaryColor,
               cursorHeight: 20,
               style: TextStyle(color: Colors.white),
@@ -1092,6 +1094,7 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                   onPressed: () {
                     setState(() {
                       searchKeyword = null;
+                      searchController.clear(); // Clear the text field
                     });
                   },
                 ),

@@ -223,6 +223,24 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   String? selectedCity;
   String? selectedCategory;
   String? searchKeyword;
+  List<String> categories = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCategories();
+  }
+
+  Future<void> fetchCategories() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection('Categorys').get();
+    setState(() {
+      categories =
+          querySnapshot.docs.map((doc) => doc['Category'] as String).toList();
+      categories.insert(0, 'All'); // Add "All" to the beginning of the list
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,6 +259,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
             padding:
                 const EdgeInsets.only(left: 25, right: 25, bottom: 6, top: 12),
             child: TextField(
+              controller: searchController,
               cursorColor: kPrimaryColor,
               cursorHeight: 20,
               style: TextStyle(color: Colors.white),
@@ -266,6 +285,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                   onPressed: () {
                     setState(() {
                       searchKeyword = null;
+                      searchController.clear(); // Clear the text field
                     });
                   },
                 ),
@@ -319,7 +339,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: CustomDropdown<String>(
-                    items: ['All', 'Electrician', 'Plumber', 'Carpenter'],
+                    items: categories,
                     hintText: 'All',
                     labelText: 'Category',
                     initialValue: selectedCategory,

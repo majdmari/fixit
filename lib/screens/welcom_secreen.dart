@@ -159,7 +159,7 @@ class _WelcomScreenState extends State<WelcomScreen> {
                 ],
               ),
               SizedBox(
-                height: 70,
+                height: 10,
               ),
               CircleAvatar(
                   radius: 152,
