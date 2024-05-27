@@ -35,6 +35,22 @@ class _AddTradepersonState extends State<AddTradeperson> {
   bool isLoading = false;
   DateTime? _selectedDate;
   String? TradeEmail;
+  List<String> categories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCategories();
+  }
+
+  Future<void> fetchCategories() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection('Categorys').get();
+    setState(() {
+      categories =
+          querySnapshot.docs.map((doc) => doc['Category'] as String).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,18 +197,7 @@ class _AddTradepersonState extends State<AddTradeperson> {
                     ),
                     SizedBox(height: 10),
                     CustomDropdown<String>(
-                      items: [
-                        'Electrician',
-                        'Plumber',
-                        'Carpenter',
-                        'Painter',
-                        'Mason',
-                        'Mechanic',
-                        'Handyman',
-                        'HVAC Technician',
-                        'Locksmith',
-                        'Roofing Contractor',
-                      ],
+                      items: categories,
                       hintText: "Category in menu mode",
                       labelText: "Category",
                       initialValue: null,

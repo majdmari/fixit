@@ -408,6 +408,7 @@ class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
   String? searchKeyword;
   late List<Map<String, String>> categories = [];
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -465,6 +466,7 @@ class _HomepageState extends State<Homepage> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
+              controller: searchController,
               cursorColor: Color(0XffB73B67),
               cursorHeight: 20,
               style: TextStyle(color: Colors.white),
@@ -490,6 +492,7 @@ class _HomepageState extends State<Homepage> {
                   onPressed: () {
                     setState(() {
                       searchKeyword = null;
+                      searchController.clear(); // Clear the text field
                     });
                   },
                 ),
