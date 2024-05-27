@@ -188,111 +188,119 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final RegisterViewModel registerViewModel =
         Provider.of<RegisterViewModel>(context);
-    return ModalProgressHUD(
-      inAsyncCall: isLoading,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Login',
-            style: TextStyle(color: Colors.white, fontFamily: Kword),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: ModalProgressHUD(
+        inAsyncCall: isLoading,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Login',
+              style: TextStyle(color: Colors.white, fontFamily: Kword),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
           ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-        ),
-        backgroundColor: KSurface,
-        body: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    CustomTextField(
-                      controller: registerViewModel.emailController,
-                      onChanged: (value) {
-                        registerInfo.email = value;
-                      },
-                      hintText: 'Type your email here',
-                      label: 'Email',
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.password = value;
-                      },
-                      hintText: 'Type your password here',
-                      label: 'Password',
-                      obscureText: true,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, Forgetpaswordpage.id);
+          backgroundColor: KSurface,
+          body: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Form(
+              key: formKey,
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      CustomTextField(
+                        controller: registerViewModel.emailController,
+                        onChanged: (value) {
+                          registerInfo.email = value;
                         },
-                        child: Text(
-                          'Forget your Password?',
-                          style:
-                              TextStyle(color: Colors.grey, fontFamily: Kword),
-                        ),
+                        hintText: 'Type your email here',
+                        label: 'Email',
                       ),
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    CustomButton(
-                      text: 'Login',
-                      onTap: () async {
-                        if (formKey.currentState!.validate()) {
-                          isLoading = true;
-                          setState(() {});
-
-                          await loginUser();
-
-                          isLoading = false;
-                          setState(() {});
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Do not have an account?',
-                          style:
-                              TextStyle(color: Colors.grey, fontFamily: Kword),
-                        ),
-                        GestureDetector(
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.password = value;
+                        },
+                        hintText: 'Type your password here',
+                        label: 'Password',
+                        obscureText: true,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, RegisterScreen.id);
+                            Navigator.pushNamed(context, Forgetpaswordpage.id);
                           },
                           child: Text(
-                            ' Register',
-                            style:
-                                TextStyle(color: KSecondary, fontFamily: Kword),
+                            'Forget your Password?',
+                            style: TextStyle(
+                                color: Colors.grey, fontFamily: Kword),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                      CustomButton(
+                        text: 'Login',
+                        onTap: () async {
+                          if (formKey.currentState!.validate()) {
+                            isLoading = true;
+                            setState(() {});
+
+                            await loginUser();
+
+                            isLoading = false;
+                            setState(() {});
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Do not have an account?',
+                            style: TextStyle(
+                                color: Colors.grey, fontFamily: Kword),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, RegisterScreen.id);
+                            },
+                            child: Text(
+                              ' Register',
+                              style: TextStyle(
+                                  color: KSecondary, fontFamily: Kword),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  // Function to handle back button press
+  Future<bool> _onBackPressed() async {
+    return false;
   }
 
   void showCustomDialog(BuildContext context, String message) {

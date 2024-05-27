@@ -338,13 +338,12 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       child: Scaffold(
         backgroundColor: KSurface,
         appBar: AppBar(
+          centerTitle: true,
           elevation: 0,
           backgroundColor: KSurface,
-          title: Center(
-            child: Text(
-              'Write a review',
-              style: TextStyle(fontFamily: Kword),
-            ),
+          title: Text(
+            'Write a review',
+            style: TextStyle(fontFamily: Kword),
           ),
         ),
         body: Padding(
@@ -443,9 +442,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                         text: 'Submit',
                         onTap: () async {
                           if (_rating == 0) {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(content: Text('Please select a rating.')),
-                            // );
                             showCustomDialog(
                                 context, 'Please select a rating.');
                             return;
@@ -453,10 +449,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
                           if (widget.comment == null ||
                               widget.comment!.isEmpty) {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(
-                            //       content: Text('Please write a comment.')),
-                            // );
                             showCustomDialog(
                                 context, 'Please write a comment.');
                             return;

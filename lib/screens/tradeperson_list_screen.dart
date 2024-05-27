@@ -1172,7 +1172,10 @@ class _TradepersonListScreenState extends State<TradepersonListScreen> {
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return Center(
-                    child: Text('No data available'),
+                    child: Text(
+                      "There's no Tradeperson here yet",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   );
                 }
 

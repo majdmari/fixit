@@ -32,190 +32,194 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final RegisterViewModel registerViewModel =
         Provider.of<RegisterViewModel>(context);
-    return ModalProgressHUD(
-      inAsyncCall: isLoading,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Register',
-            style: TextStyle(color: Colors.white, fontFamily: Kword),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: ModalProgressHUD(
+        inAsyncCall: isLoading,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Register',
+              style: TextStyle(color: Colors.white, fontFamily: Kword),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
           ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-        ),
-        backgroundColor: KSurface,
-        body: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      controller: registerViewModel.emailController,
-                      onChanged: (value) {
-                        registerInfo.email = value;
-                      },
-                      hintText: 'Type your email here',
-                      label: 'Email',
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.password = value;
-                      },
-                      hintText: 'Type your password here',
-                      label: 'Password',
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextField(
-                      onChanged: (value) {
-                        registerInfo.confirmPassword = value;
-                      },
-                      hintText: 'confirm your password',
-                      label: 'Re-Write Password',
-                    ),
-                    SizedBox(height: 10),
-                    CustomDropdown<String>(
-                      dropdownMenuHeight: 120,
-                      items: ["Male", 'Female'],
-                      hintText: "Gender in menu mode",
-                      labelText: "Gender",
-                      initialValue: null,
-                      dropdownMenuBackgroundColor: KSf2,
-                      onChanged: (String? value) {
-                        setState(() {
-                          registerInfo.selectedGender = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    CustomDropdown<String>(
-                      dropdownMenuHeight: 120,
-                      items: ["User", 'Tradeperson'],
-                      hintText: "User Or Tradeperson",
-                      labelText: "Who you are ?",
-                      initialValue: null,
-                      dropdownMenuBackgroundColor: KSf2,
-                      onChanged: (String? value) {
-                        setState(() {
-                          registerInfo.selectedOption = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    CustomButton(
-                      text: 'Continue',
-                      onTap: () async {
-                        if (formKey.currentState!.validate()) {
-                          if (registerInfo.password !=
-                              registerInfo.confirmPassword) {
-                            showCustomDialog(context, 'Passwords do not match');
-                            return;
-                          }
-                          if (registerInfo.selectedGender == null) {
-                            showCustomDialog(
-                                context, "You can't leave gender empty.");
-                            return;
-                          }
-                          if (registerInfo.selectedOption == null) {
-                            showCustomDialog(
-                                context, "You can't leave who you are empty.");
-                            return;
-                          }
-                          isLoading = true;
-                          setState(() {});
-                          try {
-                            await registerUser();
-                            late CollectionReference
-                                collectionReference; // Declare as late
-                            if (registerInfo.selectedOption == "User") {
-                              collectionReference = FirebaseFirestore.instance
-                                  .collection('users');
-                            } else if (registerInfo.selectedOption ==
-                                "Tradeperson") {
-                              collectionReference = FirebaseFirestore.instance
-                                  .collection('tradepersons');
+          backgroundColor: KSurface,
+          body: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Form(
+              key: formKey,
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        controller: registerViewModel.emailController,
+                        onChanged: (value) {
+                          registerInfo.email = value;
+                        },
+                        hintText: 'Type your email here',
+                        label: 'Email',
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.password = value;
+                        },
+                        hintText: 'Type your password here',
+                        label: 'Password',
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextField(
+                        onChanged: (value) {
+                          registerInfo.confirmPassword = value;
+                        },
+                        hintText: 'confirm your password',
+                        label: 'Re-Write Password',
+                      ),
+                      SizedBox(height: 10),
+                      CustomDropdown<String>(
+                        dropdownMenuHeight: 120,
+                        items: ["Male", 'Female'],
+                        hintText: "Gender in menu mode",
+                        labelText: "Gender",
+                        initialValue: null,
+                        dropdownMenuBackgroundColor: KSf2,
+                        onChanged: (String? value) {
+                          setState(() {
+                            registerInfo.selectedGender = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      CustomDropdown<String>(
+                        dropdownMenuHeight: 120,
+                        items: ["User", 'Tradeperson'],
+                        hintText: "User Or Tradeperson",
+                        labelText: "Who you are ?",
+                        initialValue: null,
+                        dropdownMenuBackgroundColor: KSf2,
+                        onChanged: (String? value) {
+                          setState(() {
+                            registerInfo.selectedOption = value;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                      CustomButton(
+                        text: 'Continue',
+                        onTap: () async {
+                          if (formKey.currentState!.validate()) {
+                            if (registerInfo.password !=
+                                registerInfo.confirmPassword) {
+                              showCustomDialog(
+                                  context, 'Passwords do not match');
+                              return;
                             }
-                            await collectionReference
-                                .doc(registerViewModel.emailController.text)
-                                .set({
-                              'Email': registerInfo.email,
-                              'Password': registerInfo.password,
-                              'Gender': registerInfo.selectedGender,
-                              'Type': registerInfo.selectedOption,
-                              'Status': 'Available '
-                            });
-                            // if (registerInfo.selectedOption == "Tradeperson") {
-                            //   await FirebaseFirestore.instance
-                            //       .collection('Comment')
-                            //       .doc(registerViewModel.emailController.text)
-                            //       .collection('comment')
-                            //       .doc()
-                            //       .set({});
-                            // }
-
-                            if (registerInfo.selectedOption == "User") {
-                              Navigator.pushNamed(
-                                  context, UserRegisterScreen.id);
-                            } else if (registerInfo.selectedOption ==
-                                "Tradeperson") {
-                              Navigator.pushNamed(
-                                  context, TradepersonRegisterScreen.id);
+                            if (registerInfo.selectedGender == null) {
+                              showCustomDialog(
+                                  context, "You can't leave gender empty.");
+                              return;
                             }
-                          } on FirebaseAuthException catch (ex) {
-                            if (ex.code == 'weak-password') {
-                              showCustomDialog(context, 'Weak password');
-                            } else if (ex.code == 'email-already-in-use') {
+                            if (registerInfo.selectedOption == null) {
                               showCustomDialog(context,
-                                  'The account already exists for that email.');
+                                  "You can't leave who you are empty.");
+                              return;
                             }
-                          } catch (ex) {
-                            showCustomDialog(context, 'There was an error');
+                            isLoading = true;
+                            setState(() {});
+                            try {
+                              await registerUser();
+                              late CollectionReference
+                                  collectionReference; // Declare as late
+                              if (registerInfo.selectedOption == "User") {
+                                collectionReference = FirebaseFirestore.instance
+                                    .collection('users');
+                              } else if (registerInfo.selectedOption ==
+                                  "Tradeperson") {
+                                collectionReference = FirebaseFirestore.instance
+                                    .collection('tradepersons');
+                              }
+                              await collectionReference
+                                  .doc(registerViewModel.emailController.text)
+                                  .set({
+                                'Email': registerInfo.email,
+                                'Password': registerInfo.password,
+                                'Gender': registerInfo.selectedGender,
+                                'Type': registerInfo.selectedOption,
+                                'Status': 'Available '
+                              });
+                              // if (registerInfo.selectedOption == "Tradeperson") {
+                              //   await FirebaseFirestore.instance
+                              //       .collection('Comment')
+                              //       .doc(registerViewModel.emailController.text)
+                              //       .collection('comment')
+                              //       .doc()
+                              //       .set({});
+                              // }
+
+                              if (registerInfo.selectedOption == "User") {
+                                Navigator.pushNamed(
+                                    context, UserRegisterScreen.id);
+                              } else if (registerInfo.selectedOption ==
+                                  "Tradeperson") {
+                                Navigator.pushNamed(
+                                    context, TradepersonRegisterScreen.id);
+                              }
+                            } on FirebaseAuthException catch (ex) {
+                              if (ex.code == 'weak-password') {
+                                showCustomDialog(context, 'Weak password');
+                              } else if (ex.code == 'email-already-in-use') {
+                                showCustomDialog(context,
+                                    'The account already exists for that email.');
+                              }
+                            } catch (ex) {
+                              showCustomDialog(context, 'There was an error');
+                            }
+                            isLoading = false;
+                            setState(() {});
                           }
-                          isLoading = false;
-                          setState(() {});
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'already have an account?',
-                          style:
-                              TextStyle(color: Colors.grey, fontFamily: Kword),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            ' Login',
-                            style:
-                                TextStyle(color: KSecondary, fontFamily: Kword),
+                        },
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'already have an account?',
+                            style: TextStyle(
+                                color: Colors.grey, fontFamily: Kword),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              ' Login',
+                              style: TextStyle(
+                                  color: KSecondary, fontFamily: Kword),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -236,5 +240,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return CustomAlertDialog(message: message);
       },
     );
+  }
+
+  // Function to handle back button press
+  Future<bool> _onBackPressed() async {
+    return false;
   }
 }
