@@ -128,8 +128,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     itemSize: 32,
                     itemPadding: EdgeInsets.symmetric(horizontal: 18),
                     itemBuilder: (context, _) => Icon(
-                      Icons.star_border,
-                      color: Colors.white,
+                      Icons.star,
+                      color: Colors.yellow,
                     ),
                     onRatingUpdate: (rating) {
                       setState(() {
@@ -140,6 +140,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                 ),
                 SizedBox(height: 20),
                 TextField(
+                  style: TextStyle(color: Colors.white),
                   focusNode: _textFieldFocusNode,
                   onChanged: (value) {
                     setState(() {
