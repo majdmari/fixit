@@ -1154,8 +1154,27 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        IconButton(
-                          onPressed: () {
+                        GestureDetector(
+                          child: Row(
+                            children: [
+                              Text(
+                                'Rate Now',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Icon(
+                                Icons.rate_review,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1166,11 +1185,6 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                               ),
                             );
                           },
-                          icon: Icon(
-                            Icons.star_rate,
-                            color: Colors.white,
-                            size: 50,
-                          ),
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -1206,6 +1220,11 @@ class _TradepersonDetailsScreenState extends State<TradepersonDetailsScreen> {
                                 );
                               },
                             ),
+                            SizedBox(width: 5),
+                            Icon(
+                              Icons.comment,
+                              color: Colors.white,
+                            )
                           ],
                         ),
                       ],

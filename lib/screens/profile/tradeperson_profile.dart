@@ -410,14 +410,60 @@ class _TradepersonProfileScreenState extends State<TradepersonProfileScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
+                  // CustomButton(
+                  //   text: 'Log out',
+                  //   onTap: () async {
+                  //     final prefs = await SharedPreferences.getInstance();
+                  //     prefs.setBool('isLoggedIn', false);
+                  //     Navigator.pushReplacementNamed(context, LoginScreen.id);
+                  //     registerViewModel.emailController.text = '';
+                  //   },
+                  // ),
                   CustomButton(
-                    text: 'Log out',
-                    onTap: () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      prefs.setBool('isLoggedIn', false);
-                      Navigator.pushReplacementNamed(context, LoginScreen.id);
-                      registerViewModel.emailController.text = '';
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: KSurface,
+                            title: Text(
+                              'Logout',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            content: Text(
+                              'Are you sure to make Log out?',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () async {
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setBool('isLoggedIn', false);
+                                  Navigator.pushReplacementNamed(
+                                      context, LoginScreen.id);
+                                  registerViewModel.emailController.text = '';
+                                },
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'NO',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
+                    text: 'Log Out',
                   ),
                   SizedBox(height: 15),
                   Row(

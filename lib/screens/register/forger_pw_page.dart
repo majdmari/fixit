@@ -88,7 +88,7 @@ class _ForgetpaswordpageState extends State<Forgetpaswordpage> {
                       await showCustomDialog(
                           context, 'Check your email inbox.', 'Rest Password');
                       Navigator.pushNamed(
-                          context, ForgetPaswordChangeFirePage.id);
+                          context, ForgetPasswordChangeFirePage.id);
                     }
                   },
                 ),
