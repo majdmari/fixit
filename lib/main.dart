@@ -72,8 +72,8 @@ class Fixit extends StatelessWidget {
         AddCategory.id: (context) => AddCategory(),
         SubscriptionScreen.id: (context) => SubscriptionScreen(),
         PaymentScreen.id: (context) => PaymentScreen(),
-        ForgetPaswordChangeFirePage.id: (context) =>
-            ForgetPaswordChangeFirePage(),
+        ForgetPasswordChangeFirePage.id: (context) =>
+            ForgetPasswordChangeFirePage(),
         PaymentRegScreen.id: (context) => PaymentRegScreen(),
         SubscriptionRegScreen.id: (context) => SubscriptionRegScreen(),
       },

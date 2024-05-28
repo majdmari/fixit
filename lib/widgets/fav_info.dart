@@ -174,23 +174,24 @@ class FavInfo extends StatelessWidget {
                             color: Colors.white, // Set icon color to white
                             size: 18,
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Text(
                             averageRating!.toStringAsFixed(2),
                             style: TextStyle(
                               color: Colors.white, // Set text color to white
                             ),
                           ),
-                          SizedBox(width: 5),
-                          Text(
-                            city ?? 'Unknown',
-                            style: TextStyle(
-                              color: Colors.white, // Set text color to white
-                              fontSize: 18,
-                            ),
-                          ),
                         ],
-                      )
+                      ),
+                      Text(
+                        city ?? 'Unknown',
+                        style: TextStyle(
+                          color: Colors.white, // Set text color to white
+                          fontSize: 18,
+                        ),
+                      ),
                     ],
                   ),
                 ),

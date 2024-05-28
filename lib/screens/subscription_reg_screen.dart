@@ -140,7 +140,7 @@ class _SubscriptionRegScreenState extends State<SubscriptionRegScreen> {
                 style: TextStyle(color: Colors.white, fontFamily: Kword),
               ),
               subtitle: const Text(
-                'Get full access to all features for a year.',
+                'You will be distinguished from others and appear at the first on the list of Tradepersons and will give you many advantages in the future.',
                 style: TextStyle(color: Colors.grey, fontFamily: Kword),
               ),
               value: 'paid_subscription',
