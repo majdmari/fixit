@@ -74,8 +74,8 @@ class _ForgetpaswordpageState extends State<Forgetpaswordpage> {
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
                       if (registerInfo.email == null) {
-                        showCustomDialog(context,
-                            "You can't Email Password empty.", 'error');
+                        showCustomDialog(
+                            context, "You can't leave Email empty.", 'error');
                         return;
                       }
                       isLoading = true;
