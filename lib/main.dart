@@ -5,6 +5,7 @@ import 'package:fixit/screens/admins/add_category_screen.dart';
 import 'package:fixit/screens/admins/add_traderperson.dart';
 import 'package:fixit/screens/admins/admin_control_screen.dart';
 import 'package:fixit/screens/admins/generate_report_screen.dart';
+import 'package:fixit/screens/admins/tradeperson_show_to_admin.dart';
 import 'package:fixit/screens/favorite_list_screen.dart';
 import 'package:fixit/screens/home_page.dart';
 import 'package:fixit/screens/login_screen.dart';

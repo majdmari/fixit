@@ -1,5 +1,6 @@
 import 'package:fixit/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField(
@@ -10,7 +11,8 @@ class CustomTextField extends StatelessWidget {
       required this.label,
       this.keyboardType,
       this.controller,
-      this.validator});
+      this.validator,
+      this.inputFormatters});
   IconData? icon;
   String? hintText;
   String label;
@@ -19,6 +21,7 @@ class CustomTextField extends StatelessWidget {
   TextEditingController? controller;
   TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class CustomTextField extends StatelessWidget {
             }
           },
       onChanged: onChanged,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         label: Text(label),
         labelStyle: TextStyle(color: Colors.grey, fontFamily: Kword),

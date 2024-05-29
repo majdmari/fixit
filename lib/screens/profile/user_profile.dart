@@ -206,7 +206,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             builder: (BuildContext context) {
                               return CustomDropdownPopup(
                                 title: 'select city',
-                                items: ['irbid', 'amman'],
+                                items: [
+                                  'All',
+                                  'Irbid',
+                                  'Ajloun',
+                                  'Jerash',
+                                  'Mafraq',
+                                  'Balqa',
+                                  'Amman',
+                                  'Zarqa',
+                                  'Madaba',
+                                  'Karak',
+                                  'Tafilah',
+                                  'Ma\'an',
+                                  'Aqaba'
+                                ],
                                 hintText: 'choose city',
                                 labelText: 'City',
                                 message: "Please select a city",
