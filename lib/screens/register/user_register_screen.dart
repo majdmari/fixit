@@ -91,6 +91,14 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                       SizedBox(
                         height: 10,
                       ),
+                      // CustomTextField(
+                      //   keyboardType: TextInputType.number,
+                      //   onChanged: (value) {
+                      //     registerInfo.phoneNumber = value;
+                      //   },
+                      //   hintText: '0799999999',
+                      //   label: 'Phone number',
+                      // ),
                       CustomTextField(
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
@@ -98,6 +106,21 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                         },
                         hintText: '0799999999',
                         label: 'Phone number',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your phone number';
+                          } else if (value.length != 10) {
+                            return 'Phone number must be exactly 10 digits';
+                          } else if (!value.startsWith('07')) {
+                            return 'Phone number must start with 07';
+                          }
+                          return null;
+                        },
+                        inputFormatters: [
+                          // Add this line
+                          LengthLimitingTextInputFormatter(10),
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                       ),
                       SizedBox(
                         height: 10,

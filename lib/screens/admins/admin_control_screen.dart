@@ -204,6 +204,7 @@
 //         .delete();
 //   }
 // }
+import 'package:fixit/screens/admins/tradeperson_show_to_admin.dart';
 import 'package:fixit/screens/tradeperson_details_screen.dart';
 import 'package:fixit/widgets/build_cotrol_list.dart';
 import 'package:fixit/widgets/buildlistitem.dart';
@@ -397,7 +398,8 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TradepersonDetailsScreen(
+                                builder: (context) =>
+                                    TradepersonShowToAdminScreen(
                                   email: userDocument['Email'],
                                 ),
                               ),
@@ -408,8 +410,9 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                               BuildCotrolList(
                                 userDocument: userDocument,
                                 onDeletePressed: () {
-                                  deleteUser(userDocument[
-                                      'Email']); // Assuming the document ID is used as the user ID
+                                  _showDeleteDialog(context, userDocument.id);
+
+                                  // Assuming the document ID is used as the user ID
                                 },
                               ),
                               if (index < sortedUsers.length - 1)
@@ -437,5 +440,45 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
         .collection('tradepersons')
         .doc(userId)
         .delete();
+  }
+
+  void _showDeleteDialog(BuildContext context, String userId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: KSurface,
+          title: Text(
+            'Delete',
+            style: TextStyle(color: Colors.red),
+          ),
+          content: Text(
+            'Are you sure you want to delete this user?',
+            style: TextStyle(color: Colors.red),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                await deleteUser(userId);
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Yes',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'No',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
