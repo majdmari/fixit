@@ -406,9 +406,6 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
                     } else if (snapshot.hasError) {
                       return Text(
                           'Error: ${snapshot.error}'); // Show error message
-                    } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return Text(
-                          'Tradeperson data not available'); // Handle missing tradeperson data
                     } else {
                       final tradepersonData = snapshot.data!.data()!;
                       return Padding(
