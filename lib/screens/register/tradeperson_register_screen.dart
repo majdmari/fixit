@@ -527,6 +527,32 @@ class _TradepersonRegisterScreenState extends State<TradepersonRegisterScreen> {
                         },
                       ),
                       SizedBox(height: 10),
+                      CustomDropdown<String>(
+                        items: [
+                          'Irbid',
+                          'Ajloun',
+                          'Jerash',
+                          'Mafraq',
+                          'Balqa',
+                          'Amman',
+                          'Zarqa',
+                          'Madaba',
+                          'Karak',
+                          'Tafilah',
+                          'Ma\'an',
+                          'Aqaba'
+                        ],
+                        hintText: "City in menu mode",
+                        labelText: "City",
+                        initialValue: null,
+                        dropdownMenuBackgroundColor: KSf2,
+                        onChanged: (String? value) {
+                          setState(() {
+                            registerInfo.selectedCity = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 10),
                       CustomTextField(
                         onChanged: (value) {
                           registerInfo.address = value;
